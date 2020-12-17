@@ -2,6 +2,9 @@
 
 namespace Adminx;
 
+use Adminx\Controllers\AdminxController;
+use Illuminate\Support\Facades\Route;
+
 /**
  * The Adminx Core
  */
@@ -47,5 +50,22 @@ class Core
     public function get_copyright()
     {
         return $this->copyright;
+    }
+
+    public static $core;
+
+    /**
+     * Register configured admin panel on routes
+     */
+    public function register($route='/admin')
+    {
+        $this->route_prefix = $route;
+        static::$core = clone $this;
+
+        Route::prefix($route)->group(function(){
+            Route::middleware(['web', 'auth'])->group(function(){
+                Route::get('/', [AdminxController::class, 'index']);
+            });
+        });
     }
 }

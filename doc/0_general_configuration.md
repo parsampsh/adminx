@@ -13,6 +13,8 @@ $admin->set_title('My admin panel');
 $admin->get_title();
 ```
 
+now, you can see this title in the admin panel.
+
 ### The Footer Copyright message
 You can set the footer copyright message.
 
@@ -22,3 +24,5 @@ $admin->set_copyright('All rights reserved.');
 // this methods returns the copyright
 $admin->get_copyright();
 ```
+
+now, you can see this copyright message at the footer of admin panel.

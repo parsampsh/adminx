@@ -12,6 +12,10 @@ class TestCase extends Orchestra
     public function setUp(): void
     {
         parent::setUp();
+
+        \Illuminate\Support\Facades\Route::get('/login', function(){
+            return 'the login route';
+        })->name('login');
     }
 
     public function getEnvironmentSetUp($app)
