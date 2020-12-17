@@ -26,3 +26,32 @@ $admin->get_copyright();
 ```
 
 now, you can see this copyright message at the footer of admin panel.
+
+### Access middleware
+The important question is that **Who can access to the admin panel?**
+
+to set that which users can access to the admin panel, you can use `set_middleware` method.
+
+```php
+$admin->set_middleware(function(){
+    // check some conditions and return a boolean
+    return true;
+});
+
+$admin->set_middleware(function($user){
+    // the logged in user is in $user. we can check conditions on thsi
+    // for example
+    return $user->access_level === 'manager' || $user->access_level === 'admin';
+});
+```
+
+This method gets a `Closure` and runs that and passes the current user as argument to that(you can don't set the argument and that is optional), then, if return value of function is `true`, means access is allowed for that user.
+
+By default, if you don't set this middleware, default value is `true`.
+
+also you can check this middleware manually:
+
+```php
+$result = $admin->run_middleware();
+var_dump($result); // true or false
+```

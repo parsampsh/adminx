@@ -9,11 +9,6 @@ Permissions and Groups
 	- add_permission_to_group($group, 'permission')
 }
 
-General
-{
-middleware: set_middleware(Closure), get_middleware()
-}
-
 Models
 {
 list: middleware, hidden_fields, fields_titles, fields_values, filter_data, virtual_fields

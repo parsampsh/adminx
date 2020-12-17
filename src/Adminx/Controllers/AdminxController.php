@@ -10,8 +10,25 @@ use Illuminate\Http\Request;
  */
 class AdminxController extends BaseController
 {
+    private $core;
+
+    public function __construct()
+    {
+        $this->core = \Adminx\Core::$core;
+    }
+
+    public function run_middleware()
+    {
+        $result = $this->core->run_middleware();
+        if($result === false)
+        {
+            abort(403);
+        }
+    }
+
     public function index()
     {
+        $this->run_middleware();
         return 'welcome to adminx';
     }
 }

@@ -68,4 +68,31 @@ class Core
             });
         });
     }
+
+    /**
+     * Admin panel access middleware closure
+     */
+    protected $middleware = null;
+
+    /**
+     * Sets the access middleware
+     */
+    public function set_middleware(\Closure $middleware)
+    {
+        $this->middleware = $middleware;
+    }
+
+    /**
+     * Runs the access middleware and returns the result
+     */
+    public function run_middleware(): bool
+    {
+        if($this->middleware === null)
+        {
+            return true;
+        }
+
+        $tmp = $this->middleware;
+        return (bool) \call_user_func_array($tmp, [auth()->user()]);
+    }
 }
