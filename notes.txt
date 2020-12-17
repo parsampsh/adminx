@@ -11,9 +11,7 @@ Permissions and Groups
 
 General
 {
-title: set_title('the title'), get_title()
 middleware: set_middleware(Closure), get_middleware()
-copyright_message: set_copyright_message('message'), get_copyright_message()
 }
 
 Models
