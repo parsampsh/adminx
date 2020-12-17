@@ -4,6 +4,11 @@ namespace Adminx\Models;
 
 use Illuminate\Database\Eloquent\Model;
 
+/**
+ * Permissions of a user
+ * 
+ * Also alongside groups, users can have permissions
+ */
 class UserPermission extends Model
 {
     protected $table = 'adminx_permissions';

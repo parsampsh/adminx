@@ -64,5 +64,6 @@ class CreateAdminxTables extends Migration
         Schema::dropIfExists('adminx_group_permissions');
         Schema::dropIfExists('adminx_user_groups');
         Schema::dropIfExists('adminx_user_permissions');
+        Schema::dropIfExists('adminx_logs');
     }
 }
