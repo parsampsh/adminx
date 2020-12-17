@@ -11,7 +11,7 @@ use Illuminate\Database\Eloquent\Model;
  */
 class UserPermission extends Model
 {
-    protected $table = 'adminx_permissions';
+    protected $table = 'adminx_user_permissions';
 
     public function user(){
         return $this->belongsTo(\App\Models\User::class);

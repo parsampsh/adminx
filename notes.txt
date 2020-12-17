@@ -3,7 +3,6 @@
 Permissions and Groups
 {
 \Adminx\Access:
-	- user_has_permission($user, 'permission')
 	- add_permission_for_user($user, 'permission')
 	- add_user_to_group($user, $group)
 	- add_permission_to_group($group, 'permission')

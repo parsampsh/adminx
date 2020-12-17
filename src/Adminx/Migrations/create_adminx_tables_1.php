@@ -25,6 +25,7 @@ class CreateAdminxTables extends Migration
             $table->id();
             $table->foreignId('adminx_group_id')->constrained();
             $table->string('permission');
+            $table->boolean('flag');
             $table->timestamps();
         });
 
@@ -39,6 +40,7 @@ class CreateAdminxTables extends Migration
             $table->id();
             $table->foreignId('user_id')->constrained();
             $table->string('permission');
+            $table->boolean('flag');
             $table->timestamps();
         });
 

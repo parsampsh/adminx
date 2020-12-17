@@ -15,6 +15,6 @@ class Group extends Model
     protected $table = 'adminx_groups';
 
     public function permissions(){
-        return $this->hasMany(GruopPermission::class);
+        return $this->hasMany(GroupPermission::class, 'adminx_group_id');
     }
 }
