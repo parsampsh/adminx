@@ -1,0 +1,61 @@
+-- Needed features --
+
+Source
+{
+add migrations and factories and Models
+}
+
+General
+{
+title: set_title('the title'), get_title()
+middleware: set_middleware(Closure), get_middleware()
+copyright_message: set_copyright_message('message'), get_copyright_message()
+}
+
+Models
+{
+list: middleware, hidden_fields, fields_titles, fields_values, filter_data, virtual_fields
+delete: delete_middleware
+create: create_middleware, readonly_fields, only_addable_fields, filter_create_data
+update: update_middleware, only_editable_fields, filter_update_data
+}
+
+Menu Links
+{
+# Some custom link in menu
+add_link('title', 'link')
+}
+
+Pages
+{
+# Some custom pages in admin panel
+add_page('title', Closure)
+}
+
+Permissions and Groups
+{
+groups: name
+group_permissions: group_id, permission
+user_groups: user_id, group_id
+user_permissions: user_id, permission
+PermissionTypes: create, update, delete, logall
+\Adminx\Access:
+	- user_has_permission($user, 'permission')
+	- add_permission_for_user($user, 'permission')
+	- add_user_to_group($user, $group)
+	- add_permission_to_group($group, 'permission')
+}
+
+Logs
+{
+# Handle loging
+table: model, user_id, action, item_id, message, datetime
+}
+
+Frontend customization
+{
+# Some features to customize frontend and language
+set_view_prefix, get_view_prefix
+set_lang_word('key', 'the value {var1} and {var2}'), get_lang_word('key')
+}
+
