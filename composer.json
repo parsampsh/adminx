@@ -1,0 +1,30 @@
+{
+    "name": "parsampsh/adminx",
+    "description": "Adminx is a library to create automatic admin panel for Laravel web applications",
+    "type": "library",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "parsa mpsh",
+            "email": "parsampsh@gmail.com",
+            "homepage": "https://github.com/parsampsh"
+        }
+    ],
+    "require": {
+        "laravel/framework": "^8.0"
+    },
+    "require-dev": {
+        "orchestra/testbench": "^6.0",
+        "phpunit/phpunit": "^9.3"
+    },
+    "autoload": {
+        "psr-4": {
+            "Adminx\\": "src/Adminx"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "Adminx\\Tests\\": "tests"
+        }
+    }
+}
