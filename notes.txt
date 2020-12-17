@@ -1,8 +1,12 @@
 -- Needed features --
 
-Source
+Permissions and Groups
 {
-add migrations and factories and Models
+\Adminx\Access:
+	- user_has_permission($user, 'permission')
+	- add_permission_for_user($user, 'permission')
+	- add_user_to_group($user, $group)
+	- add_permission_to_group($group, 'permission')
 }
 
 General
@@ -30,26 +34,6 @@ Pages
 {
 # Some custom pages in admin panel
 add_page('title', Closure)
-}
-
-Permissions and Groups
-{
-groups: name
-group_permissions: group_id, permission
-user_groups: user_id, group_id
-user_permissions: user_id, permission
-PermissionTypes: create, update, delete, logall
-\Adminx\Access:
-	- user_has_permission($user, 'permission')
-	- add_permission_for_user($user, 'permission')
-	- add_user_to_group($user, $group)
-	- add_permission_to_group($group, 'permission')
-}
-
-Logs
-{
-# Handle loging
-table: model, user_id, action, item_id, message, datetime
 }
 
 Frontend customization

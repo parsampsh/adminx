@@ -4,12 +4,14 @@ namespace Adminx\Tests;
 
 use Orchestra\Testbench\TestCase as Orchestra;
 
+require_once __DIR__ . '/database/User.php';
+require_once __DIR__ . '/database/factories/UserFactory.php';
+
 class TestCase extends Orchestra
 {
     public function setUp(): void
     {
         parent::setUp();
-        //$this->withFactories(__DIR__ . '/factories');
     }
 
     public function getEnvironmentSetUp($app)
@@ -21,7 +23,9 @@ class TestCase extends Orchestra
             'prefix' => '',
         ]);
 
-        //include_once __DIR__.'/../tests/database/migrations/create_users_table.php.stub';
-        //(new \CreateUsersTable())->up();
+        include_once __DIR__ . '/database/migrations/create_users_table.php.1';
+        include_once __DIR__ . '/../src/Adminx/Migrations/create_adminx_tables_1.php';
+        (new \CreateUsersTable())->up();
+        (new \Adminx\Migrations\CreateAdminxTables())->up();
     }
 }
