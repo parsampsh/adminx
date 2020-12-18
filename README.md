@@ -12,7 +12,17 @@ to get started with this package, do the following steps in your laravel project
 - Add the package via composer: `$ composer require parsampsh/adminx`
 - Run the migrations: `$ php artisan migrate`
 
-then, adminx is ready to use. go to `app/Providers/RouteServiceProvider.php` and add this code to **End of `boot` method**:
+then, adminx is ready to use. create `routes/adminx.php` file and go to `app/Providers/RouteServiceProvider.php` and inclue that in **End of `boot` method**:
+
+```php
+// ...
+
+include base_path('routes/adminx.php');
+
+// ...
+```
+
+then, write this code in `routes/adminx.php`:
 
 ```php
 // ...
