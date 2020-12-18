@@ -1,6 +1,8 @@
 # Adminx library
 Adminx is a library to create and handle admin panel automaticaly in laravel applications.
 
+### Note: This library is in development state and is not ready
+
 ### Authors
 this package is written by [parsampsh](https://github.com/parsampsh).
 
