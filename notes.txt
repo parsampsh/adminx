@@ -9,7 +9,7 @@ Permissions and Groups
 
 Models
 {
-list: middleware, hidden_fields, fields_titles, fields_values, filter_data, virtual_fields
+list: hidden_fields, fields_titles, fields_values, filter_data, virtual_fields
 delete: delete_middleware
 create: create_middleware, readonly_fields, only_addable_fields, filter_create_data
 update: update_middleware, only_editable_fields, filter_update_data
