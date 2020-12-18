@@ -12,19 +12,10 @@ to get started with this package, do the following steps in your laravel project
 - Add the package via composer: `$ composer require parsampsh/adminx`
 - Run the migrations: `$ php artisan migrate`
 
-then, adminx is ready to use. create a file in `routes/adminx.php` in your project. then go to `app/Providers/RouteServiceProvider.php` and add this code to **End of `boot` method**:
+then, adminx is ready to use. go to `app/Providers/RouteServiceProvider.php` and add this code to **End of `boot` method**:
 
 ```php
 // ...
-// include the file
-include_once base_path('routes/adminx.php');
-// ...
-```
-
-then, write this content to `routes/adminx.php` file:
-
-```php
-<?php
 
 $admin = new \Adminx\Core;
 
@@ -32,9 +23,11 @@ $admin = new \Adminx\Core;
 
 // register the admin panel
 $admin->register('/admin'); // `/admin` is the route of admin panel
+
+// ...
 ```
 
-now, run `$ php artisan optimize`, serve your application and goto `/admin` page.
+now, run `$ php artisan optimize`, serve your application and goto `/admin` page. Remember that to access to the admin panel you should be login using laravel auth.
 
 Enjoy it!
 
