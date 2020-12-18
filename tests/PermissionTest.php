@@ -55,4 +55,19 @@ class PermissionTest extends TestCase
 
         $this->assertFalse(Access::user_has_permission($user, 'gper1'));
     }
+
+    public function test_add_permission_for_user_works()
+    {
+        $user = \App\Models\User::factory()->create();
+
+        $this->assertFalse(Access::user_has_permission($user, 'test-per'));
+
+        Access::add_permission_for_user($user, 'test-per');
+
+        $this->assertTrue(Access::user_has_permission($user, 'test-per'));
+
+        Access::add_permission_for_user($user, 'test-per', false);
+
+        $this->assertFalse(Access::user_has_permission($user, 'test-per'));
+    }
 }

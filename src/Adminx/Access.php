@@ -52,4 +52,23 @@ class Access
 
         return false;
     }
+
+    /**
+     * Adds a permission for user
+     * 
+     * The $flag is a boolean. if this is true, means user has this permission
+     * and if this is false, means user Has NOT this permission
+     */
+    public static function add_permission_for_user($user, $permission, $flag=true)
+    {
+        // check already exists
+        $up = UserPermission::where('user_id', $user->id)->where('permission', $permission)->first();
+        if($up === null){
+            $up = new UserPermission;
+            $up->user_id = $user->id;
+            $up->permission = (string) $permission;
+        }
+        $up->flag = (bool) $flag;
+        return $up->save();
+    }
 }

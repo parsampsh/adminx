@@ -18,7 +18,7 @@ class Core
     /**
      * Sets the title of admin panel
      */
-    public function set_title(string $title)
+    public function set_title($title)
     {
         $this->title = $title;
     }
@@ -39,7 +39,7 @@ class Core
     /**
      * Sets the title of admin panel
      */
-    public function set_copyright(string $copyright)
+    public function set_copyright($copyright)
     {
         $this->copyright = $copyright;
     }
