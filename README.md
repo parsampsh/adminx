@@ -10,7 +10,6 @@ this package is written by [parsampsh](https://github.com/parsampsh).
 to get started with this package, do the following steps in your laravel project:
 
 - Add the package via composer: `$ composer require parsampsh/adminx`
-- Publish project migrations and files: `$ php vendor/bin/adminx-publish`
 - Run the migrations: `$ php artisan migrate`
 
 then, adminx is ready to use. create a file in `routes/adminx.php` in your project. then go to `app/Providers/RouteServiceProvider.php` and add this code to **End of `boot` method**:
