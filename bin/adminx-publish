@@ -1,5 +1,0 @@
-<?php
-
-// Publishes the adminx migrations and files to the project
-
-echo 'hello world';

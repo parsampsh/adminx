@@ -29,5 +29,11 @@
             "Adminx\\Tests\\": "tests"
         }
     },
-    "bin": ["bin/adminx-publish"]
+    "extra": {
+        "laravel": {
+            "providers": [
+                "Adminx\\AdminxServiceProvider"
+            ]
+        }
+    }
 }
