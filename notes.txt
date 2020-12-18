@@ -1,12 +1,5 @@
 -- Needed features --
 
-Permissions and Groups
-{
-\Adminx\Access:
-	- add_user_to_group($user, $group)
-	- add_permission_to_group($group, 'permission')
-}
-
 Models
 {
 list: hidden_fields, fields_titles, fields_values, filter_data, virtual_fields

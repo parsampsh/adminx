@@ -4,6 +4,8 @@ namespace Adminx;
 
 use Adminx\Models\UserPermission;
 use Adminx\Models\Group;
+use Adminx\Models\UserGroup;
+use Adminx\Models\GroupPermission;
 
 /**
  * The adminx permission and group API
@@ -70,5 +72,68 @@ class Access
         }
         $up->flag = (bool) $flag;
         return $up->save();
+    }
+
+    /**
+     * Checks user is in a group
+     */
+    public static function user_is_in_group($user, Group $group)
+    {
+        $ug = UserGroup::where('user_id', $user->id)->where('adminx_group_id', $group->id)->first();
+        if($ug !== null){
+            return true;
+        }
+        return false;
+    }
+
+    /**
+     * Adds a user to a group
+     */
+    public static function add_user_to_group($user, Group $group)
+    {
+        // check already is in group
+        if(Access::user_is_in_group($user, $group)){
+            return true;
+        }
+        $ug = new UserGroup;
+        $ug->user_id = $user->id;
+        $ug->adminx_group_id = $group->id;
+        return $ug->save();
+    }
+
+    /**
+     * Removes a user from a group
+     */
+    public static function remove_user_from_group($user, Group $group)
+    {
+        // check already is in group
+        if(!Access::user_is_in_group($user, $group)){
+            return true;
+        }
+        return UserGroup::where('user_id', $user->id)->where('adminx_group_id', $group->id)->delete();
+    }
+
+    /**
+     * Adds a permission to group
+     */
+    public static function add_permission_for_group(Group $group, $permission, $flag=true)
+    {
+        // check already exists
+        $gp = GroupPermission::where('adminx_group_id', $group->id)->where('permission', $permission)->first();
+        if($gp === null){
+            $gp = new GroupPermission;
+            $gp->adminx_group_id = $group->id;
+            $gp->permission = (string) $permission;
+        }
+        $gp->flag = (bool) $flag;
+        return $gp->save();
+    }
+
+    /**
+     * Removes a permission from group
+     */
+    public static function remove_permission_from_group(Group $group, $permission)
+    {
+        return GroupPermission::where('adminx_group_id', $group->id)->where('permission', $permission)->delete();
     }
 }
