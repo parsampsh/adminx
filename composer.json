@@ -3,6 +3,7 @@
     "description": "Adminx is a library to create automatic admin panel for Laravel web applications",
     "type": "library",
     "license": "MIT",
+    "homepage": "https://github.com/parsampsh/adminx",
     "authors": [
         {
             "name": "parsa mpsh",
