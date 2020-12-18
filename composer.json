@@ -28,5 +28,6 @@
         "psr-4": {
             "Adminx\\Tests\\": "tests"
         }
-    }
+    },
+    "bin": ["bin/adminx-publish"]
 }
