@@ -2,10 +2,6 @@
 
 namespace Adminx;
 
-<?php
-
-namespace Adminx;
-
 use Illuminate\Support\ServiceProvider;
 
 class AdminxServiceProvider extends ServiceProvider
@@ -14,6 +10,7 @@ class AdminxServiceProvider extends ServiceProvider
     {
         //
     }
+
     public function boot()
     {
         $this->loadMigrationsFrom(__DIR__.'/Migrations');
