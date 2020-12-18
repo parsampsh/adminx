@@ -30,6 +30,6 @@ class TestCase extends Orchestra
         include_once __DIR__ . '/database/migrations/create_users_table.php.1';
         include_once __DIR__ . '/../src/Adminx/Migrations/create_adminx_tables_1.php';
         (new \CreateUsersTable())->up();
-        (new \Adminx\Migrations\CreateAdminxTables())->up();
+        (new \CreateAdminxTables())->up();
     }
 }
