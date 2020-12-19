@@ -129,4 +129,19 @@ class HttpControllerTest extends TestCase
         $res->assertStatus(200);
         $res->assertSee('<span>All rights reserved</span>', false);
     }
+
+    public function test_links_in_menu_is_showed()
+    {
+        (new \Adminx\Core)
+            ->add_link('Test link', 'https://example.com', 'blank', 'fa fa-user')
+            ->register('/admin')
+            ;
+
+        $user = \App\Models\User::factory()->create();
+
+        $res = $this->actingAs($user)->get('/admin');
+        $res->assertStatus(200);
+        $res->assertSee('<a class="nav-link" href="https://example.com" target="blank">', false);
+        $res->assertSee('<i class="fa fa-user"></i><span>Test link</span></a>', false);
+    }
 }

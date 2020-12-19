@@ -36,7 +36,12 @@ $logout_url = url($core->get_logout());
 
       <hr class="sidebar-divider">
 
-      <!-- TODO : Models, links and pages -->
+      @foreach($core->get_menu() as $item)
+      <li class="nav-item">
+        <a class="nav-link" href="{{ $item['link'] }}" target="{{ $item['target'] }}">
+          <i class="{{ $item['icon'] }}"></i><span>{{ $item['title'] }}</span></a>
+      </li>
+      @endforeach
 
       <div class="text-center d-none d-md-inline">
         <button class="rounded-circle border-0" id="sidebarToggle"></button>

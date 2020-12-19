@@ -171,4 +171,34 @@ class Core
         }
         return $result;
     }
+
+    /**
+     * The admin panel menu items
+     *
+     * Contains models, links and custom pages
+     */
+    protected $menu = [];
+
+    /**
+     * Adds a link item to menu
+     */
+    public function add_link(string $title, string $link, string $target='', string $icon='')
+    {
+        array_push($this->menu, [
+            'type' => 'link',
+            'title' => $title,
+            'link' => $link,
+            'target' => $target,
+            'icon' => $icon,
+        ]);
+        return $this;
+    }
+
+    /**
+     * Returns the menu list
+     */
+    public function get_menu()
+    {
+        return $this->menu;
+    }
 }

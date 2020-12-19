@@ -90,3 +90,22 @@ also you can get user info by using `get_userinfo` method.
 $user_info = $admin->get_userinfo();
 var_dump($user_info); // {'username' => '...', 'image' => '...'}
 ```
+
+## An Example
+
+```php
+$admin = new \Adminx\Core;
+
+$admin
+    ->set_title('My admin panel')
+    ->set_copyright('All rights reserved')
+    ->set_logout('/auth/logout')
+    ->set_userinfo(function($user){
+        return [
+            'username' => $user->username
+        ];
+    })
+    ->register('/admin')
+    ;
+
+```
