@@ -35,5 +35,8 @@
                 "Adminx\\AdminxServiceProvider"
             ]
         }
+    },
+    "scripts": {
+        "test": "php vendor/bin/phpunit"
     }
 }
