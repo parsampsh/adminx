@@ -12,9 +12,9 @@ $logout_url = url($core->get_logout());
   <meta name="description" content="">
   <meta name="author" content="">
   <title>{{ $core->get_title() }} - @yield('title')</title>
-  <link href="{{ url('/adminx-public/default/vendor/fontawesome-free/css/all.min.css') }}" rel="stylesheet" type="text/css">
+  <link href="{{ url('/adminx-public/default/fontawesome-free/css/fontawesome.min.css') }}" rel="stylesheet" type="text/css">
   <link href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i" rel="stylesheet">
-  <link href="{{ url('/adminx-public/default/css/sb-admin-2.min.css') }}" rel="stylesheet">
+  <link href="{{ url('/adminx-public/default/sb-admin-2.min.css') }}" rel="stylesheet">
 </head>
 <body id="page-top">
   <div id="wrapper">
@@ -124,9 +124,9 @@ $logout_url = url($core->get_logout());
     </div>
   </div>
 
-  <script src="{{ url('/adminx-public/default/vendor/jquery/jquery.min.js') }}"></script>
-  <script src="{{ url('/adminx-public/default/vendor/bootstrap/js/bootstrap.bundle.min.js') }}"></script>
-  <script src="{{ url('/adminx-public/default/vendor/jquery-easing/jquery.easing.min.js') }}"></script>
-  <script src="{{ url('/adminx-public/default/js/sb-admin-2.min.js') }}"></script>
+  <script src="{{ url('/adminx-public/default/jquery.min.js') }}"></script>
+  <script src="{{ url('/adminx-public/default/bootstrap.bundle.min.js') }}"></script>
+  <script src="{{ url('/adminx-public/default/jquery.easing.min.js') }}"></script>
+  <script src="{{ url('/adminx-public/default/sb-admin-2.min.js') }}"></script>
 </body>
 </html>
