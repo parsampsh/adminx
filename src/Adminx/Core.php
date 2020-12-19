@@ -21,6 +21,7 @@ class Core
     public function set_title($title)
     {
         $this->title = $title;
+        return $this;
     }
 
     /**
@@ -42,6 +43,7 @@ class Core
     public function set_copyright($copyright)
     {
         $this->copyright = $copyright;
+        return $this;
     }
 
     /**
@@ -88,6 +90,7 @@ class Core
     public function set_middleware(\Closure $middleware)
     {
         $this->middleware = $middleware;
+        return $this;
     }
 
     /**
@@ -122,6 +125,7 @@ class Core
     public function set_logout($logout)
     {
         $this->logout = $logout;
+        return $this;
     }
 
     /**
@@ -143,6 +147,7 @@ class Core
     public function set_userinfo(\Closure $userinfo)
     {
         $this->userinfo = $userinfo;
+        return $this;
     }
 
     /**
