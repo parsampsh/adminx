@@ -20,8 +20,7 @@ class AdminxController extends BaseController
     public function run_middleware()
     {
         $result = $this->core->run_middleware();
-        if($result === false)
-        {
+        if ($result === false) {
             abort(403);
         }
     }

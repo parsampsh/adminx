@@ -11,11 +11,13 @@ class UserGroup extends Model
 {
     protected $table = 'adminx_user_groups';
 
-    public function group(){
+    public function group()
+    {
         return $this->belongsTo(Group::class);
     }
 
-    public function users(){
+    public function users()
+    {
         return $this->hasMany(\App\Models\User::class);
     }
 }

@@ -36,7 +36,7 @@ class GeneralConfigTest extends TestCase
 
         $this->assertEquals($admin->get_userinfo(), ['username' => 'unset', 'image' => 'unset']);
 
-        $admin->set_userinfo(function(){
+        $admin->set_userinfo(function () {
             return [
                 'username' => 'hello world',
                 'image' => '/link'
@@ -44,7 +44,7 @@ class GeneralConfigTest extends TestCase
         });
         $this->assertEquals($admin->get_userinfo(), ['username' => 'hello world', 'image' => '/link']);
 
-        $admin->set_userinfo(function(){
+        $admin->set_userinfo(function () {
             return [
                 'username' => 'hello world',
                 'fsfgfh' => 'gfghfh',
@@ -52,7 +52,7 @@ class GeneralConfigTest extends TestCase
         });
         $this->assertEquals($admin->get_userinfo(), ['username' => 'hello world', 'image' => 'unset']);
 
-        $admin->set_userinfo(function(){
+        $admin->set_userinfo(function () {
             return [
                 'username' => 'hello world',
                 'fsfgfh' => 'gfghfh',
@@ -60,7 +60,7 @@ class GeneralConfigTest extends TestCase
         });
         $this->assertEquals($admin->get_userinfo(), ['username' => 'hello world', 'image' => 'unset']);
 
-        $admin->set_userinfo(function($user){
+        $admin->set_userinfo(function ($user) {
             return [
                 'username' => 'hello world',
             ];
@@ -70,7 +70,7 @@ class GeneralConfigTest extends TestCase
         $user = \App\Models\User::factory()->create();
         auth()->login($user);
 
-        $admin->set_userinfo(function($user){
+        $admin->set_userinfo(function ($user) {
             return [
                 'username' => $user->email,
             ];

@@ -11,7 +11,8 @@ class GroupPermission extends Model
 {
     protected $table = 'adminx_group_permissions';
 
-    public function group(){
+    public function group()
+    {
         return $this->belongsTo(Group::class);
     }
 }

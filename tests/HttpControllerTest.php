@@ -25,7 +25,7 @@ class HttpControllerTest extends TestCase
     {
         $admin = new \Adminx\Core;
 
-        $admin->set_middleware(function(){
+        $admin->set_middleware(function () {
             return false;
         });
         
@@ -37,7 +37,7 @@ class HttpControllerTest extends TestCase
 
         $admin = new \Adminx\Core;
 
-        $admin->set_middleware(function($user){
+        $admin->set_middleware(function ($user) {
             return $user->username === 'manager';
         });
 
@@ -69,7 +69,7 @@ class HttpControllerTest extends TestCase
 
         $admin = new \Adminx\Core;
 
-        $admin->set_userinfo(function($user){
+        $admin->set_userinfo(function ($user) {
             return [
                 'username' => $user->email,
                 'image' => '/link',

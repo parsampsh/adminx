@@ -69,8 +69,8 @@ class Core
         config(["view.paths" => $paths]);
 
         // register routes
-        Route::prefix($route)->group(function(){
-            Route::middleware(['web', 'auth'])->group(function(){
+        Route::prefix($route)->group(function () {
+            Route::middleware(['web', 'auth'])->group(function () {
                 Route::get('/', [AdminxController::class, 'index']);
             });
             //Route::get('/')
@@ -95,8 +95,7 @@ class Core
      */
     public function run_middleware(): bool
     {
-        if($this->middleware === null)
-        {
+        if ($this->middleware === null) {
             return true;
         }
 
@@ -151,21 +150,17 @@ class Core
      */
     public function get_userinfo()
     {
-        if($this->userinfo === null)
-        {
+        if ($this->userinfo === null) {
             return ['username' => 'unset', 'image' => 'unset'];
         }
         $tmp = $this->userinfo;
         $info = call_user_func_array($tmp, [auth()->user()]);
         $result = ['username' => 'unset', 'image' => 'unset'];
-        if(is_array($info))
-        {
-            if(isset($info['username']))
-            {
+        if (is_array($info)) {
+            if (isset($info['username'])) {
                 $result['username'] = $info['username'];
             }
-            if(isset($info['image']))
-            {
+            if (isset($info['image'])) {
                 $result['image'] = $info['image'];
             }
         }

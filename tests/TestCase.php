@@ -13,7 +13,7 @@ class TestCase extends Orchestra
     {
         parent::setUp();
 
-        \Illuminate\Support\Facades\Route::get('/login', function(){
+        \Illuminate\Support\Facades\Route::get('/login', function () {
             return 'the login route';
         })->name('login');
     }

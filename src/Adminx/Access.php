@@ -20,35 +20,30 @@ class Access
         $groups = $user->belongsToMany(Group::class, 'adminx_user_groups', 'user_id', 'adminx_group_id')->get();
         $allowed_permissions = [];
         $disallowed_permissions = [];
-        foreach($groups as $group)
-        {
-            foreach($group->permissions as $gp)
-            {
-                if($gp->flag){
+        foreach ($groups as $group) {
+            foreach ($group->permissions as $gp) {
+                if ($gp->flag) {
                     array_push($allowed_permissions, $gp->permission);
-                }else{
+                } else {
                     array_push($disallowed_permissions, $gp->permission);
                 }
             }
         }
 
-        foreach(UserPermission::where('user_id', $user->id)->get() as $up)
-        {
-            if($up->flag){
+        foreach (UserPermission::where('user_id', $user->id)->get() as $up) {
+            if ($up->flag) {
                 array_push($allowed_permissions, $up->permission);
-            }else{
+            } else {
                 array_push($disallowed_permissions, $up->permission);
             }
         }
 
         // check user has the permission
-        if(in_array($permission, $disallowed_permissions))
-        {
+        if (in_array($permission, $disallowed_permissions)) {
             return false;
         }
 
-        if(in_array($permission, $allowed_permissions))
-        {
+        if (in_array($permission, $allowed_permissions)) {
             return true;
         }
 
@@ -57,7 +52,7 @@ class Access
 
     /**
      * Adds a permission for user
-     * 
+     *
      * The $flag is a boolean. if this is true, means user has this permission
      * and if this is false, means user Has NOT this permission
      */
@@ -65,7 +60,7 @@ class Access
     {
         // check already exists
         $up = UserPermission::where('user_id', $user->id)->where('permission', $permission)->first();
-        if($up === null){
+        if ($up === null) {
             $up = new UserPermission;
             $up->user_id = $user->id;
             $up->permission = (string) $permission;
@@ -80,7 +75,7 @@ class Access
     public static function user_is_in_group($user, Group $group)
     {
         $ug = UserGroup::where('user_id', $user->id)->where('adminx_group_id', $group->id)->first();
-        if($ug !== null){
+        if ($ug !== null) {
             return true;
         }
         return false;
@@ -92,7 +87,7 @@ class Access
     public static function add_user_to_group($user, Group $group)
     {
         // check already is in group
-        if(Access::user_is_in_group($user, $group)){
+        if (Access::user_is_in_group($user, $group)) {
             return true;
         }
         $ug = new UserGroup;
@@ -107,7 +102,7 @@ class Access
     public static function remove_user_from_group($user, Group $group)
     {
         // check already is in group
-        if(!Access::user_is_in_group($user, $group)){
+        if (!Access::user_is_in_group($user, $group)) {
             return true;
         }
         return UserGroup::where('user_id', $user->id)->where('adminx_group_id', $group->id)->delete();
@@ -120,7 +115,7 @@ class Access
     {
         // check already exists
         $gp = GroupPermission::where('adminx_group_id', $group->id)->where('permission', $permission)->first();
-        if($gp === null){
+        if ($gp === null) {
             $gp = new GroupPermission;
             $gp->adminx_group_id = $group->id;
             $gp->permission = (string) $permission;
