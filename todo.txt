@@ -1,6 +1,5 @@
 -- TODO --
 
-- create base of frontend
 - create menu link system
 - create custom pages system
 - create localizations and frontend customizations
