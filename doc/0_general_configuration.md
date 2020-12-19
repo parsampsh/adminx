@@ -55,3 +55,38 @@ also you can check this middleware manually:
 $result = $admin->run_middleware();
 var_dump($result); // true or false
 ```
+
+### Logout url of user
+The adminx panel, has a logout button. you can set the link of that button to logout user.
+
+```php
+$admin->set_logout('/user/logout');
+
+// you can get the link with this method
+$admin->get_logout();
+```
+
+default value for this item is `/auth/logout`.
+
+### User info
+In the adminx panel, in top right is user information: Username and image.
+
+you can set value of them by using `set_userinfo` method.
+
+```php
+$admin->set_userinfo(function($user){
+    return [
+        'username' => $user->name,
+        'image' => '/link/to/user/images/' . $user->img,
+    ];
+});
+```
+
+this method gets closure and passes user object to that(`$user` argument is optional) and this closure should return a dictonary contains two keys: `username` and `image`. the `username` will be showed as username of user and `image` will be used as user profile image link.
+
+also you can get user info by using `get_userinfo` method.
+
+```php
+$user_info = $admin->get_userinfo();
+var_dump($user_info); // {'username' => '...', 'image' => '...'}
+```

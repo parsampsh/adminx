@@ -53,4 +53,80 @@ class HttpControllerTest extends TestCase
 
         $this->actingAs($user)->get('/admin')->assertStatus(200);
     }
+
+    public function test_user_info_is_showed()
+    {
+        $admin = new \Adminx\Core;
+        
+        $admin->register('/admin');
+
+        $user = \App\Models\User::factory()->create();
+
+        $res = $this->actingAs($user)->get('/admin');
+        $res->assertStatus(200);
+        $res->assertSee('<span class="mr-2 d-none d-lg-inline text-gray-600 small">unset</span>', false);
+        $res->assertSee('<img class="img-profile rounded-circle" src="unset">', false);
+
+        $admin = new \Adminx\Core;
+
+        $admin->set_userinfo(function($user){
+            return [
+                'username' => $user->email,
+                'image' => '/link',
+            ];
+        });
+        
+        $admin->register('/admin');
+
+        $res = $this->actingAs($user)->get('/admin');
+        $res->assertStatus(200);
+        $res->assertSee('<span class="mr-2 d-none d-lg-inline text-gray-600 small">' . $user->email . '</span>', false);
+        $res->assertSee('<img class="img-profile rounded-circle" src="/link">', false);
+    }
+
+    public function test_logout_button_link_is_valid()
+    {
+        $admin = new \Adminx\Core;
+        
+        $admin->register('/admin');
+
+        $user = \App\Models\User::factory()->create();
+
+        $res = $this->actingAs($user)->get('/admin');
+        $res->assertStatus(200);
+        $res->assertSee('<a class="btn btn-primary" href="' . url('/auth/logout') . '">Logout</a>', false);
+
+        $admin = new \Adminx\Core;
+
+        $admin->set_logout('/link/to/logout');
+        
+        $admin->register('/admin');
+
+        $res = $this->actingAs($user)->get('/admin');
+        $res->assertStatus(200);
+        $res->assertSee('<a class="btn btn-primary" href="' . url('/link/to/logout') . '">Logout</a>', false);
+    }
+
+    public function test_copyright_message_is_valid()
+    {
+        $admin = new \Adminx\Core;
+        
+        $admin->register('/admin');
+
+        $user = \App\Models\User::factory()->create();
+
+        $res = $this->actingAs($user)->get('/admin');
+        $res->assertStatus(200);
+        $res->assertSee('<span>Copyright</span>', false);
+
+        $admin = new \Adminx\Core;
+
+        $admin->set_copyright('All rights reserved');
+        
+        $admin->register('/admin');
+
+        $res = $this->actingAs($user)->get('/admin');
+        $res->assertStatus(200);
+        $res->assertSee('<span>All rights reserved</span>', false);
+    }
 }

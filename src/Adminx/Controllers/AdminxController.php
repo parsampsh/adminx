@@ -29,6 +29,6 @@ class AdminxController extends BaseController
     public function index()
     {
         $this->run_middleware();
-        return 'welcome to adminx';
+        return view('adminx.default.index', ['core' => $this->core]);
     }
 }

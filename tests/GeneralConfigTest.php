@@ -25,5 +25,57 @@ class GeneralConfigTest extends TestCase
 
         $admin->set_copyright('new message');
         $this->assertEquals($admin->get_copyright(), 'new message');
+
+        $this->assertEquals($admin->get_logout(), '/auth/logout');
+
+        $admin->set_logout('/logout');
+        $this->assertEquals($admin->get_logout(), '/logout');
+
+        $admin->set_logout('/somelink');
+        $this->assertEquals($admin->get_logout(), '/somelink');
+
+        $this->assertEquals($admin->get_userinfo(), ['username' => 'unset', 'image' => 'unset']);
+
+        $admin->set_userinfo(function(){
+            return [
+                'username' => 'hello world',
+                'image' => '/link'
+            ];
+        });
+        $this->assertEquals($admin->get_userinfo(), ['username' => 'hello world', 'image' => '/link']);
+
+        $admin->set_userinfo(function(){
+            return [
+                'username' => 'hello world',
+                'fsfgfh' => 'gfghfh',
+            ];
+        });
+        $this->assertEquals($admin->get_userinfo(), ['username' => 'hello world', 'image' => 'unset']);
+
+        $admin->set_userinfo(function(){
+            return [
+                'username' => 'hello world',
+                'fsfgfh' => 'gfghfh',
+            ];
+        });
+        $this->assertEquals($admin->get_userinfo(), ['username' => 'hello world', 'image' => 'unset']);
+
+        $admin->set_userinfo(function($user){
+            return [
+                'username' => 'hello world',
+            ];
+        });
+        $this->assertEquals($admin->get_userinfo(), ['username' => 'hello world', 'image' => 'unset']);
+
+        $user = \App\Models\User::factory()->create();
+        auth()->login($user);
+
+        $admin->set_userinfo(function($user){
+            return [
+                'username' => $user->email,
+            ];
+        });
+        $this->assertEquals($admin->get_userinfo(), ['username' => $user->email, 'image' => 'unset']);
+        auth()->logout();
     }
 }
