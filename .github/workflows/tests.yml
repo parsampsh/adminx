@@ -30,4 +30,4 @@ jobs:
         run: composer install
       
       - name: Run tests
-        run: php vendor/bin/phpunit
+        run: composer test
