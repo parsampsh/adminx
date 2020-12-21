@@ -1,6 +1,5 @@
 -- TODO --
 
-- create custom pages system
 - create localizations and frontend customizations
 
 -- Models features --

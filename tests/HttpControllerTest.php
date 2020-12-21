@@ -144,4 +144,49 @@ class HttpControllerTest extends TestCase
         $res->assertSee('<a class="nav-link" href="https://example.com" target="blank">', false);
         $res->assertSee('<i class="fa fa-user"></i><span>Test link</span></a>', false);
     }
+
+    public function test_page_is_showed_in_menu()
+    {
+        $admin = new \Adminx\Core;
+        $admin->add_page('Test page', 'my-page', function () {
+        }, 'fa fa-user');
+        $admin->register('/admin');
+
+        $user = \App\Models\User::factory()->create();
+
+        $res = $this->actingAs($user)->get('/admin');
+        $res->assertStatus(200);
+        $res->assertSee('<a class="nav-link" href="' . $admin->url('page/my-page') . '" target="">', false);
+        $res->assertSee('<i class="fa fa-user"></i><span>Test page</span></a>', false);
+    }
+
+    public function test_page_can_be_showed()
+    {
+        $admin = new \Adminx\Core;
+        $admin->add_page('Test page', 'my-page', function () {
+            return 'hello world. i am a page';
+        }, 'fa fa-user');
+        $admin->register('/admin');
+
+        $user = \App\Models\User::factory()->create();
+
+        $res = $this->actingAs($user)->get('/admin/page/my-page');
+        $res->assertStatus(200);
+        $res->assertSee('hello world. i am a page', false);
+    }
+
+    public function test_page_can_be_showed_with_request_object()
+    {
+        $admin = new \Adminx\Core;
+        $admin->add_page('Test page', 'my-page', function ($request) {
+            return 'hello world. i am a page. value is ' . $request->get('the-value');
+        }, 'fa fa-user');
+        $admin->register('/admin');
+
+        $user = \App\Models\User::factory()->create();
+
+        $res = $this->actingAs($user)->get('/admin/page/my-page?the-value=hello');
+        $res->assertStatus(200);
+        $res->assertSee('hello world. i am a page. value is hello', false);
+    }
 }

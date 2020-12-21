@@ -23,3 +23,15 @@ $admin->add_link('Title of the link', 'https://example.com/foo/bar', 'blank', 'f
 ```
 
 - [Previous: General Configuration](00_general_configuration.md)
+
+### Pages
+You can add custom pages to your admin panel. they will be accessible from the menu.
+
+```php
+$admin->add_page('Title of the page in menu', 'the-slug-of-page-in-url', function($request){
+    // this is your action
+    // return value will be showed to user in the main content section of the view
+    // also you can use $request variable
+    return 'hello world! i am a simple page.';
+}, 'fa fa-user(icons as class)', 'blank(target, default is none)');
+```

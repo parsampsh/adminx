@@ -77,6 +77,7 @@ class Core
         Route::prefix($route)->group(function () {
             Route::middleware(['web', 'auth'])->group(function () {
                 Route::get('/', [AdminxController::class, 'index']);
+                Route::get('/page/{slug}', [AdminxController::class, 'show_page']);
             });
         });
     }
@@ -202,5 +203,21 @@ class Core
     public function get_menu(): array
     {
         return $this->menu;
+    }
+
+    /**
+     * Adds a page to the menu
+     */
+    public function add_page(string $title, string $slug, \Closure $action, string $icon, string $link_target='')
+    {
+        array_push($this->menu, [
+            'type' => 'page',
+            'title' => $title,
+            'slug' => $slug,
+            'target' => $link_target,
+            'icon' => $icon,
+            'action' => $action,
+        ]);
+        return $this;
     }
 }

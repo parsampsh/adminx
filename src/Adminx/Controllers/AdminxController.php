@@ -30,4 +30,27 @@ class AdminxController extends BaseController
         $this->run_middleware();
         return view('adminx.default.index', ['core' => $this->core]);
     }
+
+    public function show_page(Request $request, string $slug)
+    {
+        // check page exists
+        $action = null;
+        foreach ($this->core->get_menu() as $item) {
+            if ($item['type'] === 'page') {
+                if ($item['slug'] === $slug) {
+                    $action = $item['action'];
+                }
+            }
+        }
+
+        if (!is_callable($action)) {
+            abort(404);
+        }
+
+        // run the page action
+        $output = call_user_func_array($action, [$request]);
+
+        // return the view
+        return view('adminx.default.page', ['output' => $output, 'core' => $this->core]);
+    }
 }

@@ -37,10 +37,19 @@ $logout_url = url($core->get_logout());
       <hr class="sidebar-divider">
 
       @foreach($core->get_menu() as $item)
-      <li class="nav-item">
-        <a class="nav-link" href="{{ $item['link'] }}" target="{{ $item['target'] }}">
-          <i class="{{ $item['icon'] }}"></i><span>{{ $item['title'] }}</span></a>
-      </li>
+        @if($item['type'] === 'link')
+          <li class="nav-item">
+            <a class="nav-link" href="{{ $item['link'] }}" target="{{ $item['target'] }}">
+            <i class="{{ $item['icon'] }}"></i><span>{{ $item['title'] }}</span></a>
+          </li>
+        @else
+          @if($item['type'] === 'page')
+            <li class="nav-item">
+              <a class="nav-link" href="{{ $core->url('page/' . $item['slug']) }}" target="{{ $item['target'] }}">
+              <i class="{{ $item['icon'] }}"></i><span>{{ $item['title'] }}</span></a>
+            </li>
+          @endif
+        @endif
       @endforeach
 
       <div class="text-center d-none d-md-inline">
@@ -89,7 +98,9 @@ $logout_url = url($core->get_logout());
 
         </nav>
 
+        <div class="container">
         @yield('content')
+        </div>
 
       </div>
 
