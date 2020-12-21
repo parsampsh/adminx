@@ -111,7 +111,7 @@ $logout_url = url($core->get_logout());
             <br />
             <span>Theme by <a target="_blank" href="https://startbootstrap.com/theme/sb-admin-2">startbootstrap</a></span>
             <br />
-            <span><a target="_blank" href="https://github.com/parsampsh/adminx">adminx on github</a></span>
+            <span>Powered by <a target="_blank" href="https://github.com/parsampsh/adminx">adminx</a></span>
           </div>
         </div>
       </footer>
