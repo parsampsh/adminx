@@ -35,10 +35,12 @@ class AdminxController extends BaseController
     {
         // check page exists
         $action = null;
+        $page_title = null;
         foreach ($this->core->get_menu() as $item) {
             if ($item['type'] === 'page') {
                 if ($item['slug'] === $slug) {
                     $action = $item['action'];
+                    $page_title = $item['title'];
                 }
             }
         }
@@ -51,6 +53,6 @@ class AdminxController extends BaseController
         $output = call_user_func_array($action, [$request]);
 
         // return the view
-        return view('adminx.default.page', ['output' => $output, 'core' => $this->core]);
+        return view('adminx.default.page', ['output' => $output, 'core' => $this->core, 'page_title' => $page_title]);
     }
 }
