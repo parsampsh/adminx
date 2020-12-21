@@ -11,6 +11,11 @@ use Illuminate\Support\Facades\Route;
 class Core
 {
     /**
+     * The current registered admin panel
+     */
+    public static $core;
+
+    /**
      * Title of the admin panel
      */
     protected string $title = 'Adminx Panel';
@@ -18,7 +23,7 @@ class Core
     /**
      * Sets the title of admin panel
      */
-    public function set_title($title)
+    public function set_title(string $title)
     {
         $this->title = $title;
         return $this;
@@ -27,7 +32,7 @@ class Core
     /**
      * Returns title of admin panel
      */
-    public function get_title()
+    public function get_title(): string
     {
         return $this->title;
     }
@@ -40,7 +45,7 @@ class Core
     /**
      * Sets the title of admin panel
      */
-    public function set_copyright($copyright)
+    public function set_copyright(string $copyright)
     {
         $this->copyright = $copyright;
         return $this;
@@ -49,17 +54,15 @@ class Core
     /**
      * Returns Copyright message of admin panel
      */
-    public function get_copyright()
+    public function get_copyright(): string
     {
         return $this->copyright;
     }
 
-    public static $core;
-
     /**
      * Register configured admin panel on routes
      */
-    public function register($route='/admin')
+    public function register(string $route='/admin')
     {
         $this->route_prefix = $route;
         static::$core = clone $this;
@@ -75,7 +78,6 @@ class Core
             Route::middleware(['web', 'auth'])->group(function () {
                 Route::get('/', [AdminxController::class, 'index']);
             });
-            //Route::get('/')
         });
     }
 
@@ -98,7 +100,7 @@ class Core
      */
     public function run_middleware(): bool
     {
-        if ($this->middleware === null) {
+        if (!is_callable($this->middleware)) {
             return true;
         }
 
@@ -109,7 +111,7 @@ class Core
     /**
      * Admin panel url
      */
-    public function url($url='/')
+    public function url(string $url='/'): string
     {
         return url($this->route_prefix . '/' . $url);
     }
@@ -122,7 +124,7 @@ class Core
     /**
      * Sets the Logout url for user
      */
-    public function set_logout($logout)
+    public function set_logout(string $logout)
     {
         $this->logout = $logout;
         return $this;
@@ -131,7 +133,7 @@ class Core
     /**
      * Returns Logout url for user
      */
-    public function get_logout()
+    public function get_logout(): string
     {
         return $this->logout;
     }
@@ -155,7 +157,7 @@ class Core
      */
     public function get_userinfo()
     {
-        if ($this->userinfo === null) {
+        if (!is_callable($this->userinfo)) {
             return ['username' => 'unset', 'image' => 'unset'];
         }
         $tmp = $this->userinfo;
@@ -177,7 +179,7 @@ class Core
      *
      * Contains models, links and custom pages
      */
-    protected $menu = [];
+    protected array $menu = [];
 
     /**
      * Adds a link item to menu
@@ -197,7 +199,7 @@ class Core
     /**
      * Returns the menu list
      */
-    public function get_menu()
+    public function get_menu(): array
     {
         return $this->menu;
     }

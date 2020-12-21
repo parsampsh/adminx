@@ -6,6 +6,7 @@ use Adminx\Models\UserPermission;
 use Adminx\Models\Group;
 use Adminx\Models\UserGroup;
 use Adminx\Models\GroupPermission;
+use App\Models\User;
 
 /**
  * The adminx permission and group API
@@ -15,7 +16,7 @@ class Access
     /**
      * Checks a user has the permission
      */
-    public static function user_has_permission($user, $permission): bool
+    public static function user_has_permission(User $user, string $permission): bool
     {
         $groups = $user->belongsToMany(Group::class, 'adminx_user_groups', 'user_id', 'adminx_group_id')->get();
         $allowed_permissions = [];
@@ -56,7 +57,7 @@ class Access
      * The $flag is a boolean. if this is true, means user has this permission
      * and if this is false, means user Has NOT this permission
      */
-    public static function add_permission_for_user($user, $permission, $flag=true)
+    public static function add_permission_for_user(User $user, string $permission, bool $flag=true): bool
     {
         // check already exists
         $up = UserPermission::where('user_id', $user->id)->where('permission', $permission)->first();
@@ -72,7 +73,7 @@ class Access
     /**
      * Checks user is in a group
      */
-    public static function user_is_in_group($user, Group $group)
+    public static function user_is_in_group(User $user, Group $group): bool
     {
         $ug = UserGroup::where('user_id', $user->id)->where('adminx_group_id', $group->id)->first();
         if ($ug !== null) {
@@ -84,7 +85,7 @@ class Access
     /**
      * Adds a user to a group
      */
-    public static function add_user_to_group($user, Group $group)
+    public static function add_user_to_group(User $user, Group $group): bool
     {
         // check already is in group
         if (Access::user_is_in_group($user, $group)) {
@@ -99,7 +100,7 @@ class Access
     /**
      * Removes a user from a group
      */
-    public static function remove_user_from_group($user, Group $group)
+    public static function remove_user_from_group(User $user, Group $group): bool
     {
         // check already is in group
         if (!Access::user_is_in_group($user, $group)) {
@@ -111,7 +112,7 @@ class Access
     /**
      * Adds a permission to group
      */
-    public static function add_permission_for_group(Group $group, $permission, $flag=true)
+    public static function add_permission_for_group(Group $group, string $permission, bool $flag=true): bool
     {
         // check already exists
         $gp = GroupPermission::where('adminx_group_id', $group->id)->where('permission', $permission)->first();
@@ -127,7 +128,7 @@ class Access
     /**
      * Removes a permission from group
      */
-    public static function remove_permission_from_group(Group $group, $permission)
+    public static function remove_permission_from_group(Group $group, $permission): bool
     {
         return GroupPermission::where('adminx_group_id', $group->id)->where('permission', $permission)->delete();
     }

@@ -105,7 +105,8 @@ $admin
             'username' => $user->username
         ];
     })
-    ->register('/admin')
-    ;
+    ->register('/admin');
 
 ```
+
+- [Next: Menu links and pages](01_manu_links_and_pages.md)

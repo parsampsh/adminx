@@ -21,3 +21,5 @@ also you can set icon of the item in menu using classes.
 ```php
 $admin->add_link('Title of the link', 'https://example.com/foo/bar', 'blank', 'fa fa-user'); // fontawesome
 ```
+
+- [Previous: General Configuration](00_general_configuration.md)
