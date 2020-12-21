@@ -22,8 +22,6 @@ also you can set icon of the item in menu using classes.
 $admin->add_link('Title of the link', 'https://example.com/foo/bar', 'blank', 'fa fa-user'); // fontawesome
 ```
 
-- [Previous: General Configuration](00_general_configuration.md)
-
 ### Pages
 You can add custom pages to your admin panel. they will be accessible from the menu.
 
@@ -35,3 +33,7 @@ $admin->add_page('Title of the page in menu', 'the-slug-of-page-in-url', functio
     return 'hello world! i am a simple page.';
 }, 'fa fa-user(icons as class)', 'blank(target, default is none)');
 ```
+
+---
+
+- [Previous: General Configuration](00_general_configuration.md)
