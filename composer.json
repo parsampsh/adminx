@@ -42,7 +42,7 @@
     },
     "scripts": {
         "test": "php vendor/bin/phpunit",
-        "format": "PHP_CS_FIXER_IGNORE_ENV=1 php vendor/bin/php-cs-fixer fix src && PHP_CS_FIXER_IGNORE_ENV=1 php vendor/bin/php-cs-fixer fix tests",
+        "format": "PHP_CS_FIXER_IGNORE_ENV=1 php vendor/bin/php-cs-fixer fix",
         "all": "composer format && composer test"
     }
 }

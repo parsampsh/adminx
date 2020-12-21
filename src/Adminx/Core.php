@@ -1,5 +1,12 @@
 <?php
 
+/*
+ * This file is part of Adminx.
+ *   Copyright 2020 parsa shahmaleki <parsampsh@gmail.com>
+ * Licensed Under GPL-v3
+ * For more information, please view the LICENSE file
+ */
+
 namespace Adminx;
 
 use Adminx\Controllers\AdminxController;

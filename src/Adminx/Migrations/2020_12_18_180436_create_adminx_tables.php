@@ -1,5 +1,12 @@
 <?php
 
+/*
+ * This file is part of Adminx.
+ *   Copyright 2020 parsa shahmaleki <parsampsh@gmail.com>
+ * Licensed Under GPL-v3
+ * For more information, please view the LICENSE file
+ */
+
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
