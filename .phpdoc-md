@@ -1,0 +1,10 @@
+<?php
+return (object)[
+    'rootNamespace' => 'Adminx', 
+    'destDirectory' => 'doc/api',
+    'format' => 'github',
+    'classes' => [
+        '\Adminx\Access',
+        '\Adminx\Core',
+    ],
+];

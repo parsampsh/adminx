@@ -13,12 +13,13 @@
     ],
     "require": {
         "php": "^7.3|^8.0",
-        "laravel/framework": "^8.0",
-        "friendsofphp/php-cs-fixer": "^2.17"
+        "laravel/framework": "^8.0"
     },
     "require-dev": {
         "orchestra/testbench": "^6.0",
-        "phpunit/phpunit": "^9.3"
+        "phpunit/phpunit": "^9.3",
+        "friendsofphp/php-cs-fixer": "^2.17",
+        "clean/phpdoc-md": "^0.19.1"
     },
     "autoload": {
         "psr-4": {
@@ -43,6 +44,7 @@
     "scripts": {
         "test": "php vendor/bin/phpunit",
         "format": "PHP_CS_FIXER_IGNORE_ENV=1 php vendor/bin/php-cs-fixer fix",
-        "all": "composer format && composer test"
+        "gendoc": "php vendor/bin/phpdoc-md",
+        "all": "composer format && composer gendoc && composer test"
     }
 }
