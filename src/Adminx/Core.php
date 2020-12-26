@@ -322,4 +322,31 @@ class Core
     {
         return $this->words;
     }
+
+    /**
+     * The admin panel default layout view
+     */
+    protected string $layout = 'adminx.layouts.default';
+
+    /**
+     * Returns admin panel default layout view
+     * 
+     * @return string
+     */
+    public function get_layout(): string
+    {
+        return $this->layout;
+    }
+
+    /**
+     * Returns admin panel default layout view
+     * 
+     * @param string $layout
+     * @return Core
+     */
+    public function set_layout(string $layout): Core
+    {
+        $this->layout = $layout;
+        return $this;
+    }
 }

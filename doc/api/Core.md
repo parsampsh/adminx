@@ -16,6 +16,7 @@ This Class only keeps Admin panel configuration
 |[add_page](#coreadd_page)|Adds a page to the menu|
 |[get_all_words](#coreget_all_words)|Returns all of localization words|
 |[get_copyright](#coreget_copyright)|Returns Copyright message of admin panel|
+|[get_layout](#coreget_layout)|Returns admin panel default layout view|
 |[get_logout](#coreget_logout)|Returns Logout url for user|
 |[get_menu](#coreget_menu)|Returns the menu list|
 |[get_title](#coreget_title)|Returns title of admin panel|
@@ -24,6 +25,7 @@ This Class only keeps Admin panel configuration
 |[register](#coreregister)|Register configured admin panel on routes|
 |[run_middleware](#corerun_middleware)|Runs the access middleware and returns the result|
 |[set_copyright](#coreset_copyright)|Sets the title of admin panel|
+|[set_layout](#coreset_layout)|Returns admin panel default layout view|
 |[set_logout](#coreset_logout)|Sets the Logout url for user|
 |[set_middleware](#coreset_middleware)|Sets the access middleware|
 |[set_title](#coreset_title)|Sets the title of admin panel|
@@ -128,6 +130,32 @@ public get_copyright (void)
 ```
 
 Returns Copyright message of admin panel 
+
+ 
+
+**Parameters**
+
+`This function has no parameters.`
+
+**Return Values**
+
+`string`
+
+
+
+
+<hr />
+
+
+### Core::get_layout  
+
+**Description**
+
+```php
+public get_layout (void)
+```
+
+Returns admin panel default layout view 
 
  
 
@@ -341,6 +369,32 @@ Sets the title of admin panel
 **Parameters**
 
 * `(string) $copyright`
+
+**Return Values**
+
+`\Core`
+
+
+
+
+<hr />
+
+
+### Core::set_layout  
+
+**Description**
+
+```php
+public set_layout (string $layout)
+```
+
+Returns admin panel default layout view 
+
+ 
+
+**Parameters**
+
+* `(string) $layout`
 
 **Return Values**
 

@@ -1,7 +1,3 @@
--- TODO --
-
-- handle frontend customization
-
 -- Models features --
 
 Models

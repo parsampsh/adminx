@@ -37,7 +37,7 @@ class AdminxController extends BaseController
     public function index()
     {
         $this->run_middleware();
-        return view('adminx.default.index', ['core' => $this->core]);
+        return view('adminx.index', ['core' => $this->core]);
     }
 
     public function show_page(Request $request, string $slug)
@@ -62,6 +62,6 @@ class AdminxController extends BaseController
         $output = call_user_func_array($action, [$request]);
 
         // return the view
-        return view('adminx.default.page', ['output' => $output, 'core' => $this->core, 'page_title' => $page_title]);
+        return view('adminx.page', ['output' => $output, 'core' => $this->core, 'page_title' => $page_title]);
     }
 }

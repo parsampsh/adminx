@@ -85,6 +85,11 @@ class GeneralConfigTest extends TestCase
             ];
         });
         $this->assertEquals($admin->get_userinfo(), ['username' => $user->email, 'image' => 'unset']);
+
+        $this->assertEquals($admin->get_layout(), 'adminx.layouts.default');
+        $admin->set_layout('the-layout');
+        $this->assertEquals($admin->get_layout(), 'the-layout');
+
         auth()->logout();
     }
 
