@@ -74,3 +74,7 @@ You can show admin panel menu under this structure:
   @endif
 @endforeach
 ```
+
+---
+
+[Previous: Frontend language customization](02_lang.md)
