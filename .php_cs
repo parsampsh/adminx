@@ -2,9 +2,11 @@
 
 $header = <<<EOF
 This file is part of Adminx.
-  Copyright 2020 parsa shahmaleki <parsampsh@gmail.com>
-Licensed Under GPL-v3
-For more information, please view the LICENSE file
+
+Copyright 2020 parsa shahmaleki <parsampsh@gmail.com>
+
+Adminx project is Licensed Under GPL-v3.
+For more information, please see the LICENSE file.
 EOF;
 
 $finder = PhpCsFixer\Finder::create()

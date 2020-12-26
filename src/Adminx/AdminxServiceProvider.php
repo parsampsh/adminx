@@ -2,15 +2,20 @@
 
 /*
  * This file is part of Adminx.
- *   Copyright 2020 parsa shahmaleki <parsampsh@gmail.com>
- * Licensed Under GPL-v3
- * For more information, please view the LICENSE file
+ *
+ * Copyright 2020 parsa shahmaleki <parsampsh@gmail.com>
+ *
+ * Adminx project is Licensed Under GPL-v3.
+ * For more information, please see the LICENSE file.
  */
 
 namespace Adminx;
 
 use Illuminate\Support\ServiceProvider;
 
+/**
+ * The Adminx Laravel Service Provider
+ */
 class AdminxServiceProvider extends ServiceProvider
 {
     public function register()

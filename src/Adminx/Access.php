@@ -2,9 +2,11 @@
 
 /*
  * This file is part of Adminx.
- *   Copyright 2020 parsa shahmaleki <parsampsh@gmail.com>
- * Licensed Under GPL-v3
- * For more information, please view the LICENSE file
+ *
+ * Copyright 2020 parsa shahmaleki <parsampsh@gmail.com>
+ *
+ * Adminx project is Licensed Under GPL-v3.
+ * For more information, please see the LICENSE file.
  */
 
 namespace Adminx;
@@ -17,11 +19,18 @@ use App\Models\User;
 
 /**
  * The adminx permission and group API
+ * 
+ * This Class Has many static methods to
+ * check user permissions and groups
  */
 class Access
 {
     /**
      * Checks a user has the permission
+     * 
+     * @param User $user
+     * @param string $permission
+     * @return bool
      */
     public static function user_has_permission(User $user, string $permission): bool
     {
@@ -63,6 +72,11 @@ class Access
      *
      * The $flag is a boolean. if this is true, means user has this permission
      * and if this is false, means user Has NOT this permission
+     * 
+     * @param User $user
+     * @param string $permission
+     * @param bool $flag
+     * @return bool
      */
     public static function add_permission_for_user(User $user, string $permission, bool $flag=true): bool
     {
@@ -79,6 +93,10 @@ class Access
 
     /**
      * Checks user is in a group
+     * 
+     * @param User $user
+     * @param Group $group
+     * @return bool
      */
     public static function user_is_in_group(User $user, Group $group): bool
     {
@@ -91,6 +109,10 @@ class Access
 
     /**
      * Adds a user to a group
+     * 
+     * @param User $user
+     * @param Group $group
+     * @return bool
      */
     public static function add_user_to_group(User $user, Group $group): bool
     {
@@ -106,6 +128,10 @@ class Access
 
     /**
      * Removes a user from a group
+     * 
+     * @param User $user
+     * @param Group $group
+     * @return bool
      */
     public static function remove_user_from_group(User $user, Group $group): bool
     {
@@ -118,6 +144,10 @@ class Access
 
     /**
      * Adds a permission to group
+     * 
+     * @param Group $group
+     * @param string $permission
+     * @param bool $flag
      */
     public static function add_permission_for_group(Group $group, string $permission, bool $flag=true): bool
     {
@@ -134,8 +164,12 @@ class Access
 
     /**
      * Removes a permission from group
+     * 
+     * @param Group $group
+     * @param string $permission
+     * @return bool
      */
-    public static function remove_permission_from_group(Group $group, $permission): bool
+    public static function remove_permission_from_group(Group $group, string $permission): bool
     {
         return GroupPermission::where('adminx_group_id', $group->id)->where('permission', $permission)->delete();
     }

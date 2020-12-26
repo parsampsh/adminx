@@ -2,9 +2,11 @@
 
 /*
  * This file is part of Adminx.
- *   Copyright 2020 parsa shahmaleki <parsampsh@gmail.com>
- * Licensed Under GPL-v3
- * For more information, please view the LICENSE file
+ *
+ * Copyright 2020 parsa shahmaleki <parsampsh@gmail.com>
+ *
+ * Adminx project is Licensed Under GPL-v3.
+ * For more information, please see the LICENSE file.
  */
 
 namespace Adminx;
@@ -14,6 +16,8 @@ use Illuminate\Support\Facades\Route;
 
 /**
  * The Adminx Core
+ * 
+ * This Class only keeps Admin panel configuration
  */
 class Core
 {
@@ -29,6 +33,9 @@ class Core
 
     /**
      * Sets the title of admin panel
+     * 
+     * @param string $title
+     * @return Core
      */
     public function set_title(string $title)
     {
@@ -38,6 +45,8 @@ class Core
 
     /**
      * Returns title of admin panel
+     * 
+     * @return string
      */
     public function get_title(): string
     {
@@ -51,6 +60,9 @@ class Core
 
     /**
      * Sets the title of admin panel
+     * 
+     * @param string $copyright
+     * @return Core
      */
     public function set_copyright(string $copyright)
     {
@@ -60,6 +72,8 @@ class Core
 
     /**
      * Returns Copyright message of admin panel
+     * 
+     * @return string
      */
     public function get_copyright(): string
     {
@@ -68,6 +82,8 @@ class Core
 
     /**
      * Register configured admin panel on routes
+     * 
+     * @param string $route
      */
     public function register(string $route='/admin')
     {
@@ -96,6 +112,9 @@ class Core
 
     /**
      * Sets the access middleware
+     * 
+     * @param \Closure $middleware
+     * @return Core
      */
     public function set_middleware(\Closure $middleware)
     {
@@ -105,6 +124,8 @@ class Core
 
     /**
      * Runs the access middleware and returns the result
+     * 
+     * @return bool
      */
     public function run_middleware(): bool
     {
@@ -118,6 +139,9 @@ class Core
 
     /**
      * Admin panel url
+     * 
+     * @param string $url
+     * @return string
      */
     public function url(string $url='/'): string
     {
@@ -131,6 +155,9 @@ class Core
 
     /**
      * Sets the Logout url for user
+     * 
+     * @param string $logout
+     * @return Core
      */
     public function set_logout(string $logout)
     {
@@ -140,6 +167,8 @@ class Core
 
     /**
      * Returns Logout url for user
+     * 
+     * @return string
      */
     public function get_logout(): string
     {
@@ -153,6 +182,9 @@ class Core
 
     /**
      * Sets Info of user
+     * 
+     * @param \Closure $userinfo
+     * @return Core
      */
     public function set_userinfo(\Closure $userinfo)
     {
@@ -162,8 +194,12 @@ class Core
 
     /**
      * Returns Info of user
+     * 
+     * Returned data structure: ['username' => '...', 'image' => '...']
+     * 
+     * @return array
      */
-    public function get_userinfo()
+    public function get_userinfo(): array
     {
         if (!is_callable($this->userinfo)) {
             return ['username' => 'unset', 'image' => 'unset'];
@@ -191,6 +227,12 @@ class Core
 
     /**
      * Adds a link item to menu
+     * 
+     * @param string $title
+     * @param string $link
+     * @param string $target
+     * @param string $icon
+     * @return Core
      */
     public function add_link(string $title, string $link, string $target='', string $icon='')
     {
@@ -206,6 +248,8 @@ class Core
 
     /**
      * Returns the menu list
+     * 
+     * @return array
      */
     public function get_menu(): array
     {
@@ -214,6 +258,13 @@ class Core
 
     /**
      * Adds a page to the menu
+     * 
+     * @param string $title
+     * @param string $slug
+     * @param \Closure $action
+     * @param string $icon
+     * @param string $link_target
+     * @return Core
      */
     public function add_page(string $title, string $slug, \Closure $action, string $icon, string $link_target='')
     {
