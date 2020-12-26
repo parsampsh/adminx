@@ -37,7 +37,7 @@ class Core
      * @param string $title
      * @return Core
      */
-    public function set_title(string $title)
+    public function set_title(string $title): Core
     {
         $this->title = $title;
         return $this;
@@ -64,7 +64,7 @@ class Core
      * @param string $copyright
      * @return Core
      */
-    public function set_copyright(string $copyright)
+    public function set_copyright(string $copyright): Core
     {
         $this->copyright = $copyright;
         return $this;
@@ -116,7 +116,7 @@ class Core
      * @param \Closure $middleware
      * @return Core
      */
-    public function set_middleware(\Closure $middleware)
+    public function set_middleware(\Closure $middleware): Core
     {
         $this->middleware = $middleware;
         return $this;
@@ -159,7 +159,7 @@ class Core
      * @param string $logout
      * @return Core
      */
-    public function set_logout(string $logout)
+    public function set_logout(string $logout): Core
     {
         $this->logout = $logout;
         return $this;
@@ -186,7 +186,7 @@ class Core
      * @param \Closure $userinfo
      * @return Core
      */
-    public function set_userinfo(\Closure $userinfo)
+    public function set_userinfo(\Closure $userinfo): Core
     {
         $this->userinfo = $userinfo;
         return $this;
@@ -234,7 +234,7 @@ class Core
      * @param string $icon
      * @return Core
      */
-    public function add_link(string $title, string $link, string $target='', string $icon='')
+    public function add_link(string $title, string $link, string $target='', string $icon=''): Core
     {
         array_push($this->menu, [
             'type' => 'link',
@@ -266,7 +266,7 @@ class Core
      * @param string $link_target
      * @return Core
      */
-    public function add_page(string $title, string $slug, \Closure $action, string $icon, string $link_target='')
+    public function add_page(string $title, string $slug, \Closure $action, string $icon, string $link_target=''): Core
     {
         array_push($this->menu, [
             'type' => 'page',
@@ -277,5 +277,49 @@ class Core
             'action' => $action,
         ]);
         return $this;
+    }
+
+    /**
+     * The frontend localization words
+     */
+    protected array $words = [];
+
+    /**
+     * Sets a word in frontend customization words
+     * 
+     * @param string $key
+     * @param string $value
+     * @return Core
+     */
+    public function set_word(string $key, string $value): Core
+    {
+        $this->words[$key] = $value;
+        return $this;
+    }
+
+    /**
+     * Returns a localization word value
+     * 
+     * @param string $key
+     * @param string $default
+     * @return string
+     */
+    public function get_word(string $key, string $default=''): string
+    {
+        if(isset($this->words[$key]))
+        {
+            return $this->words[$key];
+        }
+        return $default;
+    }
+
+    /**
+     * Returns all of localization words
+     * 
+     * @return array
+     */
+    public function get_all_words(): array
+    {
+        return $this->words;
     }
 }

@@ -14,11 +14,13 @@ This Class only keeps Admin panel configuration
 |------|-------------|
 |[add_link](#coreadd_link)|Adds a link item to menu|
 |[add_page](#coreadd_page)|Adds a page to the menu|
+|[get_all_words](#coreget_all_words)|Returns all of localization words|
 |[get_copyright](#coreget_copyright)|Returns Copyright message of admin panel|
 |[get_logout](#coreget_logout)|Returns Logout url for user|
 |[get_menu](#coreget_menu)|Returns the menu list|
 |[get_title](#coreget_title)|Returns title of admin panel|
 |[get_userinfo](#coreget_userinfo)|Returns Info of user|
+|[get_word](#coreget_word)|Returns a localization word value|
 |[register](#coreregister)|Register configured admin panel on routes|
 |[run_middleware](#corerun_middleware)|Runs the access middleware and returns the result|
 |[set_copyright](#coreset_copyright)|Sets the title of admin panel|
@@ -26,6 +28,7 @@ This Class only keeps Admin panel configuration
 |[set_middleware](#coreset_middleware)|Sets the access middleware|
 |[set_title](#coreset_title)|Sets the title of admin panel|
 |[set_userinfo](#coreset_userinfo)|Sets Info of user|
+|[set_word](#coreset_word)|Sets a word in frontend customization words|
 |[url](#coreurl)|Admin panel url|
 
 
@@ -83,6 +86,32 @@ Adds a page to the menu
 **Return Values**
 
 `\Core`
+
+
+
+
+<hr />
+
+
+### Core::get_all_words  
+
+**Description**
+
+```php
+public get_all_words (void)
+```
+
+Returns all of localization words 
+
+ 
+
+**Parameters**
+
+`This function has no parameters.`
+
+**Return Values**
+
+`array`
 
 
 
@@ -213,6 +242,33 @@ Returned data structure: ['username' => '...', 'image' => '...']
 **Return Values**
 
 `array`
+
+
+
+
+<hr />
+
+
+### Core::get_word  
+
+**Description**
+
+```php
+public get_word (string $key, string $default)
+```
+
+Returns a localization word value 
+
+ 
+
+**Parameters**
+
+* `(string) $key`
+* `(string) $default`
+
+**Return Values**
+
+`string`
 
 
 
@@ -389,6 +445,33 @@ Sets Info of user
 **Parameters**
 
 * `(\Closure) $userinfo`
+
+**Return Values**
+
+`\Core`
+
+
+
+
+<hr />
+
+
+### Core::set_word  
+
+**Description**
+
+```php
+public set_word (string $key, string $value)
+```
+
+Sets a word in frontend customization words 
+
+ 
+
+**Parameters**
+
+* `(string) $key`
+* `(string) $value`
 
 **Return Values**
 

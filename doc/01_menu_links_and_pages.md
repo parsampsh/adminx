@@ -1,4 +1,4 @@
-# Admin panel manu links and pages
+# Admin panel menu links and pages
 you can add links and custom pages to the admin panel sidebar.
 
 ### Links
@@ -36,4 +36,4 @@ $admin->add_page('Title of the page in menu', 'the-slug-of-page-in-url', functio
 
 ---
 
-- [Previous: General Configuration](00_general_configuration.md)
+[Previous: General Configuration](00_general_configuration.md) | [Next: Frontend language customization](02_lang.md)

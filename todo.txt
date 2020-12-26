@@ -1,6 +1,6 @@
 -- TODO --
 
-- create localizations and frontend customizations
+- handle frontend customization
 
 -- Models features --
 

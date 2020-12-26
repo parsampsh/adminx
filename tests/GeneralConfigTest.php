@@ -87,4 +87,26 @@ class GeneralConfigTest extends TestCase
         $this->assertEquals($admin->get_userinfo(), ['username' => $user->email, 'image' => 'unset']);
         auth()->logout();
     }
+
+    public function test_localization_words(){
+        $admin = new \Adminx\Core;
+
+        $this->assertEquals($admin->get_word('hello'), '');
+        $this->assertEquals($admin->get_word('hello', 'the default'), 'the default');
+
+        $admin->set_word('hello', 'hello world');
+
+        $this->assertEquals($admin->get_word('hello'), 'hello world');
+        $this->assertEquals($admin->get_word('hello', 'the default'), 'hello world');
+
+        $this->assertEquals($admin->get_word('bye'), '');
+        $this->assertEquals($admin->get_word('bye', 'the default'), 'the default');
+
+        $admin->set_word('bye', 'good bye');
+
+        $this->assertEquals($admin->get_word('bye'), 'good bye');
+        $this->assertEquals($admin->get_word('bye', 'the default'), 'good bye');
+
+        $this->assertEquals($admin->get_all_words(), ['hello' => 'hello world', 'bye' => 'good bye']);
+    }
 }
