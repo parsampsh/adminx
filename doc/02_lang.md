@@ -25,4 +25,4 @@ All of keys:
 
 ---
 
-[Previous: Menu links and pages](01_manu_links_and_pages.md)
+[Previous: Menu links and pages](01_menu_links_and_pages.md)
