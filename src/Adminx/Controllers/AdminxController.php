@@ -42,6 +42,7 @@ class AdminxController extends BaseController
 
     public function show_page(Request $request, string $slug)
     {
+        $this->run_middleware();
         // check page exists
         $action = null;
         $page_title = null;
@@ -63,5 +64,30 @@ class AdminxController extends BaseController
 
         // return the view
         return view('adminx.page', ['output' => $output, 'core' => $this->core, 'page_title' => $page_title]);
+    }
+
+    public function model_index(Request $request, string $slug)
+    {
+        $this->run_middleware();
+        $model_config = null;
+        foreach($this->core->get_menu() as $item)
+        {
+            if($item['type'] === 'model'){
+                if($item['config']['slug'] === $slug){
+                    $model_config = $item['config'];
+                }
+            }
+        }
+
+        if($model_config === null){
+            abort(404);
+        }
+
+        $middleware_result = call_user_func_array($model_config['middleware'], [auth()->user()]);
+        if($middleware_result !== true){
+            abort(403);
+        }
+
+        return view('adminx.model', ['core' => $this->core, 'model_config' => $model_config]);
     }
 }

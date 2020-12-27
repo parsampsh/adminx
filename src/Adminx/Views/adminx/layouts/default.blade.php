@@ -48,6 +48,13 @@ $logout_url = url($core->get_logout());
               <a class="nav-link" href="{{ $core->url('page/' . $item['slug']) }}" target="{{ $item['target'] }}">
               <i class="{{ $item['icon'] }}"></i><span>{{ $item['title'] }}</span></a>
             </li>
+          @else
+            @if($item['type'] === 'model')
+              <li class="nav-item">
+                <a class="nav-link" href="{{ $core->url('model/' . $item['config']['slug']) }}" target="{{ $item['config']['target'] }}">
+                <i class="{{ $item['config']['icon'] }}"></i><span>{{ $item['config']['title'] }}</span></a>
+              </li>
+            @endif
           @endif
         @endif
       @endforeach

@@ -77,4 +77,4 @@ You can show admin panel menu under this structure:
 
 ---
 
-[Previous: Frontend language customization](02_lang.md)
+[Previous: Frontend language customization](02_lang.md) | [Next: Models](04_models.md)

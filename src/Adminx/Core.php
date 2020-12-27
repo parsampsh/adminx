@@ -101,6 +101,7 @@ class Core
             Route::middleware(['web', 'auth'])->group(function () {
                 Route::get('/', [AdminxController::class, 'index']);
                 Route::get('/page/{slug}', [AdminxController::class, 'show_page']);
+                Route::get('/model/{slug}', [AdminxController::class, 'model_index']);
             });
         });
     }
@@ -347,6 +348,42 @@ class Core
     public function set_layout(string $layout): Core
     {
         $this->layout = $layout;
+        return $this;
+    }
+
+    /**
+     * Adds a model
+     * 
+     * @param string $model
+     * @param array $config
+     */
+    public function add_model(string $model, array $config): Core
+    {
+        $config['model'] = $model;
+        if(!isset($config['title']) || !\is_string($config['title']))
+        {
+            $config['title'] = $config['model'];
+        }
+        if(!isset($config['icon']) || !\is_string($config['icon']))
+        {
+            $config['icon'] = '';
+        }
+        if(!isset($config['slug']) || !\is_string($config['slug']))
+        {
+            $config['slug'] = str_replace('\\', '-', $config['model']);
+        }
+        if(!isset($config['target']) || !\is_string($config['target']))
+        {
+            $config['target'] = '';
+        }
+        if(!isset($config['middleware']) || !\is_callable($config['middleware']))
+        {
+            $config['middleware'] = (function(){ return true; });
+        }
+        array_push($this->menu, [
+            'type' => 'model',
+            'config' => $config,
+        ]);
         return $this;
     }
 }

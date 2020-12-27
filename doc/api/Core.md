@@ -13,6 +13,7 @@ This Class only keeps Admin panel configuration
 | Name | Description |
 |------|-------------|
 |[add_link](#coreadd_link)|Adds a link item to menu|
+|[add_model](#coreadd_model)|Adds a model|
 |[add_page](#coreadd_page)|Adds a page to the menu|
 |[get_all_words](#coreget_all_words)|Returns all of localization words|
 |[get_copyright](#coreget_copyright)|Returns Copyright message of admin panel|
@@ -60,6 +61,31 @@ Adds a link item to menu
 `\Core`
 
 
+
+
+<hr />
+
+
+### Core::add_model  
+
+**Description**
+
+```php
+public add_model (string $model, array $config)
+```
+
+Adds a model 
+
+ 
+
+**Parameters**
+
+* `(string) $model`
+* `(array) $config`
+
+**Return Values**
+
+`void`
 
 
 <hr />

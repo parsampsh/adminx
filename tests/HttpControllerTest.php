@@ -220,4 +220,32 @@ class HttpControllerTest extends TestCase
         $res->assertSee('<i class="fas fa-sign-out-alt fa-sm fa-fw mr-2 text-gray-400"></i>Khorooj</a>', false);
         $res->assertSee('<a class="btn btn-primary" href="' . url($admin->get_logout()) . '">Khorooj</a>', false);
     }
+
+    public function test_model_page_middleware_works(){
+        $admin = new \Adminx\Core;
+        $admin->add_model(\App\Models\User::class, [
+            'slug' => 'user'
+        ]);
+        $admin->register('/admin');
+
+        $user = \App\Models\User::factory()->create();
+
+        $res = $this->actingAs($user)->get('/admin/model/some-model');
+        $res->assertStatus(404);
+
+        $res = $this->actingAs($user)->get('/admin/model/user');
+        $res->assertStatus(200);
+
+        $admin = new \Adminx\Core;
+        $admin->add_model(\App\Models\User::class, [
+            'slug' => 'user',
+            'middleware' => (function($user){
+                return false;
+            }),
+        ]);
+        $admin->register('/admin');
+
+        $res = $this->actingAs($user)->get('/admin/model/user');
+        $res->assertStatus(403);
+    }
 }
