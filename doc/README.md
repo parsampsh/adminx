@@ -9,4 +9,3 @@ welcome to the adminx documentation.
 - [Frontend layout customization](03_frontend_layout_customization.md)
 - [Models](04_models.md)
 - [Access api](xx_access_api.md)
-- [Full Api Documentation](api)
