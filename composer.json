@@ -18,8 +18,7 @@
     "require-dev": {
         "orchestra/testbench": "^6.0",
         "phpunit/phpunit": "^9.3",
-        "friendsofphp/php-cs-fixer": "^2.17",
-        "clean/phpdoc-md": "^0.19.1"
+        "friendsofphp/php-cs-fixer": "^2.17"
     },
     "autoload": {
         "psr-4": {
@@ -44,7 +43,6 @@
     "scripts": {
         "test": "php vendor/bin/phpunit",
         "format": "PHP_CS_FIXER_IGNORE_ENV=1 php vendor/bin/php-cs-fixer fix",
-        "gendoc": "php vendor/bin/phpdoc-md",
-        "all": "composer format && composer gendoc && composer test"
+        "all": "composer format && composer test"
     }
 }
