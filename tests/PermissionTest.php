@@ -3,7 +3,7 @@
 /*
  * This file is part of Adminx.
  *
- * Copyright 2020 parsa shahmaleki <parsampsh@gmail.com>
+ * Copyright 2020-2021 parsa shahmaleki <parsampsh@gmail.com>
  *
  * Adminx project is Licensed Under GPL-v3.
  * For more information, please see the LICENSE file.
