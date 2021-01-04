@@ -87,3 +87,7 @@ $group = \Adminx\Models\Group::find($x);
 ```
 
 now, that group has NOT `the-permission`.
+
+---
+
+[Previous: Models](04_models.md)

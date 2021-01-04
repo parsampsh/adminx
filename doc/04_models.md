@@ -36,7 +36,33 @@ All of config options:
 | `icon` | string | Icon of item in menu as class |
 | `middleware` | Closure | This closure can recive `$user` and return that this user **Can access this model** |
 | `target` | string | Target of link of model in menu |
+| `no_table_footer` | bool | If this is true, table footer will not show |
+
+### `hidden_fields`
+This option makes some fields hidden in the table.
+
+```php
+$admin->add_model(\App\Models\User::class, [
+    // ...
+    'hidden_fields' => ['password'] // the `password` column will be hidden in the table
+    // ...
+]);
+```
+
+### `fields_titles`
+This option changes title of a column in table. Default title is name of column.
+
+```php
+$admin->add_model(\App\Models\User::class, [
+    // ...
+    'fields_titles' => [
+        'email' => 'The Email', // `The Email` will be showed as title of column `email` in table
+    ]
+    // ...
+]);
+```
 
 ---
 
-[Previous: Frontend layout customization](03_frontend_layout_customization.md)
+[Previous: Frontend layout customization](03_frontend_layout_customization.md) |
+[Next: Access API](05_access_api.md)
