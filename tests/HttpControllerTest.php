@@ -248,4 +248,51 @@ class HttpControllerTest extends TestCase
         $res = $this->actingAs($user)->get('/admin/model/user');
         $res->assertStatus(403);
     }
+
+    public function test_fields_titles_option_for_models_works(){
+        $admin = new \Adminx\Core;
+        $admin->add_model(\App\Models\User::class, [
+            'slug' => 'the-users',
+            'fields_titles' => [
+                'email' => 'The Email',
+            ]
+        ]);
+        $admin->register('/admin');
+
+        $user = \App\Models\User::factory()->create();
+
+        $res = $this->actingAs($user)->get('/admin/model/the-users');
+        $res->assertStatus(200);
+
+        $res->assertSee('<th>The Email</th>', false);
+    }
+
+    public function test_no_table_footer_option_works(){
+        $admin = new \Adminx\Core;
+        $admin->add_model(\App\Models\User::class, [
+            'slug' => 'the-users',
+        ]);
+        $admin->register('/admin');
+
+        $user = \App\Models\User::factory()->create();
+
+        $res = $this->actingAs($user)->get('/admin/model/the-users');
+        $res->assertStatus(200);
+
+        $res->assertSee('<tfoot><tr>', false);
+        $res->assertSee('</tr></tfoot>', false);
+
+        $admin = new \Adminx\Core;
+        $admin->add_model(\App\Models\User::class, [
+            'slug' => 'the-users',
+            'no_table_footer' => true,
+        ]);
+        $admin->register('/admin');
+
+        $res = $this->actingAs($user)->get('/admin/model/the-users');
+        $res->assertStatus(200);
+
+        $res->assertDontSee('<tfoot><tr>', false);
+        $res->assertDontSee('</tr></tfoot>', false);
+    }
 }

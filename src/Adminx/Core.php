@@ -380,10 +380,45 @@ class Core
         {
             $config['middleware'] = (function(){ return true; });
         }
+        if(!isset($config['hidden_fields']))
+        {
+            $config['hidden_fields'] = [];
+        }
+        if(!isset($config['fields_titles']))
+        {
+            $config['fields_titles'] = [];
+        }
+        if(!isset($config['no_table_footer']))
+        {
+            $config['no_table_footer'] = false;
+        }
         array_push($this->menu, [
             'type' => 'model',
             'config' => $config,
         ]);
         return $this;
+    }
+
+    /**
+     * Loads the model columns from database by config
+     * 
+     * @param array $model_config
+     * @return array[string]
+     */
+    public function get_model_columns(array $model_config): array
+    {
+        // load columns
+        $tmp_model_object = new ("\\" . $model_config['model']);
+        $columns = $tmp_model_object->getConnection()->getSchemaBuilder()->getColumnListing($tmp_model_object->getTable());
+
+        // remove hidden fields
+        $new_columns_list = [];
+        foreach ($columns as $col) {
+            if (!\in_array($col, $model_config['hidden_fields'])){
+                array_push($new_columns_list, $col);
+            }
+        }
+
+        return $new_columns_list;
     }
 }

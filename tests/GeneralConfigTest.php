@@ -114,4 +114,41 @@ class GeneralConfigTest extends TestCase
 
         $this->assertEquals($admin->get_all_words(), ['hello' => 'hello world', 'bye' => 'good bye']);
     }
+
+    public function test_model_get_fields_works()
+    {
+        $admin = new \Adminx\Core;
+        $admin->add_model(\App\Models\User::class, [
+        ]);
+        $menu = $admin->get_menu();
+        $columns = $admin->get_model_columns($menu[count($menu)-1]['config']);
+
+        $this->assertEquals($columns, [
+            "id",
+            "username",
+            "email",
+            "password",
+            "remember_token",
+            "created_at",
+            "updated_at",
+        ]);
+
+        $admin = new \Adminx\Core;
+        $admin->add_model(\App\Models\User::class, [
+            'hidden_fields' => [
+                'password',
+            ],
+        ]);
+        $menu = $admin->get_menu();
+        $columns = $admin->get_model_columns($menu[count($menu)-1]['config']);
+
+        $this->assertEquals($columns, [
+            "id",
+            "username",
+            "email",
+            "remember_token",
+            "created_at",
+            "updated_at",
+        ]);
+    }
 }
