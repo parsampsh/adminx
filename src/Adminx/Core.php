@@ -408,7 +408,7 @@ class Core
     public function get_model_columns(array $model_config): array
     {
         // load columns
-        $tmp_model_object = new ("\\" . $model_config['model']);
+        $tmp_model_object = new $model_config['model'];
         $columns = $tmp_model_object->getConnection()->getSchemaBuilder()->getColumnListing($tmp_model_object->getTable());
 
         // remove hidden fields
