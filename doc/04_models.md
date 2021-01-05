@@ -93,6 +93,25 @@ $admin->add_model(\App\Models\User::class, [
 ]);
 ```
 
+### `virtual_fields`
+This option can create some **Virtual fields**. This helps to add some options to the table which does not exists really in database.
+
+For example, we have Posts table and posts have Comments. We want to show count of comments in a column.
+
+```php
+$admin->add_model(\App\Models\Post::class, [
+    // ...
+    'virtual_fields' => [
+        'Posts Count' => (function($post){
+            return $post->comments()->count();
+            // or use html tags
+            return '<a>' . $post->comments()->count() . '</a>';
+        }),
+    ],
+    // ...
+]);
+```
+
 ---
 
 [Previous: Frontend layout customization](03_frontend_layout_customization.md) |

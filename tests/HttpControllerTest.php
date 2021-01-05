@@ -331,7 +331,6 @@ class HttpControllerTest extends TestCase
     }
 
     public function test_filter_data_option_works(){
-        $this->withoutExceptionHandling();
         $user = \App\Models\User::factory()->create();
         $admin = new \Adminx\Core;
         $admin->add_model(\App\Models\User::class, [
@@ -358,5 +357,25 @@ class HttpControllerTest extends TestCase
         $res = $this->actingAs($user)->get('/admin/model/the-users');
         $res->assertStatus(200);
         $res->assertDontSee('<td>' . $user->email . '</td>', false);
+    }
+
+    public function test_virtual_fields_option_works()
+    {
+        $user = \App\Models\User::factory()->create();
+        $admin = new \Adminx\Core;
+        $admin->add_model(\App\Models\User::class, [
+            'slug' => 'the-users',
+            'virtual_fields' => [
+                'Something' => (function($row){
+                    return 'hello ' . $row->email;
+                }),
+            ],
+        ]);
+        $admin->register('/admin');
+
+        $res = $this->actingAs($user)->get('/admin/model/the-users');
+        $res->assertStatus(200);
+        $res->assertSee('<th>Something</th>', false);
+        $res->assertSee('<td>hello ' . $user->email . '</td>', false);
     }
 }

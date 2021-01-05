@@ -406,6 +406,10 @@ class Core
                 return $query;
             });
         }
+        if(!isset($config['virtual_fields']) || !is_array($config['virtual_fields']))
+        {
+            $config['virtual_fields'] = [];
+        }
         array_push($this->menu, [
             'type' => 'model',
             'config' => $config,

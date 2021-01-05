@@ -21,12 +21,18 @@ $columns = $core->get_model_columns($model_config);
                 @foreach ($columns as $column)
                     <th>{{ isset($model_config['fields_titles'][$column]) ? $model_config['fields_titles'][$column] : $column }}</th>
                 @endforeach
+                @foreach ($model_config['virtual_fields'] as $k => $v)
+                    <th>{{ $k }}</th>
+                @endforeach
             </tr>
           </thead>
           @if(!$model_config['no_table_footer'])
           <tfoot><tr>
                 @foreach ($columns as $column)
                     <th>{{ isset($model_config['fields_titles'][$column]) ? $model_config['fields_titles'][$column] : $column }}</th>
+                @endforeach
+                @foreach ($model_config['virtual_fields'] as $k => $v)
+                    <th>{{ $k }}</th>
                 @endforeach
           </tr></tfoot>
           @endif
@@ -39,6 +45,9 @@ $columns = $core->get_model_columns($model_config);
                   @else
                     <td>{{ $row->{$column} }}</td>
                   @endif
+                @endforeach
+                @foreach ($model_config['virtual_fields'] as $vf => $value)
+                    <td><?php echo $value($row) ?></td>
                 @endforeach
               </tr>
             @endforeach
