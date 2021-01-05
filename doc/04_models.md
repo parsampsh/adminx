@@ -80,6 +80,19 @@ $admin->add_model(\App\Models\User::class, [
 ]);
 ```
 
+### `filter_data`
+This option can customize table rows. This should be a Closure and gets the Query Builder, then you can customize the query and return changed query.
+
+```php
+$admin->add_model(\App\Models\User::class, [
+    // ...
+    'filter_data' => (function($query){
+        return $query->orderBy('name', 'asc')->where('is_enable', 1); // or other conditions
+    }),
+    // ...
+]);
+```
+
 ---
 
 [Previous: Frontend layout customization](03_frontend_layout_customization.md) |
