@@ -10,7 +10,7 @@ $admin->set_layout('my.view');
 also you can get the seted view:
 
 ```php
-$admin->get_view();
+$admin->get_layout();
 ```
 
 If should design your view(in above example, `my.view`) under the adminx standards.
@@ -70,6 +70,13 @@ You can show admin panel menu under this structure:
         <a class="nav-link" href="{{ $core->url('page/' . $item['slug']) }}" target="{{ $item['target'] }}">
         <i class="{{ $item['icon'] }}"></i><span>{{ $item['title'] }}</span></a>
       </li>
+    @else
+      @if($item['type'] === 'model')
+        <li class="nav-item">
+          <a class="nav-link" href="{{ $core->url('model/' . $item['config']['slug']) }}" target="{{ $item['config']['target'] }}">
+          <i class="{{ $item['config']['icon'] }}"></i><span>{{ $item['config']['title'] }}</span></a>
+        </li>
+      @endif
     @endif
   @endif
 @endforeach
