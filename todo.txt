@@ -1,9 +1,6 @@
--- Models features --
 
-Models
-{
-list: virtual_fields, search
-delete: delete_middleware
-create: create_middleware, readonly_fields, only_addable_fields, filter_create_data
-update: update_middleware, only_editable_fields, filter_update_data
-}
+- add `rtl` option for view
+- list: virtual_fields, search, custom_html
+- delete: delete_middleware
+- create: create_middleware, readonly_fields, only_addable_fields, filter_create_data
+- update: update_middleware, only_editable_fields, filter_update_data
