@@ -88,6 +88,11 @@ class AdminxController extends BaseController
             abort(403);
         }
 
-        return view('adminx.model', ['core' => $this->core, 'model_config' => $model_config]);
+        // load model table rows
+        $rows = $model_config['model']::query();
+        $rows = $model_config['filter_data']($rows);
+        $rows = $rows->paginate($model_config['per_page']);
+
+        return view('adminx.model', ['core' => $this->core, 'model_config' => $model_config, 'rows' => $rows]);
     }
 }

@@ -392,6 +392,20 @@ class Core
         {
             $config['no_table_footer'] = false;
         }
+        if(!isset($config['per_page']))
+        {
+            $config['per_page'] = 30;
+        }
+        if(!isset($config['fields_values']))
+        {
+            $config['fields_values'] = [];
+        }
+        if(!isset($config['filter_data']) || !is_callable($config['filter_data']))
+        {
+            $config['filter_data'] = (function($query){
+                return $query;
+            });
+        }
         array_push($this->menu, [
             'type' => 'model',
             'config' => $config,

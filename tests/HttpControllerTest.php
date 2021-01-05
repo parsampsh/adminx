@@ -295,4 +295,68 @@ class HttpControllerTest extends TestCase
         $res->assertDontSee('<tfoot><tr>', false);
         $res->assertDontSee('</tr></tfoot>', false);
     }
+
+    public function test_fields_values_option_works(){
+        $admin = new \Adminx\Core;
+        $admin->add_model(\App\Models\User::class, [
+            'slug' => 'the-users',
+        ]);
+        $admin->register('/admin');
+
+        $user = \App\Models\User::factory()->create();
+
+        $res = $this->actingAs($user)->get('/admin/model/the-users');
+        $res->assertStatus(200);
+
+        $res->assertSee('<td>' . $user->email . '</td>', false);
+
+        $admin = new \Adminx\Core;
+        $admin->add_model(\App\Models\User::class, [
+            'slug' => 'the-users',
+            'fields_values' => [
+                'email' => (function($user){
+                    return '<a>' . $user->email . '</a>';
+                }),
+            ],
+        ]);
+        $admin->register('/admin');
+
+        $user = \App\Models\User::factory()->create();
+
+        $res = $this->actingAs($user)->get('/admin/model/the-users');
+        $res->assertStatus(200);
+
+        $res->assertDontSee('<td>' . $user->email . '</td>', false);
+        $res->assertSee('<td><a>' . $user->email . '</a></td>', false);
+    }
+
+    public function test_filter_data_option_works(){
+        $this->withoutExceptionHandling();
+        $user = \App\Models\User::factory()->create();
+        $admin = new \Adminx\Core;
+        $admin->add_model(\App\Models\User::class, [
+            'slug' => 'the-users',
+            'filter_data' => (function($q) use ($user){
+                return $q->where('email', $user->email);
+            }),
+        ]);
+        $admin->register('/admin');
+
+        $res = $this->actingAs($user)->get('/admin/model/the-users');
+        $res->assertStatus(200);
+        $res->assertSee('<td>' . $user->email . '</td>', false);
+
+        $admin = new \Adminx\Core;
+        $admin->add_model(\App\Models\User::class, [
+            'slug' => 'the-users',
+            'filter_data' => (function($q) use ($user){
+                return $q->where('email', '!=', $user->email);
+            }),
+        ]);
+        $admin->register('/admin');
+
+        $res = $this->actingAs($user)->get('/admin/model/the-users');
+        $res->assertStatus(200);
+        $res->assertDontSee('<td>' . $user->email . '</td>', false);
+    }
 }

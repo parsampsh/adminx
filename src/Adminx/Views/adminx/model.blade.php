@@ -13,6 +13,7 @@ $columns = $core->get_model_columns($model_config);
       <h6 class="m-0 font-weight-bold text-primary">{{ $model_config['title'] }}</h6>
     </div>
     <div class="card-body">
+      <?php echo $rows->render(); ?>
       <div class="table-responsive">
         <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
           <thead>
@@ -30,11 +31,21 @@ $columns = $core->get_model_columns($model_config);
           </tr></tfoot>
           @endif
           <tbody>
-            <tr>
-            </tr>
+            @foreach($rows as $row)
+              <tr>
+                @foreach ($columns as $column)
+                  @if(isset($model_config['fields_values'][$column]) && is_callable($model_config['fields_values'][$column]))
+                    <td><?php echo $model_config['fields_values'][$column]($row) ?></td>
+                  @else
+                    <td>{{ $row->{$column} }}</td>
+                  @endif
+                @endforeach
+              </tr>
+            @endforeach
           </tbody>
         </table>
       </div>
+      <?php echo $rows->render(); ?>
     </div>
 </div>
 

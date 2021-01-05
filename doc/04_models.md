@@ -37,6 +37,7 @@ All of config options:
 | `middleware` | Closure | This closure can recive `$user` and return that this user **Can access this model** |
 | `target` | string | Target of link of model in menu |
 | `no_table_footer` | bool | If this is true, table footer will not show |
+| `per_page` | int | Table rows per page |
 
 ### `hidden_fields`
 This option makes some fields hidden in the table.
@@ -57,6 +58,23 @@ $admin->add_model(\App\Models\User::class, [
     // ...
     'fields_titles' => [
         'email' => 'The Email', // `The Email` will be showed as title of column `email` in table
+    ]
+    // ...
+]);
+```
+
+### `fields_values`
+This option helps you to change default original value of a column in table(only for show).
+
+```php
+$admin->add_model(\App\Models\User::class, [
+    // ...
+    'fields_values' => [
+        'email' => (function($row){
+            // show a link to email instead of email string
+            // this will be used only in table
+            return '<a href="mailto:' . $row->email . '">' . $row->email . '</a>';
+        }),
     ]
     // ...
 ]);
