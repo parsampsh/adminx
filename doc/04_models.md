@@ -38,6 +38,8 @@ All of config options:
 | `target` | string | Target of link of model in menu |
 | `no_table_footer` | bool | If this is true, table footer will not show |
 | `per_page` | int | Table rows per page |
+| `only_top_pagination` | bool | Only show top pagination |
+| `only_bottom_pagination` | bool | Only show bottom pagination |
 
 ### `hidden_fields`
 This option makes some fields hidden in the table.

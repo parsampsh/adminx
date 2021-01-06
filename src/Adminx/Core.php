@@ -410,6 +410,14 @@ class Core
         {
             $config['virtual_fields'] = [];
         }
+        if(!isset($config['only_top_pagination']))
+        {
+            $config['only_top_pagination'] = false;
+        }
+        if(!isset($config['only_bottom_pagination']))
+        {
+            $config['only_bottom_pagination'] = false;
+        }
         array_push($this->menu, [
             'type' => 'model',
             'config' => $config,
