@@ -37,7 +37,7 @@ You can set the admin panel layout Right to left.
 $admin->enable_rtl(); // this method enables the rtl mode
 ```
 
-also you check is rtl enable:
+also you can check is rtl enable:
 
 ```php
 echo $admin->is_rtl(); // returns boolean
