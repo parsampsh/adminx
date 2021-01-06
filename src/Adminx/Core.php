@@ -29,7 +29,7 @@ class Core
     /**
      * Title of the admin panel
      */
-    protected string $title = 'Adminx Panel';
+    private string $title = 'Adminx Panel';
 
     /**
      * Sets the title of admin panel
@@ -56,7 +56,7 @@ class Core
     /**
      * Copyright message of the admin panel
      */
-    protected string $copyright = 'Copyright';
+    private string $copyright = 'Copyright';
 
     /**
      * Sets the title of admin panel
@@ -109,7 +109,7 @@ class Core
     /**
      * Admin panel access middleware closure
      */
-    protected $middleware = null;
+    private $middleware = null;
 
     /**
      * Sets the access middleware
@@ -152,7 +152,7 @@ class Core
     /**
      * Logout url for user
      */
-    protected string $logout = '/auth/logout';
+    private string $logout = '/auth/logout';
 
     /**
      * Sets the Logout url for user
@@ -179,7 +179,7 @@ class Core
     /**
      * Info of user
      */
-    protected $userinfo = null;
+    private $userinfo = null;
 
     /**
      * Sets Info of user
@@ -224,7 +224,7 @@ class Core
      *
      * Contains models, links and custom pages
      */
-    protected array $menu = [];
+    private array $menu = [];
 
     /**
      * Adds a link item to menu
@@ -283,7 +283,7 @@ class Core
     /**
      * The frontend localization words
      */
-    protected array $words = [];
+    private array $words = [];
 
     /**
      * Sets a word in frontend customization words
@@ -327,7 +327,7 @@ class Core
     /**
      * The admin panel default layout view
      */
-    protected string $layout = 'adminx.layouts.default';
+    private string $layout = 'adminx.layouts.default';
 
     /**
      * Returns admin panel default layout view
