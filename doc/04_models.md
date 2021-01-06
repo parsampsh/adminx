@@ -139,6 +139,29 @@ $admin->add_model(\App\Models\Post::class, [
 
 You can use this feature to create advance filter options for you data, etc.
 
+### Searching
+You can add a text search option for model.
+
+for example:
+
+```php
+$admin->add_model(\App\Models\Post::class, [
+    // ...
+    'search' => (function($q, $word){
+        // filter the query by searching in title
+        // or any algorithm you want
+        return $q->where('title', 'like', '%'.$word.'%');
+    }),
+
+    `search_hint` => 'Search by post title',
+    // ...
+]);
+```
+
+You should set `search` option to a closure. Then, a search box will be added to your model page. user can search with that box. when user are searching something, the query builder and searched word will be passed to your closure. then you can filter the query by searched word and return new query.
+
+Also you can write a hint for search box by `search_hint` option(default value for this, is `Search here...`).
+
 ---
 
 [Previous: Frontend layout customization](03_frontend_layout_customization.md) |

@@ -398,4 +398,68 @@ class HttpControllerTest extends TestCase
         $res->assertSee('The top custom html', false);
         $res->assertSee('The bottom custom html', false);
     }
+
+    public function test_search_system_works(){
+        $user = \App\Models\User::factory()->create();
+
+        $admin = new \Adminx\Core;
+        $admin->add_model(\App\Models\User::class, [
+            'slug' => 'the-users',
+        ]);
+        $admin->register('/admin');
+
+        $res = $this->actingAs($user)->get('/admin/model/the-users');
+        $res->assertStatus(200);
+        $res->assertDontSee('<input value="" name="search" type="text" class="form-control bg-light border-0 small" placeholder="Search here..." aria-label="Search" aria-describedby="basic-addon2">', false);
+
+        $admin = new \Adminx\Core;
+        $admin->add_model(\App\Models\User::class, [
+            'slug' => 'the-users',
+            'search' => (function($q, $w){
+                return $q;
+            })
+        ]);
+        $admin->register('/admin');
+
+        $res = $this->actingAs($user)->get('/admin/model/the-users');
+        $res->assertStatus(200);
+        $res->assertSee('<input value="" name="search" type="text" class="form-control bg-light border-0 small" placeholder="Search here..." aria-label="Search" aria-describedby="basic-addon2">', false);
+
+        $res = $this->actingAs($user)->get('/admin/model/the-users?search=hello');
+        $res->assertStatus(200);
+        $res->assertSee('<input value="hello" name="search" type="text" class="form-control bg-light border-0 small" placeholder="Search here..." aria-label="Search" aria-describedby="basic-addon2">', false);
+
+        $admin = new \Adminx\Core;
+        $admin->add_model(\App\Models\User::class, [
+            'slug' => 'the-users',
+            'search' => (function($q, $w){
+                return $q;
+            }),
+            'search_hint' => 'search for something',
+        ]);
+        $admin->register('/admin');
+
+        $res = $this->actingAs($user)->get('/admin/model/the-users');
+        $res->assertStatus(200);
+        $res->assertSee('<input value="" name="search" type="text" class="form-control bg-light border-0 small" placeholder="search for something" aria-label="Search" aria-describedby="basic-addon2">', false);
+
+        $admin = new \Adminx\Core;
+        $admin->add_model(\App\Models\User::class, [
+            'slug' => 'the-users',
+            'search' => (function($q, $w){
+                // reverse search
+                return $q->where('email', '<>', $w);
+            }),
+            'search_hint' => 'search for something',
+        ]);
+        $admin->register('/admin');
+
+        $res = $this->actingAs($user)->get('/admin/model/the-users');
+        $res->assertStatus(200);
+        $res->assertSee('<td>' . $user->email . '</td>', false);
+
+        $res = $this->actingAs($user)->get('/admin/model/the-users?search=' . $user->email);
+        $res->assertStatus(200);
+        $res->assertDontSee('<td>' . $user->email . '</td>', false);
+    }
 }

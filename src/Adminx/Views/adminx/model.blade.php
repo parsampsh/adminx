@@ -13,6 +13,19 @@ $columns = $core->get_model_columns($model_config);
       <h6 class="m-0 font-weight-bold text-primary">{{ $model_config['title'] }}</h6>
     </div>
     <div class="card-body">
+      @if(is_callable($model_config['search']))
+        <form class="d-none d-sm-inline-block form-inline mr-auto ml-md-3 my-2 my-md-0 mw-100 navbar-search">
+          <div class="input-group">
+            <input value="{{ request()->get('search') }}" name="search" type="text" class="form-control bg-light border-0 small" placeholder="{{ $model_config['search_hint'] }}" aria-label="Search" aria-describedby="basic-addon2">
+            <div class="input-group-append">
+              <button class="btn btn-primary" type="submit">
+                <i class="fas fa-search fa-sm"></i>
+              </button>
+            </div>
+          </div>
+        </form>
+        <br />
+      @endif
       <?php echo call_user_func_array($model_config['custom_html'], []); ?>
       @if($model_config['only_bottom_pagination'] === false)
       <?php echo $rows->render(); ?>

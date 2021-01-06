@@ -91,6 +91,15 @@ class AdminxController extends BaseController
         // load model table rows
         $rows = $model_config['model']::query();
         $rows = $model_config['filter_data']($rows);
+
+        // handle search filter
+        if($request->get('search')){
+            if(is_callable($model_config['search'])){
+                $rows = call_user_func_array($model_config['search'], [$rows, $request->get('search')]);
+            }
+        }
+
+        // paginate and get the final data
         $rows = $rows->paginate($model_config['per_page']);
 
         return view('adminx.model', ['core' => $this->core, 'model_config' => $model_config, 'rows' => $rows]);

@@ -457,6 +457,14 @@ class Core
                 return '';
             });
         }
+        if(!isset($config['search']) || !is_callable($config['search']))
+        {
+            $config['search'] = null;
+        }
+        if(!isset($config['search_hint']))
+        {
+            $config['search_hint'] = 'Search here...';
+        }
         array_push($this->menu, [
             'type' => 'model',
             'config' => $config,
