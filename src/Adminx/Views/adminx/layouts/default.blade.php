@@ -12,10 +12,10 @@ $logout_url = url($core->get_logout());
   <meta name="description" content="">
   <meta name="author" content="">
   <title>{{ $core->get_title() }} - @yield('adminx_title')</title>
-  <link href="{{ $core->url('/public/default/styles.css') }}" rel="stylesheet" type="text/css">
+  <link href="{{ url('/adminx-public/default/styles.css') }}" rel="stylesheet" type="text/css">
   <link href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i" rel="stylesheet">
   @if($core->is_rtl())
-  <link href="{{ $core->url('/public/default/bootstrap-rtl.css') }}" rel="stylesheet">
+  <link href="{{ url('/adminx-public/default/bootstrap-rtl.css') }}" rel="stylesheet">
   <style>
     *{
       direction: rtl !important;
@@ -171,9 +171,9 @@ $logout_url = url($core->get_logout());
     </div>
   </div>
 
-  <script src="{{ $core->url('/public/default/jquery.min.js') }}"></script>
-  <script src="{{ $core->url('/public/default/bootstrap.bundle.min.js') }}"></script>
-  <script src="{{ $core->url('/public/default/jquery.easing.min.js') }}"></script>
-  <script src="{{ $core->url('/public/default/sb-admin-2.min.js') }}"></script>
+  <script src="{{ url('/adminx-public/default/jquery.min.js') }}"></script>
+  <script src="{{ url('/adminx-public/default/bootstrap.bundle.min.js') }}"></script>
+  <script src="{{ url('/adminx-public/default/jquery.easing.min.js') }}"></script>
+  <script src="{{ url('/adminx-public/default/sb-admin-2.min.js') }}"></script>
 </body>
 </html>
