@@ -340,7 +340,7 @@ class Core
     }
 
     /**
-     * Returns admin panel default layout view
+     * Sets admin panel default layout view
      * 
      * @param string $layout
      * @return Core
@@ -348,6 +348,33 @@ class Core
     public function set_layout(string $layout): Core
     {
         $this->layout = $layout;
+        return $this;
+    }
+
+    /**
+     * Is Right to left
+     */
+    private bool $rtl = false;
+
+    /**
+     * Returns is right to left
+     * 
+     * @return bool
+     */
+    public function is_rtl(): bool
+    {
+        return $this->rtl;
+    }
+
+    /**
+     * Enables the right to left
+     * 
+     * @param bool $rtl
+     * @return Core
+     */
+    public function enable_rtl(bool $rtl=true): Core
+    {
+        $this->rtl = $rtl;
         return $this;
     }
 

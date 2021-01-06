@@ -30,6 +30,25 @@ $admin->get_word('key');
 $admin->get_all_words(); // array
 ```
 
+## Right to left
+You can set the admin panel layout Right to left.
+
+```php
+$admin->enable_rtl(); // this method enables the rtl mode
+```
+
+also you check is rtl enable:
+
+```php
+echo $admin->is_rtl(); // returns boolean
+```
+
+also you can disable the rtl mode by passing `false` to `enable_rtl` method:
+
+```php
+$admin->enable_rtl(false);
+```
+
 ---
 
 [Previous: Menu links and pages](01_menu_links_and_pages.md) | [Next: Frontend layout customization](03_frontend_layout_customization.md)
