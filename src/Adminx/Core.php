@@ -418,6 +418,18 @@ class Core
         {
             $config['only_bottom_pagination'] = false;
         }
+        if(!isset($config['custom_html']) || !is_callable($config['custom_html']))
+        {
+            $config['custom_html'] = (function(){
+                return '';
+            });
+        }
+        if(!isset($config['custom_html_bottom']) || !is_callable($config['custom_html_bottom']))
+        {
+            $config['custom_html_bottom'] = (function(){
+                return '';
+            });
+        }
         array_push($this->menu, [
             'type' => 'model',
             'config' => $config,

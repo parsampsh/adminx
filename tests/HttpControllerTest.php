@@ -378,4 +378,24 @@ class HttpControllerTest extends TestCase
         $res->assertSee('<th>Something</th>', false);
         $res->assertSee('<td>hello ' . $user->email . '</td>', false);
     }
+
+    public function test_custom_html_works(){
+        $user = \App\Models\User::factory()->create();
+        $admin = new \Adminx\Core;
+        $admin->add_model(\App\Models\User::class, [
+            'slug' => 'the-users',
+            'custom_html' => (function(){
+                return 'The top custom html';
+            }),
+            'custom_html_bottom' => (function(){
+                return 'The bottom custom html';
+            }),
+        ]);
+        $admin->register('/admin');
+
+        $res = $this->actingAs($user)->get('/admin/model/the-users');
+        $res->assertStatus(200);
+        $res->assertSee('The top custom html', false);
+        $res->assertSee('The bottom custom html', false);
+    }
 }

@@ -31,6 +31,8 @@ $admin->add_page('Title of the page in menu', 'the-slug-of-page-in-url', functio
     // return value will be showed to user in the main content section of the view
     // also you can use $request variable
     return 'hello world! i am a simple page.';
+    // or use view
+    return view('some.view');
 }, 'fa fa-user(icons as class)', 'blank(target, default is none)');
 ```
 

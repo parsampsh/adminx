@@ -13,6 +13,7 @@ $columns = $core->get_model_columns($model_config);
       <h6 class="m-0 font-weight-bold text-primary">{{ $model_config['title'] }}</h6>
     </div>
     <div class="card-body">
+      <?php echo call_user_func_array($model_config['custom_html'], []); ?>
       @if($model_config['only_bottom_pagination'] === false)
       <?php echo $rows->render(); ?>
       @endif
@@ -60,6 +61,7 @@ $columns = $core->get_model_columns($model_config);
       <br />
       <?php echo $rows->render(); ?>
       @endif
+      <?php echo call_user_func_array($model_config['custom_html_bottom'], []); ?>
     </div>
 </div>
 

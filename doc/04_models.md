@@ -114,6 +114,31 @@ $admin->add_model(\App\Models\Post::class, [
 ]);
 ```
 
+### `custom_html` & `custom_html_bottom`
+This options help you to show a custom html/text in the top and bottom of the table.
+
+You should set a Closure as value for them. out put of the closure will be showd.
+
+```php
+$admin->add_model(\App\Models\Post::class, [
+    // ...
+    'custom_html' => (function(){
+        return 'this is the custom TOP html';
+        // or use view
+        return view('some.view');
+    }),
+
+    'custom_html_bottom' => (function(){
+        return 'this is the custom BOTTOM html';
+        // or use view
+        return view('some.view');
+    }),
+    // ...
+]);
+```
+
+You can use this feature to create advance filter options for you data, etc.
+
 ---
 
 [Previous: Frontend layout customization](03_frontend_layout_customization.md) |
