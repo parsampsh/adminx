@@ -104,4 +104,49 @@ class AdminxController extends BaseController
 
         return view('adminx.model', ['core' => $this->core, 'model_config' => $model_config, 'rows' => $rows]);
     }
+
+    public function model_delete(Request $request, string $slug)
+    {
+        $this->run_middleware();
+        $model_config = null;
+        foreach($this->core->get_menu() as $item)
+        {
+            if($item['type'] === 'model'){
+                if($item['config']['slug'] === $slug){
+                    $model_config = $item['config'];
+                }
+            }
+        }
+
+        if($model_config === null){
+            abort(404);
+        }
+
+        $middleware_result = call_user_func_array($model_config['middleware'], [auth()->user()]);
+        if($middleware_result !== true){
+            abort(403);
+        }
+
+        // has user delete permission
+        if(!\Adminx\Access::user_has_permission(auth()->user(), $slug . '.delete')){
+            abort(403);
+        }
+
+        // load the row
+        $row = $model_config['model']::find($request->post('delete'));
+
+        if(!$row){
+            abort(404);
+        }
+
+        // check the delete middleware
+        if(!call_user_func_array($model_config['delete_middleware'], [auth()->user(), $row])){
+            abort(403);
+        }
+
+        // delete the item
+        $row->delete();
+
+        return redirect($request->fullUrl());
+    }
 }

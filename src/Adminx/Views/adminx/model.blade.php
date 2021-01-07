@@ -40,6 +40,7 @@ $columns = $core->get_model_columns($model_config);
                 @foreach ($model_config['virtual_fields'] as $k => $v)
                     <th>{{ $k }}</th>
                 @endforeach
+                <th>{{ $core->get_word('tbl.action', 'Actions') }}</th>
             </tr>
           </thead>
           @if(!$model_config['no_table_footer'])
@@ -50,6 +51,7 @@ $columns = $core->get_model_columns($model_config);
                 @foreach ($model_config['virtual_fields'] as $k => $v)
                     <th>{{ $k }}</th>
                 @endforeach
+                <th>{{ $core->get_word('tbl.action', 'Actions') }}</th>
           </tr></tfoot>
           @endif
           <tbody>
@@ -65,6 +67,18 @@ $columns = $core->get_model_columns($model_config);
                 @foreach ($model_config['virtual_fields'] as $vf => $value)
                     <td><?php echo $value($row) ?></td>
                 @endforeach
+                @if(\Adminx\Access::user_has_permission(auth()->user(), $model_config['slug'] . '.delete'))
+                @if(call_user_func_array($model_config['delete_middleware'], [auth()->user(), $row]))
+                <td>
+                  <form method="POST" onsubmit="return confirm('{{ $core->get_word('delete.msg', 'Are you sure to delete this item?') }}')">
+                    <input type="hidden" name="_method" value="DELETE" />
+                    @csrf
+                    <input type="hidden" name="delete" value="{{ $row->id }}" />
+                    <button class="btn btn-danger" type="submit">{{ $core->get_word('btn.delete', 'Delete') }}</button>
+                  </form>
+                </td>
+                @endif
+                @endif
               </tr>
             @endforeach
           </tbody>

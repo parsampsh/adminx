@@ -162,6 +162,22 @@ You should set `search` option to a closure. Then, a search box will be added to
 
 Also you can write a hint for search box by `search_hint` option(default value for this, is `Search here...`).
 
+### Delete middleware
+This option is for handling delete permission. by default, adminx checks user permission for delete the item. for example, user should have `user.delete` permission in database(You will learn about this is the **Access API** next part) to delete a item in users table. But also you can handle some exceptions by using this `delete_middleware` to customize this action permissions.
+
+```php
+$admin->add_model(\App\Models\Post::class, [
+    // ...
+    // this closure should return boolean
+    'delete_middleware' => (function($user, $post){
+        // for example:
+        return $user->is_manager() || $post->user_id == $user->id;
+        // if result id true, user can delete the item
+    }),
+    // ...
+]);
+```
+
 ---
 
 [Previous: Frontend layout customization](03_frontend_layout_customization.md) |

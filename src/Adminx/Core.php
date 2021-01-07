@@ -102,6 +102,7 @@ class Core
                 Route::get('/', [AdminxController::class, 'index']);
                 Route::get('/page/{slug}', [AdminxController::class, 'show_page']);
                 Route::get('/model/{slug}', [AdminxController::class, 'model_index']);
+                Route::delete('/model/{slug}', [AdminxController::class, 'model_delete']);
             });
         });
     }
@@ -464,6 +465,12 @@ class Core
         if(!isset($config['search_hint']))
         {
             $config['search_hint'] = 'Search here...';
+        }
+        if(!isset($config['delete_middleware']) || !is_callable($config['delete_middleware']))
+        {
+            $config['delete_middleware'] = (function(){
+                return true;
+            });
         }
         array_push($this->menu, [
             'type' => 'model',

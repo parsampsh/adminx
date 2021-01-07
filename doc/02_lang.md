@@ -21,7 +21,9 @@ All of keys:
 |`logout.btn`|text of logout button|`Logout`|
 |`logout.message`|the message of logout window|`Select "Logout" below if you are ready to end your current session.`|
 |`logout.cancel`|text of logout cancel button|`Cancel`|
-|`menu.dashboard`|text of manu dashboard link|`Dashboard`|
+|`menu.dashboard`|text of menu dashboard link|`Dashboard`|
+|`btn.delete`|text of model delete button|`Delete`|
+|`tbl.action`|title of actions column in models table|`Actions`|
 
 also you can use `get_word` and `get_all_words` methods to get words:
 
