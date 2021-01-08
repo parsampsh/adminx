@@ -10,6 +10,7 @@
  */
 
 if (! class_exists('\App\Models\User')) {
-    // TODO : fix error of this line for php cs fixer
-    //class_alias('App\User', 'App\Models\User');
+    if (class_exists('\App\User')){
+        class_alias('App\User', 'App\Models\User');
+    }
 }
