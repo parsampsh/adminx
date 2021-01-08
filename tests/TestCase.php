@@ -13,7 +13,7 @@ namespace Adminx\Tests;
 
 use Orchestra\Testbench\TestCase as Orchestra;
 
-require_once __DIR__ . '/database/User.php';
+require_once __DIR__ . '/database/Models.php';
 require_once __DIR__ . '/database/factories/UserFactory.php';
 
 class TestCase extends Orchestra
