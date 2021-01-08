@@ -472,6 +472,12 @@ class Core
                 return true;
             });
         }
+        if(!isset($config['create_middleware']) || !is_callable($config['create_middleware']))
+        {
+            $config['create_middleware'] = (function(){
+                return true;
+            });
+        }
         array_push($this->menu, [
             'type' => 'model',
             'config' => $config,

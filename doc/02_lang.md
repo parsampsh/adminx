@@ -24,6 +24,7 @@ All of keys:
 |`menu.dashboard`|text of menu dashboard link|`Dashboard`|
 |`btn.delete`|text of model delete button|`Delete`|
 |`tbl.action`|title of actions column in models table|`Actions`|
+|`btn.create`|title of create button|`Create new {name}` (you should write exactly `{name}` for model name)|
 
 also you can use `get_word` and `get_all_words` methods to get words:
 

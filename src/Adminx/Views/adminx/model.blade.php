@@ -8,6 +8,14 @@ $columns = $core->get_model_columns($model_config);
 <h2>{{ $model_config['title'] }}</h2>
 <hr />
 
+@if(\Adminx\Access::user_has_permission(auth()->user(), $model_config['slug'] . '.create'))
+@if(call_user_func_array($model_config['create_middleware'], [auth()->user()]) === true)
+<a class="btn btn-success" href="{{ $core->url('/model/' . $model_config['slug'] . '/create?back=' . request()->fullUrl()) }}">{{ str_replace('{name}', $model_config['slug'], $core->get_word('btn.create', 'Create new {name}')) }} <i class="fa fa-plus"></i></a>
+<br />
+<br />
+@endif
+@endif
+
 <div class="card shadow mb-4">
     <div class="card-header py-3">
       <h6 class="m-0 font-weight-bold text-primary">{{ $model_config['title'] }}</h6>

@@ -178,6 +178,21 @@ $admin->add_model(\App\Models\Post::class, [
 ]);
 ```
 
+### Create middleware
+This option is like `delete_middleware` but for create action. by default, this permission is handled by adminx permission system but you can check some exceptions by this option.
+
+```php
+$admin->add_model(\App\Models\Post::class, [
+    // ...
+    // this closure should return boolean
+    'create_middleware' => (function($user, $post){
+        // for example:
+        return $user->can_create_new_post_or_something_else();
+    }),
+    // ...
+]);
+```
+
 ---
 
 [Previous: Frontend layout customization](03_frontend_layout_customization.md) |
