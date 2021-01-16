@@ -21,6 +21,30 @@ class AdminxController extends BaseController
 {
     private $core;
 
+    private function find_model_by_slug(string $slug)
+    {
+        $model_config = null;
+        foreach($this->core->get_menu() as $item)
+        {
+            if($item['type'] === 'model'){
+                if($item['config']['slug'] === $slug){
+                    $model_config = $item['config'];
+                }
+            }
+        }
+
+        if($model_config === null){
+            abort(404);
+        }
+
+        $middleware_result = call_user_func_array($model_config['middleware'], [auth()->user()]);
+        if($middleware_result !== true){
+            abort(403);
+        }
+
+        return $model_config;
+    }
+
     public function __construct()
     {
         $this->core = \Adminx\Core::$core;
@@ -69,24 +93,7 @@ class AdminxController extends BaseController
     public function model_index(Request $request, string $slug)
     {
         $this->run_middleware();
-        $model_config = null;
-        foreach($this->core->get_menu() as $item)
-        {
-            if($item['type'] === 'model'){
-                if($item['config']['slug'] === $slug){
-                    $model_config = $item['config'];
-                }
-            }
-        }
-
-        if($model_config === null){
-            abort(404);
-        }
-
-        $middleware_result = call_user_func_array($model_config['middleware'], [auth()->user()]);
-        if($middleware_result !== true){
-            abort(403);
-        }
+        $model_config = $this->find_model_by_slug($slug);
 
         // load model table rows
         $rows = $model_config['model']::query();
@@ -108,24 +115,7 @@ class AdminxController extends BaseController
     public function model_delete(Request $request, string $slug)
     {
         $this->run_middleware();
-        $model_config = null;
-        foreach($this->core->get_menu() as $item)
-        {
-            if($item['type'] === 'model'){
-                if($item['config']['slug'] === $slug){
-                    $model_config = $item['config'];
-                }
-            }
-        }
-
-        if($model_config === null){
-            abort(404);
-        }
-
-        $middleware_result = call_user_func_array($model_config['middleware'], [auth()->user()]);
-        if($middleware_result !== true){
-            abort(403);
-        }
+        $model_config = $this->find_model_by_slug($slug);
 
         // has user delete permission
         if(!\Adminx\Access::user_has_permission(auth()->user(), $slug . '.delete')){
@@ -148,5 +138,26 @@ class AdminxController extends BaseController
         $row->delete();
 
         return redirect($request->fullUrl());
+    }
+
+    public function model_create(Request $request, string $slug)
+    {
+        $this->run_middleware();
+        $model_config = $this->find_model_by_slug($slug);
+
+        // has user create permission
+        if(!\Adminx\Access::user_has_permission(auth()->user(), $slug . '.create')){
+            abort(403);
+        }
+
+        // check create_middleware
+        if(call_user_func_array($model_config['create_middleware'], [auth()->user()]) !== true){
+            abort(403);
+        }
+
+        return view('adminx.create', [
+            'core' => $this->core,
+            'model_config' => $model_config
+        ]);
     }
 }

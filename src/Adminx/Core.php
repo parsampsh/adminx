@@ -103,6 +103,7 @@ class Core
                 Route::get('/page/{slug}', [AdminxController::class, 'show_page']);
                 Route::get('/model/{slug}', [AdminxController::class, 'model_index']);
                 Route::delete('/model/{slug}', [AdminxController::class, 'model_delete']);
+                Route::get('/model/{slug}/create', [AdminxController::class, 'model_create']);
             });
         });
     }
@@ -147,7 +148,11 @@ class Core
      */
     public function url(string $url='/'): string
     {
-        return url($this->route_prefix . '/' . $url);
+        $output = url($this->route_prefix . '/' . $url);
+        $output = str_replace('//', '/', $output);
+        $output = str_replace('http:/', 'http://', $output);
+        $output = str_replace('https:/', 'https://', $output);
+        return $output;
     }
 
     /**
