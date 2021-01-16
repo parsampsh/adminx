@@ -1,5 +1,4 @@
 
-- create super user system
 - model.create: readonly_fields, only_addable_fields, filter_create_data
 - model.update: update_middleware, only_editable_fields, filter_update_data
 - create index page

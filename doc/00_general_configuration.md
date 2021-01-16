@@ -91,6 +91,22 @@ $user_info = $admin->get_userinfo();
 var_dump($user_info); // {'username' => '...', 'image' => '...'}
 ```
 
+### Super user
+There is a important thing in admin panels: The manager or Super user.
+
+Super user is a user that can do everything!
+
+To determine that who is super user in adminx, you should use `super_user` method:
+
+```php
+$admin->super_user(function($user){
+    return (bool) $user->is_manager();
+});
+```
+
+This method gets a closure and that closure should recive user object and return a boolean.
+If true is returned, means that user is Super user.
+
 ## An Example
 
 ```php

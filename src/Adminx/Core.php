@@ -512,4 +512,34 @@ class Core
 
         return $new_columns_list;
     }
+
+    private $super_user_closure = null;
+
+    /**
+     * Sets a closure to determine super user
+     *
+     * @param \Closure $closure
+     * @return Core
+     */
+    public function super_user(\Closure $closure)
+    {
+        $this->super_user_closure = $closure;
+        return $this;
+    }
+
+    /**
+     * Checks user is super user
+     *
+     * @param \App\Models\User $user
+     */
+    public function check_super_user(\App\Models\User $user)
+    {
+        $func = $this->super_user_closure;
+
+        if ($func === null){
+            return false;
+        }
+
+        return (bool) call_user_func_array($func, [$user]);
+    }
 }

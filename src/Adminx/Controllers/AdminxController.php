@@ -37,9 +37,11 @@ class AdminxController extends BaseController
             abort(404);
         }
 
-        $middleware_result = call_user_func_array($model_config['middleware'], [auth()->user()]);
-        if($middleware_result !== true){
-            abort(403);
+        if(!$this->core->check_super_user(auth()->user())) {
+            $middleware_result = call_user_func_array($model_config['middleware'], [auth()->user()]);
+            if ($middleware_result !== true) {
+                abort(403);
+            }
         }
 
         return $model_config;
@@ -52,6 +54,9 @@ class AdminxController extends BaseController
 
     public function run_middleware()
     {
+        if ($this->core->check_super_user(auth()->user())){
+            return;
+        }
         $result = $this->core->run_middleware();
         if ($result === false) {
             abort(403);
@@ -118,8 +123,10 @@ class AdminxController extends BaseController
         $model_config = $this->find_model_by_slug($slug);
 
         // has user delete permission
-        if(!\Adminx\Access::user_has_permission(auth()->user(), $slug . '.delete')){
-            abort(403);
+        if(!$this->core->check_super_user(auth()->user())) {
+            if (!\Adminx\Access::user_has_permission(auth()->user(), $slug . '.delete')) {
+                abort(403);
+            }
         }
 
         // load the row
@@ -146,13 +153,17 @@ class AdminxController extends BaseController
         $model_config = $this->find_model_by_slug($slug);
 
         // has user create permission
-        if(!\Adminx\Access::user_has_permission(auth()->user(), $slug . '.create')){
-            abort(403);
+        if(!$this->core->check_super_user(auth()->user())) {
+            if (!\Adminx\Access::user_has_permission(auth()->user(), $slug . '.create')) {
+                abort(403);
+            }
         }
 
         // check create_middleware
-        if(call_user_func_array($model_config['create_middleware'], [auth()->user()]) !== true){
-            abort(403);
+        if(!$this->core->check_super_user(auth()->user())) {
+            if (call_user_func_array($model_config['create_middleware'], [auth()->user()]) !== true) {
+                abort(403);
+            }
         }
 
         return view('adminx.create', [
