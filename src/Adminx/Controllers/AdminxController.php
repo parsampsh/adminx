@@ -63,10 +63,31 @@ class AdminxController extends BaseController
         }
     }
 
-    public function index()
+    public function index(Request $request)
     {
         $this->run_middleware();
-        return view('adminx.index', ['core' => $this->core]);
+
+        $action = null;
+        $page_title = null;
+        foreach ($this->core->get_menu() as $item) {
+            if ($item['type'] === 'page') {
+                if ($item['slug'] === '.') {
+                    $action = $item['action'];
+                    $page_title = $item['title'];
+                }
+            }
+        }
+
+        if (!is_callable($action)) {
+            // use adminx default index page
+            return view('adminx.index', ['core' => $this->core]);
+        }
+
+        // run the page action
+        $output = call_user_func_array($action, [$request]);
+
+        // return the view
+        return view('adminx.page', ['output' => $output, 'core' => $this->core, 'page_title' => $page_title]);
     }
 
     public function show_page(Request $request, string $slug)

@@ -15,7 +15,6 @@ use Adminx\Tests\TestCase;
 
 class PageSystemTest extends TestCase
 {
-
     public function test_page_is_showed_in_menu()
     {
         $admin = new \Adminx\Core;
@@ -59,5 +58,21 @@ class PageSystemTest extends TestCase
         $res = $this->actingAs($user)->get('/admin/page/my-page?the-value=hello');
         $res->assertStatus(200);
         $res->assertSee('hello world. i am a page. value is hello', false);
+    }
+
+    public function test_index_page_working()
+    {
+        $admin = new \Adminx\Core;
+        $admin->add_page('The index page for adminx', '.', function ($request) {
+            return 'The index page of adminx';
+        });
+        $admin->register('/admin');
+
+        $user = \App\Models\User::factory()->create();
+
+        $res = $this->actingAs($user)->get('/admin');
+        $res->assertStatus(200);
+        $res->assertSee('The index page for adminx', false);
+        $res->assertSee('The index page of adminx', false);
     }
 }

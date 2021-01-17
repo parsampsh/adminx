@@ -273,7 +273,7 @@ class Core
      * @param string $link_target
      * @return Core
      */
-    public function add_page(string $title, string $slug, \Closure $action, string $icon, string $link_target=''): Core
+    public function add_page(string $title, string $slug, \Closure $action, string $icon='', string $link_target=''): Core
     {
         array_push($this->menu, [
             'type' => 'page',

@@ -69,7 +69,7 @@ $logout_url = url($core->get_logout());
             <i class="{{ $item['icon'] }}"></i><span>{{ $item['title'] }}</span></a>
           </li>
         @else
-          @if($item['type'] === 'page')
+          @if($item['type'] === 'page' && $item['slug'] !== '.')
             <li class="nav-item">
               <a class="nav-link" href="{{ $core->url('page/' . $item['slug']) }}" target="{{ $item['target'] }}">
               <i class="{{ $item['icon'] }}"></i><span>{{ $item['title'] }}</span></a>

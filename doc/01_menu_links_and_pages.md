@@ -36,6 +36,17 @@ $admin->add_page('Title of the page in menu', 'the-slug-of-page-in-url', functio
 }, 'fa fa-user(icons as class)', 'blank(target, default is none)');
 ```
 
+#### Index page
+To set the index page(http://localhost:yyyy/admin/), you should use `.` for slug option.
+
+For example:
+
+```php
+$admin->add_page('Welcome', '.', function($request){
+    return view('my.custom.index.page');
+});
+```
+
 ---
 
 [Previous: General Configuration](00_general_configuration.md) | [Next: Frontend language customization](02_lang.md)
