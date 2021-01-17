@@ -158,8 +158,10 @@ class AdminxController extends BaseController
         }
 
         // check the delete middleware
-        if(!call_user_func_array($model_config['delete_middleware'], [auth()->user(), $row])){
-            abort(403);
+        if(!$this->core->check_super_user(auth()->user())) {
+            if (!call_user_func_array($model_config['delete_middleware'], [auth()->user(), $row])) {
+                abort(403);
+            }
         }
 
         // delete the item
@@ -173,15 +175,13 @@ class AdminxController extends BaseController
         $this->run_middleware();
         $model_config = $this->find_model_by_slug($slug);
 
-        // has user create permission
         if(!$this->core->check_super_user(auth()->user())) {
+            // has user create permission
             if (!\Adminx\Access::user_has_permission(auth()->user(), $slug . '.create')) {
                 abort(403);
             }
-        }
 
-        // check create_middleware
-        if(!$this->core->check_super_user(auth()->user())) {
+            // check create_middleware
             if (call_user_func_array($model_config['create_middleware'], [auth()->user()]) !== true) {
                 abort(403);
             }
