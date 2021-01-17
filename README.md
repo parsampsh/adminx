@@ -9,6 +9,7 @@ You can see some of Adminx Features:
 - Easy to Install and Configure
 - Secure
 - Automatic and Advance CRUD for models with useful options
+- Fully match with your database models
 - Beautiful default frontend
 - Able to Customize frontend layout
 - Able to Customizing by language and localization
