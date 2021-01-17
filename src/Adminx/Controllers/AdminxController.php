@@ -205,12 +205,19 @@ class AdminxController extends BaseController
                         $maxlength = 255;
                     }
                     $is_null = !$column_data->getNotnull();
+                    $comment = '';
+                    if (isset($model_config['fields_comments'][$column])) {
+                        $comment = $model_config['fields_comments'][$column];
+                    } else {
+                        $comment = $column_data->getComment();
+                    }
                     array_push($new_columns, [
                         'name' => $column,
                         'type' => $type,
                         'max' => $maxlength,
                         'is_null' => $is_null,
-                        'default' => $default
+                        'default' => $default,
+                        'comment' => $comment,
                     ]);
                 }
             }

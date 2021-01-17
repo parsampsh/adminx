@@ -491,6 +491,10 @@ class Core
         {
             $config['only_addable_fields'] = [];
         }
+        if(!isset($config['fields_comments']) || !is_array($config['fields_comments']))
+        {
+            $config['fields_comments'] = [];
+        }
         array_push($this->menu, [
             'type' => 'model',
             'config' => $config,

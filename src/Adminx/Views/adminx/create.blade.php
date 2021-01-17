@@ -34,9 +34,9 @@
                 {{ $column['name'] }}:
             @endif
             @if(!$is_textarea)
-                <input value="{{ $column['default'] }}" maxlength="{{ $type === 'text' ? $column['max'] : '' }}" {{ $column['is_null'] === false ? 'required' : '' }} type="{{ $type }}" name="{{ $column['name'] }}" class="form-control" />
+                <input placeholder="{{ $column['comment'] ? $column['comment'] : $column['name'] }}" value="{{ $column['default'] }}" maxlength="{{ $type === 'text' ? $column['max'] : '' }}" {{ $column['is_null'] === false ? 'required' : '' }} type="{{ $type }}" name="{{ $column['name'] }}" class="form-control" />
             @else
-                <textarea name="{{ $column['name'] }}" class="form-control" {{ $column['is_null'] === false ? 'required' : '' }}>{{ $column['default'] }}</textarea>
+                <textarea placeholder="{{ $column['comment'] ? $column['comment'] : $column['name'] }}" name="{{ $column['name'] }}" class="form-control" {{ $column['is_null'] === false ? 'required' : '' }}>{{ $column['default'] }}</textarea>
             @endif
             <br />
         @endforeach

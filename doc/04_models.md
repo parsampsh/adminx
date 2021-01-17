@@ -222,6 +222,17 @@ $admin->add_model(\App\Models\Post::class, [
 
 In the above example, value of column `something` can be set in CREATE action, but cannot be changed in UPDATE action.
 
+### `fields_comments`
+This option sets comment for fields. this comment will be showed as placeholder in create and update forms.
+
+```php
+$admin->add_model(\App\Models\Post::class, [
+    // ...
+    'fields_comments' => ['body' => 'Content of the post'],
+    // ...
+]);
+```
+
 ---
 
 [Previous: Frontend layout customization](03_frontend_layout_customization.md) |
