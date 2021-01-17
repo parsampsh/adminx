@@ -199,10 +199,12 @@ The `readonly_fields` option declares some columns READONLY. the readonly column
 ```php
 $admin->add_model(\App\Models\Post::class, [
     // ...
-    'readonly_fields' => ['created_at', 'deleted_at', 'updated_at'],
+    'readonly_fields' => ['something'],
     // ...
 ]);
 ```
+
+(By default, `created_at`, `updated_at` and `deleted_at` fields are readonly).
 
 But sometimes you want to set some fields readonly ONLY for UPDATE action.
 means you want to set value of this field in CREATE action, but this not be editable in update action.

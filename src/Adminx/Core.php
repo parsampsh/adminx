@@ -485,7 +485,7 @@ class Core
         }
         if(!isset($config['readonly_fields']) || !is_array($config['readonly_fields']))
         {
-            $config['readonly_fields'] = [];
+            $config['readonly_fields'] = ['created_at', 'updated_at', 'deleted_at'];
         }
         if(!isset($config['only_addable_fields']) || !is_array($config['only_addable_fields']))
         {
