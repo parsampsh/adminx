@@ -494,20 +494,25 @@ class Core
      * Loads the model columns from database by config
      * 
      * @param array $model_config
+     * @param bool $remove_hidden_columns (Do remove hidden fields from list or not)
      * @return array[string]
      */
-    public function get_model_columns(array $model_config): array
+    public function get_model_columns(array $model_config, bool $remove_hidden_columns=true): array
     {
         // load columns
         $tmp_model_object = new $model_config['model'];
         $columns = $tmp_model_object->getConnection()->getSchemaBuilder()->getColumnListing($tmp_model_object->getTable());
 
         // remove hidden fields
-        $new_columns_list = [];
-        foreach ($columns as $col) {
-            if (!\in_array($col, $model_config['hidden_fields'])){
-                array_push($new_columns_list, $col);
+        if ($remove_hidden_columns) {
+            $new_columns_list = [];
+            foreach ($columns as $col) {
+                if (!\in_array($col, $model_config['hidden_fields'])) {
+                    array_push($new_columns_list, $col);
+                }
             }
+        } else {
+            $new_columns_list = $columns;
         }
 
         return $new_columns_list;
