@@ -483,6 +483,14 @@ class Core
                 return true;
             });
         }
+        if(!isset($config['readonly_fields']) || !is_array($config['readonly_fields']))
+        {
+            $config['readonly_fields'] = [];
+        }
+        if(!isset($config['only_addable_fields']) || !is_array($config['only_addable_fields']))
+        {
+            $config['only_addable_fields'] = [];
+        }
         array_push($this->menu, [
             'type' => 'model',
             'config' => $config,

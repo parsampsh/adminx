@@ -193,6 +193,33 @@ $admin->add_model(\App\Models\Post::class, [
 ]);
 ```
 
+### `readonly_fields`, `only_addable_fields`
+The `readonly_fields` option declares some columns READONLY. the readonly column value cannot be set in create and update form.
+
+```php
+$admin->add_model(\App\Models\Post::class, [
+    // ...
+    'readonly_fields' => ['created_at', 'deleted_at', 'updated_at'],
+    // ...
+]);
+```
+
+But sometimes you want to set some fields readonly ONLY for UPDATE action.
+means you want to set value of this field in CREATE action, but this not be editable in update action.
+
+To do this, you should add that field to `readonly_fields` AND `only_addable_fields`:
+
+```php
+$admin->add_model(\App\Models\Post::class, [
+    // ...
+    'readonly_fields' => ['something'],
+    'only_addable_fields' => ['something'],
+    // ...
+]);
+```
+
+In the above example, value of column `something` can be set in CREATE action, but cannot be changed in UPDATE action.
+
 ---
 
 [Previous: Frontend layout customization](03_frontend_layout_customization.md) |

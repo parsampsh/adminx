@@ -1,6 +1,6 @@
 Road to complete this project
 
-- model.create: readonly_fields, only_addable_fields, filter_create_data
+- model.create: filter_create_data
 - model.update: update_middleware, only_editable_fields, filter_update_data
 - create custom actions system
 - handle cache

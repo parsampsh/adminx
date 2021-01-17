@@ -13,6 +13,7 @@ namespace Adminx\Controllers;
 
 use Illuminate\Routing\Controller as BaseController;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 /**
  * The Adminx Controller
@@ -187,9 +188,40 @@ class AdminxController extends BaseController
             }
         }
 
+        // load model fields
+        $columns = $this->core->get_model_columns($model_config, false);
+        $new_columns = [];
+        $table_name = (new $model_config['model'])->getTable();
+
+        // filter the columns
+        foreach($columns as $column){
+            if($column !== 'id') {
+                if (!in_array($column, $model_config['readonly_fields']) || in_array($column, $model_config['only_addable_fields'])) {
+                    $column_data = DB::connection()->getDoctrineColumn($table_name, $column);
+                    $type = $column_data->getType()->getName();
+                    $maxlength = $column_data->getLength();
+                    $default = $column_data->getDefault();
+                    if ($maxlength === null) {
+                        $maxlength = 255;
+                    }
+                    $is_null = !$column_data->getNotnull();
+                    array_push($new_columns, [
+                        'name' => $column,
+                        'type' => $type,
+                        'max' => $maxlength,
+                        'is_null' => $is_null,
+                        'default' => $default
+                    ]);
+                }
+            }
+        }
+
+        $columns = $new_columns;
+
         return view('adminx.create', [
             'core' => $this->core,
-            'model_config' => $model_config
+            'model_config' => $model_config,
+            'columns' => $columns
         ]);
     }
 }
