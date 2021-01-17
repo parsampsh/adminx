@@ -6,7 +6,6 @@ Road to complete this project
 - handle cache
 - api system
 - clean up documentation and add some examples
-- write why adminx is good
 - a script to publish public assets
 - add some examples images
 - fix bugs
