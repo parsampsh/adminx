@@ -1,5 +1,13 @@
+Road to complete this project
 
 - model.create: readonly_fields, only_addable_fields, filter_create_data
 - model.update: update_middleware, only_editable_fields, filter_update_data
+- create custom actions system
 - create index page
 - handle cache
+- clean up documentation and add some examples
+- write why adminx is good
+- a script to publish public assets
+- fix bugs
+- release 0.1
+
