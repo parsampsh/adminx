@@ -15,7 +15,7 @@ $admin->get_layout();
 
 If should design your view(in above example, `my.view`) under the adminx standards.
 
-### 1. Body content
+## 1. Body content
 Structure of your layout should be something like this:
 
 ```blade
@@ -28,7 +28,7 @@ Structure of your layout should be something like this:
 
 The `adminx_layout` section contents page body content. you should yield this in your layout.
 
-### 2. Page title
+## 2. Page title
 You should set page title of page like this example:
 
 ```blade
@@ -43,7 +43,7 @@ The `$core->get_title()` returns admin panel base title and `@yield('adminx_titl
 
 Also you can use another `$core` methods.
 
-### 3. Urls
+## 3. Urls
 To generate urls to admin panel, you can use `$core->url('...')` method.
 
 for example:
@@ -54,7 +54,7 @@ for example:
 
 Actually, the `$core->url()` method returns something like this: `<admin-panel-base-route>/<the-route>`. for example `$core->url('/some/place')` returns `/admin/some/place`.
 
-### 4. Menu
+## 4. Menu
 You can show admin panel menu under this structure:
 
 ```blade
@@ -65,7 +65,7 @@ You can show admin panel menu under this structure:
       <i class="{{ $item['icon'] }}"></i><span>{{ $item['title'] }}</span></a>
     </li>
   @else
-    @if($item['type'] === 'page')
+    @if($item['type'] === 'page' && $item['slug'] !== '.')
       <li class="nav-item">
         <a class="nav-link" href="{{ $core->url('page/' . $item['slug']) }}" target="{{ $item['target'] }}">
         <i class="{{ $item['icon'] }}"></i><span>{{ $item['title'] }}</span></a>

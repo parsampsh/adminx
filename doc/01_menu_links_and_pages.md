@@ -1,7 +1,7 @@
 # Admin panel menu links and pages
 you can add links and custom pages to the admin panel sidebar.
 
-### Links
+## Links
 to add the links, use `add_link` method.
 
 ```php
@@ -22,7 +22,7 @@ also you can set icon of the item in menu using classes.
 $admin->add_link('Title of the link', 'https://example.com/foo/bar', 'blank', 'fa fa-user'); // fontawesome
 ```
 
-### Pages
+## Pages
 You can add custom pages to your admin panel. they will be accessible from the menu.
 
 ```php
@@ -36,7 +36,7 @@ $admin->add_page('Title of the page in menu', 'the-slug-of-page-in-url', functio
 }, 'fa fa-user(icons as class)', 'blank(target, default is none)');
 ```
 
-#### Index page
+### Index page
 To set the index page(http://localhost:yyyy/admin/), you should use `.` for slug option.
 
 For example:

@@ -1,5 +1,5 @@
 # Adminx Documentation
-welcome to the adminx documentation.
+Welcome to the Adminx documentation.
 
 ## Table of content
 

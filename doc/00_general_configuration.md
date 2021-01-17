@@ -1,7 +1,7 @@
 # General configuration
 Adminx has some general configurations.
 
-### Admin panel title
+## Admin panel title
 You can set title of your admin panel.
 
 ```php
@@ -15,7 +15,7 @@ $admin->get_title();
 
 now, you can see this title in the admin panel.
 
-### The Footer Copyright message
+## The Footer Copyright message
 You can set the footer copyright message.
 
 ```php
@@ -27,7 +27,7 @@ $admin->get_copyright();
 
 now, you can see this copyright message at the footer of admin panel.
 
-### Access middleware
+## Access middleware
 The important question is that **Who can access to the admin panel?**
 
 to set that which users can access to the admin panel, you can use `set_middleware` method.
@@ -56,7 +56,7 @@ $result = $admin->run_middleware();
 var_dump($result); // true or false
 ```
 
-### Logout url of user
+## Logout url of user
 The adminx panel, has a logout button. you can set the link of that button to logout user.
 
 ```php
@@ -68,7 +68,7 @@ $admin->get_logout();
 
 default value for this item is `/auth/logout`.
 
-### User info
+## User info
 In the adminx panel, in top right is user information: Username and image.
 
 you can set value of them by using `set_userinfo` method.
@@ -91,7 +91,7 @@ $user_info = $admin->get_userinfo();
 var_dump($user_info); // {'username' => '...', 'image' => '...'}
 ```
 
-### Super user
+## Super user
 There is a important thing in admin panels: The manager or Super user.
 
 Super user is a user that can do everything!

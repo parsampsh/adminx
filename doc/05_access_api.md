@@ -1,7 +1,7 @@
 # The Adminx Permission access API
 Adminx has a class named `Adminx\Access`. this class contains some static methods to handle users permissions.
 
-### user_has_permission
+## user_has_permission
 this method checks user has permission or not, returns boolean.
 
 ```php
@@ -11,7 +11,7 @@ $user = \App\Models\User::find(1); // the user model
 \Adminx\Access::user_has_permission($user, 'Product.create');
 ```
 
-### add_permission_for_user
+## add_permission_for_user
 this methods adds a permission for a user.
 
 ```php
@@ -28,7 +28,7 @@ $user = \App\Models\User::find(1); // the user model
 \Adminx\Access::add_permission_for_user($user, '<permission>', false);
 ```
 
-### add_user_to_group
+## add_user_to_group
 this method adds the user to a group.
 
 ```php
@@ -39,7 +39,7 @@ $group = \Adminx\Models\Group::find($x);
 
 now, the user is added to that group and has all of the group permissions.
 
-### user_is_in_group
+## user_is_in_group
 this method checks a user is in a group.
 
 ```php
@@ -50,7 +50,7 @@ $result = \Adminx\Access::user_is_in_group($user, $group); // true or false
 
 the output is a boolean.
 
-### remove_user_from_group
+## remove_user_from_group
 this method removes a user from a group.
 
 ```php
@@ -61,7 +61,7 @@ $group = \Adminx\Models\Group::find($x);
 
 now, user is removed from that group.
 
-### add_permission_for_group
+## add_permission_for_group
 this method adds a permssion for group.
 
 ```php
@@ -78,7 +78,7 @@ $group = \Adminx\Models\Group::find($x);
 \Adminx\Access::add_permission_for_group($group, 'the-permission', false);
 ```
 
-### remove_permission_from_group
+## remove_permission_from_group
 this method removes a permssion from group.
 
 ```php
