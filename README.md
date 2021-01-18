@@ -14,7 +14,7 @@ You can see some of Adminx Features:
 - Able to Customize frontend layout
 - Able to Customizing by language and localization
 - Advance Permission and Group handling
-- Useful for End-User
+- Able to Use for End-User
 - Match with laravel Auth
 - Cache handling (comming soon...)
 - Has API (comming soon...)
