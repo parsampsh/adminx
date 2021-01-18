@@ -67,7 +67,7 @@ $is_superuser = $core->check_super_user(auth()->user());
                 @foreach ($columns as $column)
                   @if(isset($model_config['foreign_keys'][$column]))
                       <?php $foreign_row = $model_config['foreign_keys'][$column]['model']::find($row->{$column}); ?>
-                      <td>{{ $model_config['foreign_keys'][$column]['title']($foreign_row) }}</td>
+			<td><?php echo $model_config['foreign_keys'][$column]['title']($foreign_row); ?></td>
                   @else
                     @if(isset($model_config['fields_values'][$column]) && is_callable($model_config['fields_values'][$column]))
                       <td><?php echo $model_config['fields_values'][$column]($row) ?></td>

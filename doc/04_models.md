@@ -257,6 +257,7 @@ $admin->add_model(\App\Models\Post::class, [
             }),
             'title' => (function($row){
                 // determine a title for item
+		// remember, this output will be showed as html! if you want to make this secure, use `htmlspecialchars()`
                 return $row->username;
             }),
         ]
