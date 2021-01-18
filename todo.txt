@@ -12,7 +12,6 @@ model{
 - handle cache: Use cache system to optimize database
 - api system: The restful api for admin actions
 - clean up documentation and add some examples
-- a script to publish public assets
 - add some example images
 - fix bugs
 - clean up

@@ -26,6 +26,7 @@ this package is written by [parsampsh](https://github.com/parsampsh).
 to get started with this package, do the following steps in your laravel project:
 
 - Add the package via composer: `$ composer require parsampsh/adminx`
+- Publish public assets: `$ php artisan vendor:publish --provider="Adminx\AdminxServiceProvider"`
 - Run the migrations: `$ php artisan migrate`
 
 then, adminx is ready to use. create `routes/adminx.php` file and go to `app/Providers/RouteServiceProvider.php` and inclue that in **End of `boot` method**:
@@ -53,7 +54,7 @@ $admin->register('/admin'); // `/admin` is the route of admin panel
 // ...
 ```
 
-now, run `$ php artisan optimize`, serve your application and goto `/admin` page. Remember that to access to the admin panel you should be login using laravel auth.
+now, run `$ php artisan optimize`, `$ php artisan serve` and goto `/admin` page. Remember that to access to the admin panel you should be login using laravel auth.
 
 Enjoy it!
 
