@@ -33,10 +33,20 @@
             @else
                 {{ $column['name'] }}:
             @endif
-            @if(!$is_textarea)
-                <input placeholder="{{ $column['comment'] ? $column['comment'] : $column['name'] }}" value="{{ $column['default'] }}" maxlength="{{ $type === 'text' ? $column['max'] : '' }}" {{ $column['is_null'] === false ? 'required' : '' }} type="{{ $type }}" name="{{ $column['name'] }}" class="form-control" />
+            @if(isset($model_config['foreign_keys'][$column['name']]))
+                <?php $list = $model_config['foreign_keys'][$column['name']]['list'](); ?>
+                <select name="{{ $column['name'] }}">
+                    @foreach($list as $item)
+                        <option value="{{ $item->id }}">{{ $model_config['foreign_keys'][$column['name']]['title']($item) }}</option>
+                    @endforeach
+                </select>
+                <br />
             @else
-                <textarea placeholder="{{ $column['comment'] ? $column['comment'] : $column['name'] }}" name="{{ $column['name'] }}" class="form-control" {{ $column['is_null'] === false ? 'required' : '' }}>{{ $column['default'] }}</textarea>
+                @if(!$is_textarea)
+                    <input placeholder="{{ $column['comment'] ? $column['comment'] : $column['name'] }}" value="{{ $column['default'] }}" maxlength="{{ $type === 'text' ? $column['max'] : '' }}" {{ $column['is_null'] === false ? 'required' : '' }} type="{{ $type }}" name="{{ $column['name'] }}" class="form-control" />
+                @else
+                    <textarea placeholder="{{ $column['comment'] ? $column['comment'] : $column['name'] }}" name="{{ $column['name'] }}" class="form-control" {{ $column['is_null'] === false ? 'required' : '' }}>{{ $column['default'] }}</textarea>
+                @endif
             @endif
             <br />
         @endforeach

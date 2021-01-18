@@ -64,10 +64,15 @@ $columns = $core->get_model_columns($model_config);
             @foreach($rows as $row)
               <tr>
                 @foreach ($columns as $column)
-                  @if(isset($model_config['fields_values'][$column]) && is_callable($model_config['fields_values'][$column]))
-                    <td><?php echo $model_config['fields_values'][$column]($row) ?></td>
+                  @if(isset($model_config['foreign_keys'][$column]))
+                      <?php $foreign_row = $model_config['foreign_keys'][$column]['model']::find($row->{$column}); ?>
+                      <td>{{ $model_config['foreign_keys'][$column]['title']($foreign_row) }}</td>
                   @else
-                    <td>{{ $row->{$column} }}</td>
+                    @if(isset($model_config['fields_values'][$column]) && is_callable($model_config['fields_values'][$column]))
+                      <td><?php echo $model_config['fields_values'][$column]($row) ?></td>
+                    @else
+                      <td>{{ $row->{$column} }}</td>
+                    @endif
                   @endif
                 @endforeach
                 @foreach ($model_config['virtual_fields'] as $vf => $value)

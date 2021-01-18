@@ -495,6 +495,10 @@ class Core
         {
             $config['fields_comments'] = [];
         }
+        if(!isset($config['foreign_keys']) || !is_array($config['foreign_keys']))
+        {
+            $config['foreign_keys'] = [];
+        }
         array_push($this->menu, [
             'type' => 'model',
             'config' => $config,

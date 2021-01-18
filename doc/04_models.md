@@ -233,6 +233,40 @@ $admin->add_model(\App\Models\Post::class, [
 ]);
 ```
 
+### Foreign Keys
+Handling foreign keys is so easy in adminx.
+
+You should set a option named `foreign_keys`.
+
+`1 to N` example:
+
+```php
+$admin->add_model(\App\Models\Post::class, [
+    // ...
+    // for example, posts have a user_id:
+    'foreign_keys' => [
+        'user_id' => [
+            // you should set model of foreign table with `model` option
+            'model' => \App\Models\User::class,
+            'list' => (function(){
+                // in the `list` closure, you should return list of foreign table
+                // (This will be used for Create ad Update forms)
+                return \App\Models\User::all();
+            }),
+            'title' => (function($row){
+                // determine a title for item
+                return $row->username;
+            }),
+        ]
+    ],
+    // ...
+]);
+```
+
+In the above example, column `user_id` will be set as a foreign key and instead of `user_id`,
+The title will be showed as value of column, and also in Create and Update forms, A select box
+will be showed and user can select a item. (The 1 To N relationship)
+
 ---
 
 [Previous: Frontend layout customization](03_frontend_layout_customization.md) |
