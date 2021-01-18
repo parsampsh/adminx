@@ -8,7 +8,6 @@ model{
 - update_html: Custom html for update form
 }
 
-- create custom actions system: Some buttons for action column in model table
 - handle cache: Use cache system to optimize database
 - api system: The restful api for admin actions
 - clean up documentation and add some examples

@@ -122,6 +122,32 @@ class AdminxController extends BaseController
         $this->run_middleware();
         $model_config = $this->find_model_by_slug($slug);
 
+        // check is a action clicked
+        if ($request->method() == 'POST') {
+            $action_name = $request->post('action');
+
+            // check action exists
+            if (!isset($model_config['actions'][$action_name])) {
+                abort(400);
+            }
+
+            $row = $model_config['model']::find($request->post('id'));
+            
+            if ($row === null) {
+                abort(400);
+            }
+
+            // check action middleware
+            if (isset($model_config['actions'][$action_name]['middleware'])) {
+                if (!call_user_func_array($model_config['actions'][$action_name]['middleware'], [auth()->user(), $row])) {
+                    abort(403);
+                }
+            }
+
+            // run the action
+            return call_user_func_array($model_config['actions'][$action_name]['run'], [$row]);
+        }
+
         // load model table rows
         $rows = $model_config['model']::query();
         $rows = $model_config['filter_data']($rows);

@@ -308,6 +308,42 @@ $admin->add_model(\App\Models\Post::class, [
 ]);
 ```
 
+### Custom actions
+There is a column named `actions` in model table. By default, there is delete and update buttons.
+
+You can add some custom buttons to this column using custom actions system.
+
+For example:
+
+```php
+$admin->add_model(\App\Models\Post::class, [
+    // ...
+    'actions' => [
+        'my_custom_button' => [
+            'title' => 'my button',
+            'class' => '(html-classes) btn btn-primary',
+            'middleware' => (function($user, $row){
+                // gets $user and $row
+                // you should determine show this button for $row for $user
+                return $user->id === $row->user_id; // exmaple
+            }),
+            'run' => (function($post){
+                // will be runed when button is pressed for $post
+                // do something...
+                
+                // return the response
+                // this response will be returned as http response
+                // for example:
+                return view('some.view');
+                return redirect('/some/place');
+                // ...
+            }),
+        ],
+    ],
+    // ...
+]);
+```
+
 ---
 
 [Previous: Frontend layout customization](03_frontend_layout_customization.md) |

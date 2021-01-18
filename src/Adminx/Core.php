@@ -102,6 +102,7 @@ class Core
                 Route::get('/', [AdminxController::class, 'index']);
                 Route::get('/page/{slug}', [AdminxController::class, 'show_page']);
                 Route::get('/model/{slug}', [AdminxController::class, 'model_index']);
+                Route::post('/model/{slug}', [AdminxController::class, 'model_index']);
                 Route::delete('/model/{slug}', [AdminxController::class, 'model_delete']);
                 Route::get('/model/{slug}/create', [AdminxController::class, 'model_create']);
                 Route::post('/model/{slug}/create', [AdminxController::class, 'model_create']);
@@ -509,6 +510,10 @@ class Core
         if(!isset($config['after_create_go_to']))
         {
             $config['after_create_go_to'] = 'update';
+        }
+        if(!isset($config['actions']) || !is_array($config['actions']))
+        {
+            $config['actions'] = [];
         }
         array_push($this->menu, [
             'type' => 'model',

@@ -1,6 +1,21 @@
 <?php
 $columns = $core->get_model_columns($model_config);
 $is_superuser = $core->check_super_user(auth()->user());
+
+$actions = $model_config['actions'];
+foreach($actions as $k => $v) {
+    if (!isset($actions[$k]['class'])) {
+        $actions[$k]['class'] = 'btn btn-primary';
+    }
+    if (!isset($actions[$k]['middleware'])) {
+        $actions[$k]['class'] = (function(){
+            return true;
+        });
+    }
+    if (!isset($actions[$k]['class'])) {
+        $actions[$k]['class'] = 'btn btn-primary';
+    }
+}
 ?>
 @extends($core->get_layout(), ['core' => $core])
 @section('adminx_title', $model_config['title'])
@@ -82,12 +97,22 @@ $is_superuser = $core->check_super_user(auth()->user());
                 @if($is_superuser || \Adminx\Access::user_has_permission(auth()->user(), $model_config['slug'] . '.delete'))
                 @if($is_superuser || call_user_func_array($model_config['delete_middleware'], [auth()->user(), $row]))
                 <td>
-                  <form method="POST" onsubmit="return confirm('{{ $core->get_word('delete.msg', 'Are you sure to delete this item?') }}')">
+                  <form method="POST" class="d-inline" onsubmit="return confirm('{{ $core->get_word('delete.msg', 'Are you sure to delete this item?') }}')">
                     <input type="hidden" name="_method" value="DELETE" />
                     @csrf
                     <input type="hidden" name="delete" value="{{ $row->id }}" />
-                    <button class="btn btn-danger" type="submit">{{ $core->get_word('btn.delete', 'Delete') }}</button>
+                    <button style="margin: 5px;" class="btn btn-danger" type="submit">{{ $core->get_word('btn.delete', 'Delete') }}</button>
                   </form>
+                    @foreach ($actions as $k => $action)
+                        @if(call_user_func_array($action['middleware'], [auth()->user(), $row]))
+                        <form method="POST" class="d-inline">
+                            @csrf
+                            <input type="hidden" name="action" value="{{ $k }}" />
+                            <input type="hidden" name="id" value="{{ $row->id }}" />
+                            <button style="margin: 5px;" class="{{ $action['class'] }}" type="submit">{{ $action['title'] }}</button>
+                        </form>
+                        @endif
+                    @endforeach
                 </td>
                 @endif
                 @endif
