@@ -50,6 +50,8 @@
             <br />
         @endforeach
 
+        <?php echo call_user_func($model_config['create_html']); ?>
+
         <input class="btn btn-success" style="width: 100%; padding: 20px;" type="submit" value="{{ str_replace('{name}', $model_config['slug'], $core->get_word('btn.create', 'Create new {name}')) }}" />
     </form>
 

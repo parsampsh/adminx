@@ -515,6 +515,12 @@ class Core
         {
             $config['actions'] = [];
         }
+        if(!isset($config['create_html']) || !is_callable($config['create_html']))
+        {
+            $config['create_html'] = (function(){
+                return '';
+            });
+        }
         array_push($this->menu, [
             'type' => 'model',
             'config' => $config,

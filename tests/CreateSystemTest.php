@@ -181,4 +181,23 @@ class CreateSystemTest extends TestCase
         $post = \App\Models\Post::where('body', 'hello world-filter')->where('user_id', $user->id)->first();
         $this->assertNotEmpty($post);
     }
+
+    public function test_custom_html_is_showed()
+    {
+        $user = \App\Models\User::factory()->create();
+
+        $admin = new \Adminx\Core;
+        $admin->super_user(function($u) use ($user){
+            return $user->id === $u->id;
+        });
+        $admin->add_model(\App\Models\Post::class, [
+            'slug' => 'Post',
+            'create_html' => (function(){ return 'hello create_html'; }),
+        ]);
+        $admin->register('/admin');
+
+        $res = $this->actingAs($user)->get('/admin/model/Post/create');
+        $res->assertStatus(200);
+        $res->assertSee('hello create_html', false);
+    }
 }

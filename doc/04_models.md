@@ -344,6 +344,24 @@ $admin->add_model(\App\Models\Post::class, [
 ]);
 ```
 
+### `create_html`
+This option can make a custom html inside create form.
+
+```php
+$admin->add_model(\App\Models\Post::class, [
+    // ...
+    'create_html' => (function(){
+        return 'this is my custom html';
+        // also you can use view
+        return view('some.view');
+    }),
+    // ...
+]);
+```
+
+Then, in create form, output of this closure will be showed in end of create form.
+For example, You can make custom inputs for form and use them in `filter_create_data`. 
+
 ---
 
 [Previous: Frontend layout customization](03_frontend_layout_customization.md) |

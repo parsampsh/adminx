@@ -4,7 +4,6 @@ model{
 - update_middleware: Middleware for update action
 - only_editable_fields: Readonly fields for create action but changable for update action
 - filter_update_data: Closure to customize update data
-- create_html: Custom html for create form
 - update_html: Custom html for update form
 }
 
