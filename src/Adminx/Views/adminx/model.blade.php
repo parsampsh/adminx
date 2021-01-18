@@ -109,7 +109,7 @@ foreach($actions as $k => $v) {
                             @csrf
                             <input type="hidden" name="action" value="{{ $k }}" />
                             <input type="hidden" name="id" value="{{ $row->id }}" />
-                            <button style="margin: 5px;" class="{{ $action['class'] }}" type="submit">{{ $action['title'] }}</button>
+                            <button style="margin: 5px;" class="{{ $action['class'] }}" type="submit"><?php echo $action['title'] ?></button>
                         </form>
                         @endif
                     @endforeach
