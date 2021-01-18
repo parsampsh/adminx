@@ -1,11 +1,19 @@
 Road to complete this project
 
-- model.update: update_middleware, only_editable_fields, filter_update_data
-- create custom actions system
-- handle cache
-- api system
+model{
+- update_middleware: Middleware for update action
+- only_editable_fields: Readonly fields for create action but changable for update action
+- filter_update_data: Closure to customize update data
+- create_html: Custom html for create form
+- update_html: Custom html for update form
+}
+
+- create custom actions system: Some buttons for action column in model table
+- handle cache: Use cache system to optimize database
+- api system: The restful api for admin actions
 - clean up documentation and add some examples
 - a script to publish public assets
-- add some examples images
+- add some example images
 - fix bugs
+- clean up
 - release 0.1
