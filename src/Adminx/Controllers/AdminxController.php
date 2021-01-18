@@ -201,7 +201,7 @@ class AdminxController extends BaseController
                     $type = $column_data->getType()->getName();
                     $maxlength = $column_data->getLength();
                     $default = $column_data->getDefault();
-                    if ($maxlength === null) {
+                    if ($maxlength === null && ($type === 'text' or $type === 'string')) {
                         $maxlength = 255;
                     }
                     $is_null = !$column_data->getNotnull();
@@ -224,6 +224,67 @@ class AdminxController extends BaseController
         }
 
         $columns = $new_columns;
+
+        // handle post action
+        if($request->method() === 'POST') {
+            // validate data
+            $validate_options = [];
+
+            foreach($columns as $column) {
+                $validate_options[$column['name']] = '';
+                if (!$column['is_null']) {
+                    $validate_options[$column['name']] .= 'required|';
+                }
+                if ($column['max'] !== null) {
+                    $validate_options[$column['name']] .= 'max:' . $column['max'] . '|';
+                }
+            }
+
+            $request->validate($validate_options);
+
+            // check foreign keys
+            $foreign_rows = [];
+            foreach($columns as $column) {
+                if (isset($model_config['foreign_keys'][$column['name']])) {
+                    $id = $request->post($column['name']);
+                    $row = $model_config['foreign_keys'][$column['name']]['model']::find($id);
+                    $foreign_rows[$column['name']] = $row;
+
+                    if (!$column['is_null']) {
+                        if ($foreign_rows[$column['name']] === null) {
+                            abort(400);
+                        }
+                    }
+                }
+            }
+
+            $row = new $model_config['model'];
+
+            foreach($columns as $column) {
+                if (isset($model_config['foreign_keys'][$column['name']])) {
+                    if ($foreign_rows[$column['name']] !== null) {
+                        $row->{$column['name']} = $foreign_rows[$column['name']]->id;
+                    }
+                } else {
+                    $row->{$column['name']} = $request->post($column['name']);
+                }
+            }
+
+            $row = $model_config['filter_create_data']($row);
+
+            $row->save();
+
+            if ($model_config['after_create_go_to'] === 'create') {
+                return redirect($request->fullUrl());
+            } else if ($model_config['after_create_go_to'] === 'table' || $model_config['after_create_go_to'] === 'update') {
+                // TODO : handle `update`
+                if ($request->get('back')) {
+                    return redirect($request->get('back'));
+                } else {
+                    return redirect($this->core->url('/model/' . $model_config['slug']));
+                }
+            }
+        }
 
         return view('adminx.create', [
             'core' => $this->core,

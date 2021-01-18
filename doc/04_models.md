@@ -252,6 +252,8 @@ $admin->add_model(\App\Models\Post::class, [
                 // in the `list` closure, you should return list of foreign table
                 // (This will be used for Create ad Update forms)
                 return \App\Models\User::all();
+                // also you can optimize your query and select only tha thing you want to use
+                return \App\Models\User::all(['id', 'username']);
             }),
             'title' => (function($row){
                 // determine a title for item
@@ -266,6 +268,44 @@ $admin->add_model(\App\Models\Post::class, [
 In the above example, column `user_id` will be set as a foreign key and instead of `user_id`,
 The title will be showed as value of column, and also in Create and Update forms, A select box
 will be showed and user can select a item. (The 1 To N relationship)
+
+### `filter_create_data`
+This option, is a option to customize user entered data for Create action.
+By default, Adminx Validates user data, sets data on a model object, But you can customize the data(Optional).
+
+For example:
+
+```php
+$admin->add_model(\App\Models\Post::class, [
+    // ...
+    'filter_create_data' => (function($row){
+        // make changes on $row and return the $row
+        // for example:
+        $row->body .= 'something else';
+        // return the row
+        return $row;
+    }),
+    // ...
+]);
+```
+
+### `after_create_go_to`
+This option is for customizing that after create action, user will be redirected to where.
+
+Valid values:
+- `table`: back to the table
+- `stay`: stay at create page to create new
+- `update`: go to update form of created item
+
+Default is `update`.
+
+```php
+$admin->add_model(\App\Models\Post::class, [
+    // ...
+    'after_create_go_to' => 'table',
+    // ...
+]);
+```
 
 ---
 

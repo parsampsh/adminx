@@ -104,6 +104,7 @@ class Core
                 Route::get('/model/{slug}', [AdminxController::class, 'model_index']);
                 Route::delete('/model/{slug}', [AdminxController::class, 'model_delete']);
                 Route::get('/model/{slug}/create', [AdminxController::class, 'model_create']);
+                Route::post('/model/{slug}/create', [AdminxController::class, 'model_create']);
             });
         });
     }
@@ -498,6 +499,16 @@ class Core
         if(!isset($config['foreign_keys']) || !is_array($config['foreign_keys']))
         {
             $config['foreign_keys'] = [];
+        }
+        if(!isset($config['filter_create_data']) || !is_callable($config['filter_create_data']))
+        {
+            $config['filter_create_data'] = (function($row){
+                return $row;
+            });
+        }
+        if(!isset($config['after_create_go_to']))
+        {
+            $config['after_create_go_to'] = 'update';
         }
         array_push($this->menu, [
             'type' => 'model',

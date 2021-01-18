@@ -5,9 +5,8 @@
     <h2>{{ str_replace('{name}', $model_config['slug'], $core->get_word('btn.create', 'Create new {name}')) }}</h2>
     <hr />
 
-    <form action="POSt" class="form-group">
+    <form method="POST" class="form-group">
         @csrf
-        <input type="hidden" name="_method" value="PUT" />
 
         @foreach($columns as $column)
             <?php

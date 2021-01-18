@@ -1,5 +1,6 @@
 <?php
 $columns = $core->get_model_columns($model_config);
+$is_superuser = $core->check_super_user(auth()->user());
 ?>
 @extends($core->get_layout(), ['core' => $core])
 @section('adminx_title', $model_config['title'])
@@ -78,8 +79,8 @@ $columns = $core->get_model_columns($model_config);
                 @foreach ($model_config['virtual_fields'] as $vf => $value)
                     <td><?php echo $value($row) ?></td>
                 @endforeach
-                @if(\Adminx\Access::user_has_permission(auth()->user(), $model_config['slug'] . '.delete'))
-                @if(call_user_func_array($model_config['delete_middleware'], [auth()->user(), $row]))
+                @if($is_superuser || \Adminx\Access::user_has_permission(auth()->user(), $model_config['slug'] . '.delete'))
+                @if($is_superuser || call_user_func_array($model_config['delete_middleware'], [auth()->user(), $row]))
                 <td>
                   <form method="POST" onsubmit="return confirm('{{ $core->get_word('delete.msg', 'Are you sure to delete this item?') }}')">
                     <input type="hidden" name="_method" value="DELETE" />

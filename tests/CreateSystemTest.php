@@ -132,4 +132,53 @@ class CreateSystemTest extends TestCase
         $res->assertSee('email:', false);
         $res->assertSee('name="email" class="form-control" />', false);
     }
+
+    public function test_create_form_should_be_validatad_and_item_can_be_created()
+    {
+        $user = \App\Models\User::factory()->create();
+
+        $admin = new \Adminx\Core;
+        $admin->super_user(function($u) use ($user){
+            return $user->id === $u->id;
+        });
+        $admin->add_model(\App\Models\Post::class, [
+            'slug' => 'Post',
+            'foreign_keys' => [
+                'user_id' => [
+                    'model' => \App\Models\User::class,
+                    'list' => (function(){
+                        return \App\Models\User::all();
+                    }),
+                    'title' => (function($post){
+                        return $post->id;
+                    }),
+                ]
+            ],
+            'filter_create_data' => (function($post){
+                $post->body .= '-filter';
+                return $post;
+            }),
+        ]);
+        $admin->register('/admin');
+
+        $res = $this->actingAs($user)->post('/admin/model/Post/create', [
+
+        ]);
+        $res->assertStatus(302);
+
+        $res = $this->actingAs($user)->post('/admin/model/Post/create', [
+            'body' => 'hello world',
+            'user_id' => 1000,
+        ]);
+        $res->assertStatus(400);
+
+        $res = $this->actingAs($user)->post('/admin/model/Post/create', [
+            'body' => 'hello world',
+            'user_id' => $user->id,
+        ]);
+        $res->assertStatus(302);
+
+        $post = \App\Models\Post::where('body', 'hello world-filter')->where('user_id', $user->id)->first();
+        $this->assertNotEmpty($post);
+    }
 }
