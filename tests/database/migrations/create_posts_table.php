@@ -1,5 +1,14 @@
 <?php
 
+/*
+ * This file is part of Adminx.
+ *
+ * Copyright 2020-2021 parsa shahmaleki <parsampsh@gmail.com>
+ *
+ * Adminx project is Licensed Under MIT.
+ * For more information, please see the LICENSE file.
+ */
+
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
