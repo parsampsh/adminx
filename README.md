@@ -16,7 +16,7 @@ You can see some of Adminx Features:
 - Advance Permission and Group handling
 - Able to Use for End-User
 - Match with laravel Auth
-- Plugin system (comming soon...)
+- Plugin system
 - Cache handling (comming soon...)
 
 ## Authors

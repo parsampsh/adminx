@@ -613,4 +613,17 @@ class Core
 
         return (bool) call_user_func_array($func, [$user]);
     }
+
+    /**
+     * Adds a plugin
+     *
+     * @param string $class
+     * @param array $options
+     */
+    public function add_plugin(string $class, array $options=[])
+    {
+        $obj = new $class;
+        call_user_func_array([$obj, 'run'], [$this, $options]);
+        return $this;
+    }
 }

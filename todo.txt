@@ -1,7 +1,6 @@
 Road to complete this project
 
 - handle logs
-- plugin system
 - backup builtin plugin
 - handle cache: Use cache system to optimize database
 - clean up documentation and add some examples

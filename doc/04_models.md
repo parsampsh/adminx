@@ -426,4 +426,4 @@ $admin->add_model(\App\Models\Post::class, [
 ---
 
 [Previous: Frontend layout customization](03_frontend_layout_customization.md) |
-[Next: Access API](05_access_api.md)
+[Next: Plugins](05_plugins.md)
