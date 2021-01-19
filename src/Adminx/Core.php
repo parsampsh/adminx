@@ -106,6 +106,8 @@ class Core
                 Route::delete('/model/{slug}', [AdminxController::class, 'model_delete']);
                 Route::get('/model/{slug}/create', [AdminxController::class, 'model_create']);
                 Route::post('/model/{slug}/create', [AdminxController::class, 'model_create']);
+                Route::get('/model/{slug}/update/{id}', [AdminxController::class, 'model_update']);
+                Route::put('/model/{slug}/update/{id}', [AdminxController::class, 'model_update']);
             });
         });
     }
@@ -493,6 +495,10 @@ class Core
         {
             $config['only_addable_fields'] = [];
         }
+        if(!isset($config['only_editable_fields']) || !is_array($config['only_editable_fields']))
+        {
+            $config['only_editable_fields'] = [];
+        }
         if(!isset($config['fields_comments']) || !is_array($config['fields_comments']))
         {
             $config['fields_comments'] = [];
@@ -507,9 +513,19 @@ class Core
                 return $row;
             });
         }
+        if(!isset($config['filter_update_data']) || !is_callable($config['filter_update_data']))
+        {
+            $config['filter_update_data'] = (function($row){
+                return $row;
+            });
+        }
         if(!isset($config['after_create_go_to']))
         {
             $config['after_create_go_to'] = 'update';
+        }
+        if(!isset($config['after_update_go_to']))
+        {
+            $config['after_update_go_to'] = 'update';
         }
         if(!isset($config['actions']) || !is_array($config['actions']))
         {
@@ -519,6 +535,18 @@ class Core
         {
             $config['create_html'] = (function(){
                 return '';
+            });
+        }
+        if(!isset($config['update_html']) || !is_callable($config['update_html']))
+        {
+            $config['update_html'] = (function(){
+                return '';
+            });
+        }
+        if(!isset($config['update_middleware']) || !is_callable($config['update_middleware']))
+        {
+            $config['update_middleware'] = (function(){
+                return true;
             });
         }
         array_push($this->menu, [

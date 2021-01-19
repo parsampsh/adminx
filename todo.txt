@@ -1,12 +1,7 @@
 Road to complete this project
 
-model{
-- update_middleware: Middleware for update action
-- only_editable_fields: Readonly fields for create action but changable for update action
-- filter_update_data: Closure to customize update data
-- update_html: Custom html for update form
-}
-
+- use icon instead of text in action buttons
+- handle logs
 - plugin system
 - backup builtin plugin
 - handle cache: Use cache system to optimize database

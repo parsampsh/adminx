@@ -94,28 +94,35 @@ foreach($actions as $k => $v) {
                 @foreach ($model_config['virtual_fields'] as $vf => $value)
                     <td><?php echo $value($row) ?></td>
                 @endforeach
+                    <td>
                 @if($is_superuser || \Adminx\Access::user_has_permission(auth()->user(), $model_config['slug'] . '.delete'))
                 @if($is_superuser || call_user_func_array($model_config['delete_middleware'], [auth()->user(), $row]))
-                <td>
+
                   <form method="POST" class="d-inline" onsubmit="return confirm('{{ $core->get_word('delete.msg', 'Are you sure to delete this item?') }}')">
                     <input type="hidden" name="_method" value="DELETE" />
                     @csrf
                     <input type="hidden" name="delete" value="{{ $row->id }}" />
                     <button style="margin: 5px;" class="btn btn-danger" type="submit">{{ $core->get_word('btn.delete', 'Delete') }}</button>
                   </form>
+
+                @endif
+                @endif
+                    @if($is_superuser || \Adminx\Access::user_has_permission(auth()->user(), $model_config['slug'] . '.update'))
+                        @if($is_superuser || call_user_func_array($model_config['update_middleware'], [auth()->user(), $row]))
+                            <a href="{{ $core->url('/model/'. $model_config['slug'] . '/update/' . $row->id) . '?back=' . request()->fullUrl() }}" style="margin: 5px;" class="btn btn-primary">{{ $core->get_word('btn.update', 'Update') }}</a>
+                        @endif
+                    @endif
                     @foreach ($actions as $k => $action)
                         @if(call_user_func_array($action['middleware'], [auth()->user(), $row]))
-                        <form method="POST" class="d-inline">
-                            @csrf
-                            <input type="hidden" name="action" value="{{ $k }}" />
-                            <input type="hidden" name="id" value="{{ $row->id }}" />
-                            <button style="margin: 5px;" class="{{ $action['class'] }}" type="submit"><?php echo $action['title'] ?></button>
-                        </form>
+                            <form method="POST" class="d-inline">
+                                @csrf
+                                <input type="hidden" name="action" value="{{ $k }}" />
+                                <input type="hidden" name="id" value="{{ $row->id }}" />
+                                <button style="margin: 5px;" class="{{ $action['class'] }}" type="submit"><?php echo $action['title'] ?></button>
+                            </form>
                         @endif
                     @endforeach
-                </td>
-                @endif
-                @endif
+                    </td>
               </tr>
             @endforeach
           </tbody>

@@ -197,20 +197,52 @@ class AdminxController extends BaseController
         return redirect($request->fullUrl());
     }
 
-    public function model_create(Request $request, string $slug)
+    public function model_update(Request $request, string $slug, string $id)
+    {
+        return $this->model_create($request, $slug, true, $id);
+    }
+
+    public function model_create(Request $request, string $slug, bool $is_update=false, $update_id=null)
     {
         $this->run_middleware();
         $model_config = $this->find_model_by_slug($slug);
 
         if(!$this->core->check_super_user(auth()->user())) {
-            // has user create permission
-            if (!\Adminx\Access::user_has_permission(auth()->user(), $slug . '.create')) {
+            // has user create/update permission
+            $permission = '.create';
+            if ($is_update) {
+                $permission = '.update';
+            }
+
+            if (!\Adminx\Access::user_has_permission(auth()->user(), $slug . $permission)) {
                 abort(403);
             }
 
-            // check create_middleware
-            if (call_user_func_array($model_config['create_middleware'], [auth()->user()]) !== true) {
+            // check create_middleware/update_middleware
+            if ($is_update) {
+                $row = $model_config['model']::find($update_id);
+
+                if ($row === null) {
+                    abort(404);
+                }
+
+                $middleware_result = call_user_func_array($model_config['update_middleware'], [auth()->user(), $row]);
+            } else {
+                $middleware_result = call_user_func_array($model_config['create_middleware'], [auth()->user()]);
+            }
+
+            if (!$middleware_result) {
                 abort(403);
+            }
+        }
+
+        if ($is_update) {
+            if (!isset($row)) {
+                $row = $model_config['model']::find($update_id);
+
+                if ($row === null) {
+                    abort(404);
+                }
             }
         }
 
@@ -222,7 +254,13 @@ class AdminxController extends BaseController
         // filter the columns
         foreach($columns as $column){
             if($column !== 'id') {
-                if (!in_array($column, $model_config['readonly_fields']) || in_array($column, $model_config['only_addable_fields'])) {
+                if ($is_update) {
+                    $is_show = !in_array($column, $model_config['readonly_fields']) || in_array($column, $model_config['only_editable_fields']);
+                } else {
+                    $is_show = !in_array($column, $model_config['readonly_fields']) || in_array($column, $model_config['only_addable_fields']);
+                }
+
+                if ($is_show) {
                     $column_data = DB::connection()->getDoctrineColumn($table_name, $column);
                     $type = $column_data->getType()->getName();
                     $maxlength = $column_data->getLength();
@@ -252,7 +290,7 @@ class AdminxController extends BaseController
         $columns = $new_columns;
 
         // handle post action
-        if($request->method() === 'POST') {
+        if($request->method() === 'POST' || $request->method() === 'PUT') {
             // validate data
             $validate_options = [];
 
@@ -273,8 +311,8 @@ class AdminxController extends BaseController
             foreach($columns as $column) {
                 if (isset($model_config['foreign_keys'][$column['name']])) {
                     $id = $request->post($column['name']);
-                    $row = $model_config['foreign_keys'][$column['name']]['model']::find($id);
-                    $foreign_rows[$column['name']] = $row;
+                    $r = $model_config['foreign_keys'][$column['name']]['model']::find($id);
+                    $foreign_rows[$column['name']] = $r;
 
                     if (!$column['is_null']) {
                         if ($foreign_rows[$column['name']] === null) {
@@ -284,7 +322,13 @@ class AdminxController extends BaseController
                 }
             }
 
-            $row = new $model_config['model'];
+            if (!$is_update) {
+                $row = new $model_config['model'];
+            }
+
+            if ($is_update) {
+                $old_row = clone $row;
+            }
 
             foreach($columns as $column) {
                 if (isset($model_config['foreign_keys'][$column['name']])) {
@@ -296,26 +340,58 @@ class AdminxController extends BaseController
                 }
             }
 
-            $row = $model_config['filter_create_data']($row);
+            if ($is_update) {
+                $row = call_user_func_array($model_config['filter_update_data'], [$old_row, $row]);
+            } else {
+                $row = call_user_func_array($model_config['filter_create_data'], [$row]);
+            }
+
+            if ($is_update) {
+                //dd($row);
+            }
 
             $row->save();
 
-            if ($model_config['after_create_go_to'] === 'create') {
+            if ($is_update) {
+                $next_step = $model_config['after_update_go_to'];
+            } else {
+                $next_step = $model_config['after_create_go_to'];
+            }
+
+            if ($next_step === 'create') {
                 return redirect($request->fullUrl());
-            } else if ($model_config['after_create_go_to'] === 'table' || $model_config['after_create_go_to'] === 'update') {
-                // TODO : handle `update`
+            } else if ($next_step === 'table') {
                 if ($request->get('back')) {
                     return redirect($request->get('back'));
                 } else {
                     return redirect($this->core->url('/model/' . $model_config['slug']));
                 }
+            } else if ($next_step === 'update') {
+                return redirect($this->core->url('/model/' . $model_config['slug'] . '/update/' . $row->id));
             }
         }
 
-        return view('adminx.create', [
-            'core' => $this->core,
-            'model_config' => $model_config,
-            'columns' => $columns
-        ]);
+        if ($is_update) {
+            if (!isset($row)) {
+                $row = $model_config['model']::find($update_id);
+            }
+            if ($row === null) {
+                abort(404);
+            }
+            return view('adminx.create', [
+                'core' => $this->core,
+                'model_config' => $model_config,
+                'columns' => $columns,
+                'is_update' => true,
+                'row' => $row,
+            ]);
+        } else {
+            return view('adminx.create', [
+                'core' => $this->core,
+                'model_config' => $model_config,
+                'columns' => $columns,
+                'is_update' => false,
+            ]);
+        }
     }
 }

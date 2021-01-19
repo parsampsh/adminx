@@ -193,7 +193,22 @@ $admin->add_model(\App\Models\Post::class, [
 ]);
 ```
 
-### `readonly_fields`, `only_addable_fields`
+### Update middleware
+This option is like `create_middle` but for update action. by default, this permission is handled by adminx permission system but you can check some exceptions by this option.
+
+```php
+$admin->add_model(\App\Models\Post::class, [
+    // ...
+    // this closure should return boolean
+    'update_middleware' => (function($user, $post){
+        // for example:
+        return $user->id === $post->id;
+    }),
+    // ...
+]);
+```
+
+### `readonly_fields`, `only_addable_fields`, `only_editable_fields`
 The `readonly_fields` option declares some columns READONLY. the readonly column value cannot be set in create and update form.
 
 ```php
@@ -221,6 +236,20 @@ $admin->add_model(\App\Models\Post::class, [
 ```
 
 In the above example, value of column `something` can be set in CREATE action, but cannot be changed in UPDATE action.
+
+Also `only_editable_fields` option is like `only_addable_fields` but for Update action.
+
+If you want to set a field that to don't get value in Create action, but can be edited in Update action,
+You should put that field in `readonly_fields` and `only_editable_fields`:
+
+```php
+$admin->add_model(\App\Models\Post::class, [
+    // ...
+    'readonly_fields' => ['something'],
+    'only_editable_fields' => ['something'],
+    // ...
+]);
+```
 
 ### `fields_comments`
 This option sets comment for fields. this comment will be showed as placeholder in create and update forms.
@@ -270,8 +299,8 @@ In the above example, column `user_id` will be set as a foreign key and instead 
 The title will be showed as value of column, and also in Create and Update forms, A select box
 will be showed and user can select a item. (The 1 To N relationship)
 
-### `filter_create_data`
-This option, is a option to customize user entered data for Create action.
+### `filter_create_data`, `filter_update_data`
+`filter_create_data` option, is a option to customize user entered data for Create action.
 By default, Adminx Validates user data, sets data on a model object, But you can customize the data(Optional).
 
 For example:
@@ -290,7 +319,24 @@ $admin->add_model(\App\Models\Post::class, [
 ]);
 ```
 
-### `after_create_go_to`
+Also `filter_update_data` is for Update form:
+
+```php
+$admin->add_model(\App\Models\Post::class, [
+    // ...
+    'filter_update_data' => (function($old, $row){
+        // $old is the old row data and $row is new edited data!
+        // make changes on $row and return the $row
+        // for example:
+        $row->body .= 'something else';
+        // return the row
+        return $row;
+    }),
+    // ...
+]);
+```
+
+### `after_create_go_to`, `after_update_go_to`
 This option is for customizing that after create action, user will be redirected to where.
 
 Valid values:
@@ -304,6 +350,7 @@ Default is `update`.
 $admin->add_model(\App\Models\Post::class, [
     // ...
     'after_create_go_to' => 'table',
+    'after_update_go_to' => 'update', // this is even like after_create_go_to but for update form
     // ...
 ]);
 ```
@@ -344,8 +391,8 @@ $admin->add_model(\App\Models\Post::class, [
 ]);
 ```
 
-### `create_html`
-This option can make a custom html inside create form.
+### `create_html`, `update_html`
+This option can make a custom html inside create/update form.
 
 ```php
 $admin->add_model(\App\Models\Post::class, [
@@ -361,6 +408,20 @@ $admin->add_model(\App\Models\Post::class, [
 
 Then, in create form, output of this closure will be showed in end of create form.
 For example, You can make custom inputs for form and use them in `filter_create_data`. 
+
+Also `update_html` is even like `create_html` but this closure can get `$row` user are editing:
+
+```php
+$admin->add_model(\App\Models\Post::class, [
+    // ...
+    'update_html' => (function($post){
+        return 'this is my custom html';
+        // also you can use view
+        return view('some.view');
+    }),
+    // ...
+]);
+```
 
 ---
 
