@@ -16,8 +16,8 @@ You can see some of Adminx Features:
 - Advance Permission and Group handling
 - Able to Use for End-User
 - Match with laravel Auth
+- Plugin system (comming soon...)
 - Cache handling (comming soon...)
-- Has API (comming soon...)
 
 ## Authors
 this package is written by [parsampsh](https://github.com/parsampsh).
