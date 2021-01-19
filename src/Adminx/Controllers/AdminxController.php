@@ -346,10 +346,6 @@ class AdminxController extends BaseController
                 $row = call_user_func_array($model_config['filter_create_data'], [$row]);
             }
 
-            if ($is_update) {
-                //dd($row);
-            }
-
             $row->save();
 
             if ($is_update) {

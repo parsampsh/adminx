@@ -515,7 +515,7 @@ class Core
         }
         if(!isset($config['filter_update_data']) || !is_callable($config['filter_update_data']))
         {
-            $config['filter_update_data'] = (function($row){
+            $config['filter_update_data'] = (function($old_row, $row){
                 return $row;
             });
         }

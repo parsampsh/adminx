@@ -50,7 +50,7 @@
                     $current_selected = null;
 
                     if ($is_update) {
-                        $current_selected = $row->{$column['name']};
+                        $current_selected = intval($row->{$column['name']});
                     }
                 ?>
                 <select name="{{ $column['name'] }}">
