@@ -5,6 +5,7 @@ Road to complete this project
 - add users and permissions as default models
 - backup builtin plugin
 - handle and use cache system to optimize database
+- add more default themes
 - clean up documentation and add some examples
 - add some example images
 - fix bugs
