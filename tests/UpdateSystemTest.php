@@ -26,13 +26,13 @@ class UpdateSystemTest extends TestCase
 
         $res = $this->actingAs($user)->get('/admin/model/the-users');
         $res->assertStatus(200);
-        $res->assertDontSee('class="btn btn-primary">Update</a>', false);
+        $res->assertDontSee('class="btn btn-primary"><i class="fa fa-edit"></i></a>', false);
 
         \Adminx\Access::add_permission_for_user($user, 'the-users.update');
 
         $res = $this->actingAs($user)->get('/admin/model/the-users');
         $res->assertStatus(200);
-        $res->assertSee('class="btn btn-primary">Update</a>', false);
+        $res->assertSee('class="btn btn-primary"><i class="fa fa-edit"></i></a>', false);
 
         $admin = new \Adminx\Core;
         $admin->add_model(\App\Models\User::class, [
@@ -45,7 +45,7 @@ class UpdateSystemTest extends TestCase
 
         $res = $this->actingAs($user)->get('/admin/model/the-users');
         $res->assertStatus(200);
-        $res->assertDontSee('class="btn btn-primary">Update</a>', false);
+        $res->assertDontSee('class="btn btn-primary"><i class="fa fa-edit"></i></a>', false);
     }
 
     public function test_user_needs_permission_to_see_update_page()

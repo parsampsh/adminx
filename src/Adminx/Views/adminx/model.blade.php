@@ -102,14 +102,14 @@ foreach($actions as $k => $v) {
                     <input type="hidden" name="_method" value="DELETE" />
                     @csrf
                     <input type="hidden" name="delete" value="{{ $row->id }}" />
-                    <button style="margin: 5px;" class="btn btn-danger" type="submit">{{ $core->get_word('btn.delete', 'Delete') }}</button>
+                      <button style="margin: 2px;" class="btn btn-danger" type="submit"><i class="fa fa-trash"></i></button>
                   </form>
 
                 @endif
                 @endif
                     @if($is_superuser || \Adminx\Access::user_has_permission(auth()->user(), $model_config['slug'] . '.update'))
                         @if($is_superuser || call_user_func_array($model_config['update_middleware'], [auth()->user(), $row]))
-                            <a href="{{ $core->url('/model/'. $model_config['slug'] . '/update/' . $row->id) . '?back=' . request()->fullUrl() }}" style="margin: 5px;" class="btn btn-primary">{{ $core->get_word('btn.update', 'Update') }}</a>
+                            <a href="{{ $core->url('/model/'. $model_config['slug'] . '/update/' . $row->id) . '?back=' . request()->fullUrl() }}" style="margin: 2px;" class="btn btn-primary"><i class="fa fa-edit"></i></a>
                         @endif
                     @endif
                     @foreach ($actions as $k => $action)

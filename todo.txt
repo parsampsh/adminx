@@ -1,6 +1,5 @@
 Road to complete this project
 
-- use icon instead of text in action buttons
 - handle logs
 - plugin system
 - backup builtin plugin
