@@ -5,8 +5,6 @@ Road to complete this project
 - add more default themes
 - backup builtin plugin
 - handle and use cache system to optimize database
-- clean up documentation and add some examples
-- add some example images
-- fix bugs
-- clean up
+- clean up documentation and add some example images and configs
+- fix bugs and clean up
 - release 0.1
