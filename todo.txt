@@ -1,5 +1,6 @@
 Road to complete this project
 
+- add delete button to update page
 - add users and permissions as default models
 - handle logs
 - add more default themes
