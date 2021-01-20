@@ -6,8 +6,24 @@
 @endif
 @section('adminx_content')
     <a class="btn btn-primary" href="{{ request()->get('back', $core->url('/model/' . $model_config['slug'])) }}">{{ $core->get_word('btn.back', 'Back') }}</a>
+    <br />
+    <br />
     @if($is_update)
         <h2>{{ $core->get_word('btn.update', 'Update') }} "{{ $row->id }}"</h2>
+        <?php $is_superuser = $core->check_super_user(auth()->user()); ?>
+        @if($is_superuser || \Adminx\Access::user_has_permission(auth()->user(), $model_config['slug'] . '.delete'))
+            @if($is_superuser || call_user_func_array($model_config['delete_middleware'], [auth()->user(), $row]))
+                <br />
+                <form action="{{ request()->get('back', $core->url('/model/' . $model_config['slug'])) }}" method="POST" class="d-inline" onsubmit="return confirm('{{ $core->get_word('delete.msg', 'Are you sure to delete this item?') }}')">
+                    <input type="hidden" name="_method" value="DELETE" />
+                    @csrf
+                    <input type="hidden" name="delete" value="{{ $row->id }}" />
+                    <button class="btn btn-danger" type="submit"><i class="fa fa-trash"></i></button>
+                </form>
+                <div style="clear: both;"></div>
+
+            @endif
+        @endif
     @else
         <h2>{{ str_replace('{name}', $model_config['slug'], $core->get_word('btn.create', 'Create new {name}')) }}</h2>
     @endif
