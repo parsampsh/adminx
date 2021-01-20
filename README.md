@@ -29,7 +29,7 @@ Some of Adminx Features:
 - Match with laravel Auth
 - Plugin system
 - Builtin Data Backup plugin
-- Cache handling (comming soon...)
+- Cache Handling to Optimize database usage (comming soon...)
 
 ## Authors
 this package is written by [parsampsh](https://github.com/parsampsh).
