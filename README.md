@@ -15,6 +15,7 @@ Some of Adminx Features:
 - Fully match with your database models
 - Handling 1 to n and n to n relations in database
 - Custom actions for model datatable
+- Handling Admins Actibvity Logs (comming soon...)
 - Able to Customize frontend layout
 - Able to Customizing by language and localization
 - RTL layout
