@@ -1,7 +1,6 @@
 Road to complete this project
 
 - handle logs
-- add select2 library for select box
 - handle n to n relations
 - add users and permissions as default models
 - backup builtin plugin

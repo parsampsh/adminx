@@ -12,6 +12,7 @@ $logout_url = url($core->get_logout());
   <title>{{ $core->get_title() }} - @yield('adminx_title')</title>
   <link href="{{ url('/adminx-public/default/font-awesome.css') }}" rel="stylesheet" type="text/css">
   <link href="{{ url('/adminx-public/default/styles.css') }}" rel="stylesheet" type="text/css">
+  <link href="{{ url('/adminx-public/default/select2/select2.min.css') }}" rel="stylesheet" type="text/css">
   <link href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i" rel="stylesheet">
   @if($core->is_rtl())
   <link href="{{ url('/adminx-public/default/bootstrap-rtl.css') }}" rel="stylesheet">
@@ -174,5 +175,11 @@ $logout_url = url($core->get_logout());
   <script src="{{ url('/adminx-public/default/bootstrap.bundle.min.js') }}"></script>
   <script src="{{ url('/adminx-public/default/jquery.easing.min.js') }}"></script>
   <script src="{{ url('/adminx-public/default/sb-admin-2.min.js') }}"></script>
+  <script src="{{ url('/adminx-public/default/select2/select2.full.min.js') }}"></script>
+  <script>
+    $(document).ready(function(){
+      $('.select2-box').select2();
+    });
+  </script>
 </body>
 </html>

@@ -53,7 +53,7 @@
                         $current_selected = intval($row->{$column['name']});
                     }
                 ?>
-                <select name="{{ $column['name'] }}">
+                <select class="select2-box" name="{{ $column['name'] }}">
                     @foreach($list as $item)
                         <option{{ $current_selected === $item->id ? ' selected' : '' }} value="{{ $item->id }}">{{ $model_config['foreign_keys'][$column['name']]['title']($item) }}</option>
                     @endforeach
