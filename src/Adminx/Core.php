@@ -630,4 +630,33 @@ class Core
         call_user_func_array([$obj, 'run'], [$this, $options]);
         return $this;
     }
+
+    /**
+     * The frontend font
+     *
+     * @var string
+     */
+    private string $font = '';
+
+    /**
+     * Sets the frontend font
+     *
+     * @param string $font
+     * @return $this
+     */
+    public function set_font(string $font)
+    {
+        $this->font = $font;
+        return $this;
+    }
+
+    /**
+     * Returns the frontend font
+     *
+     * @return string
+     */
+    public function get_font(): string
+    {
+        return $this->font;
+    }
 }

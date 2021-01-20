@@ -54,6 +54,25 @@ also you can disable the rtl mode by passing `false` to `enable_rtl` method:
 $admin->enable_rtl(false);
 ```
 
+## Font
+You can change default font of Adminx default layouts.
+
+You can use `set_font` method:
+
+```php
+$admin->set_font('/url/to/font');
+
+// examples
+$admin->set_font('/fonts/Some-font.ttf');
+$admin->set_font('https://example.com/font.woff');
+```
+
+Also you can get current font with `get_font`:
+
+```php
+echo $admin->get_font();
+```
+
 ---
 
 [Previous: Menu links and pages](01_menu_links_and_pages.md) | [Next: Frontend layout customization](03_frontend_layout_customization.md)

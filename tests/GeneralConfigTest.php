@@ -113,6 +113,10 @@ class GeneralConfigTest extends TestCase
         $this->assertEquals($admin->get_word('bye', 'the default'), 'good bye');
 
         $this->assertEquals($admin->get_all_words(), ['hello' => 'hello world', 'bye' => 'good bye']);
+
+        $this->assertEquals($admin->get_font(), null);
+        $admin->set_font('/test/font.ttf');
+        $this->assertEquals($admin->get_font(), '/test/font.ttf');
     }
 
     public function test_model_get_fields_works()

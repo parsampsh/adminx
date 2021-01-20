@@ -41,6 +41,18 @@ $logout_url = url($core->get_logout());
     }
   </style>
   @endif
+  @if($core->get_font() !== '')
+    <style>
+    @font-face {
+    font-family: customfont;
+    src: url('{{ $core->get_font() }}');
+    }
+
+    *{
+    font-family: customfont;
+    }
+    </style>
+  @endif
 </head>
 <body id="page-top">
   <div id="wrapper">
