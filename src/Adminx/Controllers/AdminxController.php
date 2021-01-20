@@ -317,6 +317,11 @@ class AdminxController extends BaseController
                     if (!$column['is_null']) {
                         if ($foreign_rows[$column['name']] === null) {
                             abort(400);
+                        } else {
+                            $tmp = call_user_func_array($model_config['foreign_keys'][$column['name']]['list'], [])->where('id', $foreign_rows[$column['name']]->id)->first();
+                            if ($tmp === null) {
+                                abort(400);
+                            }
                         }
                     }
                 }
@@ -347,6 +352,47 @@ class AdminxController extends BaseController
             }
 
             $row->save();
+
+            // handle n2n relations
+            $i = 0;
+            foreach ($model_config['n2n'] as $item) {
+                $list = $item['list']();
+                $current_selected = [];
+
+                if ($is_update) {
+                    $current_selected = $item['pivot']::where($item['pivot_keys'][0], $row->id)->get();
+                    $current_selected_ids = [];
+                    foreach ($current_selected as $cs) {
+                        array_push($current_selected_ids, $cs->{$item['pivot_keys'][1]});
+                    }
+                    $current_selected = $current_selected_ids;
+                }
+
+                $i++;
+
+                $input = $request->post('n2n' . $i);
+
+                if (!is_array($input)) {
+                    $input = [];
+                }
+
+                // delete old items
+                if ($is_update) {
+                    $item['pivot']::where($item['pivot_keys'][0], $row->id)->delete();
+                }
+
+                // set new items
+                foreach ($input as $input_item) {
+                    $tmp_list = clone $list;
+                    $input_row = $tmp_list->where('id', $input_item)->first();
+                    if ($input_row !== null) {
+                        $pivot_row = new $item['pivot'];
+                        $pivot_row->{$item['pivot_keys'][0]} = $row->id;
+                        $pivot_row->{$item['pivot_keys'][1]} = $input_row->id;
+                        $pivot_row->save();
+                    }
+                }
+            }
 
             if ($is_update) {
                 $next_step = $model_config['after_update_go_to'];

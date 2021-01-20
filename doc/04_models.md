@@ -299,6 +299,40 @@ In the above example, column `user_id` will be set as a foreign key and instead 
 The title will be showed as value of column, and also in Create and Update forms, A select box
 will be showed and user can select a item. (The 1 To N relationship)
 
+### Foreign Keys: N to N Relations
+Adminx can handle N to N relations between models.
+
+You should use option `n2n`:
+
+```php
+$admin->add_model(\App\Models\Post::class, [
+    // ...
+    'n2n' => [
+        [
+            'name' => 'Categories', // name of this relation
+            'model' => \App\Models\Category::class, // which model the Post model has n2n relation with
+            'pivot' => \App\Models\PostCategory::class, // the pivot table
+            'pivot_keys' => ['post_id', 'category_id'], // the pivot table keys. first is Post id key, second is Category id key
+            'list' => (function(){
+                // closure to load list of Categories
+                return \App\Models\Category::all();
+            }),
+            'title' => (function($row){
+                // determine title for each Post
+                return $row->title;
+            }),
+        ],
+        [
+            // other relation...
+        ],
+    ],
+    // ...
+]);
+```
+
+Then, Adminx loads categories with `list` closure and shows that as a multiple select box
+in Create/Update forms for Post model.
+
 ### `filter_create_data`, `filter_update_data`
 `filter_create_data` option, is a option to customize user entered data for Create action.
 By default, Adminx Validates user data, sets data on a model object, But you can customize the data(Optional).

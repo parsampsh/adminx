@@ -549,6 +549,10 @@ class Core
                 return true;
             });
         }
+        if(!isset($config['n2n']) || !is_array($config['n2n']))
+        {
+            $config['n2n'] = [];
+        }
         array_push($this->menu, [
             'type' => 'model',
             'config' => $config,

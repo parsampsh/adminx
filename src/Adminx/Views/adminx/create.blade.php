@@ -53,7 +53,7 @@
                         $current_selected = intval($row->{$column['name']});
                     }
                 ?>
-                <select class="select2-box" name="{{ $column['name'] }}">
+                <select class="select2-box form-control" name="{{ $column['name'] }}">
                     @foreach($list as $item)
                         <option{{ $current_selected === $item->id ? ' selected' : '' }} value="{{ $item->id }}">{{ $model_config['foreign_keys'][$column['name']]['title']($item) }}</option>
                     @endforeach
@@ -72,6 +72,35 @@
                     <textarea placeholder="{{ $column['comment'] ? $column['comment'] : $column['name'] }}" name="{{ $column['name'] }}" class="form-control" {{ $column['is_null'] === false ? 'required' : '' }}>{{ $default }}</textarea>
                 @endif
             @endif
+            <br />
+        @endforeach
+
+
+        <?php $i = 0; ?>
+        @foreach($model_config['n2n'] as $item)
+        <?php
+            $list = $item['list']();
+            $current_selected = [];
+
+            if ($is_update) {
+                $current_selected = $item['pivot']::where($item['pivot_keys'][0], $row->id)->get();
+                $current_selected_ids = [];
+                foreach ($current_selected as $cs) {
+                    array_push($current_selected_ids, intval($cs->{$item['pivot_keys'][1]}));
+                }
+
+                $current_selected = $current_selected_ids;
+            }
+
+            $i++;
+        ?>
+            {{ $item['name'] }}:
+            <select multiple="multiple" class="select2-box form-control" name="n2n{{ $i }}[]">
+                @foreach($list as $r)
+                    <option{!! in_array($r->id, $current_selected) ? ' selected="selected"' : '' !!} value="{{ $r->id }}">{{ $item['title']($r) }}</option>
+                @endforeach
+            </select>
+            <br />
             <br />
         @endforeach
 

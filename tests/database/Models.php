@@ -53,3 +53,13 @@ class Post extends Model
 {
     use HasFactory;
 }
+
+class Category extends Model
+{
+    use HasFactory;
+}
+
+class PostCategory extends Model
+{
+    use HasFactory;
+}

@@ -1,7 +1,6 @@
 Road to complete this project
 
 - handle logs
-- handle n to n relations
 - add users and permissions as default models
 - backup builtin plugin
 - handle and use cache system to optimize database

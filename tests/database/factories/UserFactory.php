@@ -13,6 +13,8 @@ namespace Database\Factories;
 
 use App\Models\User;
 use App\Models\Post;
+use App\Models\Category;
+use App\Models\PostCategory;
 use Illuminate\Database\Eloquent\Factories\Factory;
 use Illuminate\Support\Str;
 
@@ -60,6 +62,51 @@ class PostFactory extends Factory
         return [
             'user_id' => User::factory()->create()->id,
             'body' => $this->faker->sentence(),
+        ];
+    }
+}
+
+class CategoryFactory extends Factory
+{
+    /**
+     * The name of the factory's corresponding model.
+     *
+     * @var string
+     */
+    protected $model = Category::class;
+
+    /**
+     * Define the model's default state.
+     *
+     * @return array
+     */
+    public function definition()
+    {
+        return [
+            'title' => $this->faker->sentence(),
+        ];
+    }
+}
+
+class PostCategoryFactory extends Factory
+{
+    /**
+     * The name of the factory's corresponding model.
+     *
+     * @var string
+     */
+    protected $model = PostCategory::class;
+
+    /**
+     * Define the model's default state.
+     *
+     * @return array
+     */
+    public function definition()
+    {
+        return [
+            'post_id' => Post::factory()->create()->id,
+            'category_id' => Category::factory()->create()->id,
         ];
     }
 }
