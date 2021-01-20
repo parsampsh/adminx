@@ -30,7 +30,7 @@ class CreateAdminxTables extends Migration
 
         Schema::create('adminx_group_permissions', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('adminx_group_id')->constrained();
+            $table->foreignId('adminx_group_id')->constrained()->onDelete('cascade')->onUpdate('cascade');
             $table->string('permission');
             $table->boolean('flag');
             $table->timestamps();
@@ -38,14 +38,14 @@ class CreateAdminxTables extends Migration
 
         Schema::create('adminx_user_groups', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('user_id')->constrained();
-            $table->foreignId('adminx_group_id')->constrained();
+            $table->foreignId('user_id')->constrained()->onDelete('cascade')->onUpdate('cascade');
+            $table->foreignId('adminx_group_id')->constrained()->onDelete('cascade')->onUpdate('cascade');
             $table->timestamps();
         });
 
         Schema::create('adminx_user_permissions', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('user_id')->constrained();
+            $table->foreignId('user_id')->constrained()->onDelete('cascade')->onUpdate('cascade');
             $table->string('permission');
             $table->boolean('flag');
             $table->timestamps();
@@ -53,7 +53,7 @@ class CreateAdminxTables extends Migration
 
         Schema::create('adminx_logs', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('user_id')->constrained();
+            $table->foreignId('user_id')->constrained()->onDelete('cascade')->onUpdate('cascade');
             $table->integer('item_id');
             $table->string('model');
             $table->string('action');
