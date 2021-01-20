@@ -10,6 +10,7 @@ You can see some of Adminx Features:
 - Secure
 - Automatic and Advance CRUD for models with useful options
 - Fully match with your database models
+- Handling 1 to n and n to n relations in database
 - Beautiful default frontend
 - Able to Customize frontend layout
 - Able to Customizing by language and localization
