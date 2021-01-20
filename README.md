@@ -15,10 +15,11 @@ Some of Adminx Features:
 - Fully match with your database models
 - Handling 1 to n and n to n relations in database
 - Custom actions for model datatable
-- Handling Admins Actibvity Logs (comming soon...)
+- Handling Admins Activity Logs (coming soon...)
 - Able to Customize frontend layout
 - Able to Customizing by language and localization
 - RTL layout
+- Has Multiple Selectable Beautiful Default layouts (coming soon...)
 - Advance Permission and Group handling
 - Customizing Authorization
 - Advance options for model Datatable
@@ -30,7 +31,7 @@ Some of Adminx Features:
 - Match with laravel Auth
 - Plugin system
 - Builtin Data Backup plugin
-- Cache Handling to Optimize database usage (comming soon...)
+- Cache Handling to Optimize database usage (coming soon...)
 
 ## Authors
 this package is written by [parsampsh](https://github.com/parsampsh).
