@@ -20,30 +20,30 @@ class DeleteSystemTest extends TestCase
 
         $admin = new \Adminx\Core;
         $admin->add_model(\App\Models\User::class, [
-            'slug' => 'the-users',
+            'slug' => 'User',
         ]);
         $admin->register('/admin');
 
-        $res = $this->actingAs($user)->get('/admin/model/the-users');
+        $res = $this->actingAs($user)->get('/admin/model/User');
         $res->assertStatus(200);
         $res->assertDontSee('<input type="hidden" name="delete" value="' . $user->id . '" />', false);
 
-        \Adminx\Access::add_permission_for_user($user, 'the-users.delete');
+        \Adminx\Access::add_permission_for_user($user, 'User.delete');
 
-        $res = $this->actingAs($user)->get('/admin/model/the-users');
+        $res = $this->actingAs($user)->get('/admin/model/User');
         $res->assertStatus(200);
         $res->assertSee('<input type="hidden" name="delete" value="' . $user->id . '" />', false);
 
         $admin = new \Adminx\Core;
         $admin->add_model(\App\Models\User::class, [
-            'slug' => 'the-users',
+            'slug' => 'User',
             'delete_middleware' => (function(){
                 return false;
             }),
         ]);
         $admin->register('/admin');
 
-        $res = $this->actingAs($user)->get('/admin/model/the-users');
+        $res = $this->actingAs($user)->get('/admin/model/User');
         $res->assertStatus(200);
         $res->assertDontSee('<input type="hidden" name="delete" value="' . $user->id . '" />', false);
     }
@@ -56,29 +56,29 @@ class DeleteSystemTest extends TestCase
 
         $admin = new \Adminx\Core;
         $admin->add_model(\App\Models\User::class, [
-            'slug' => 'the-users',
+            'slug' => 'User',
         ]);
         $admin->register('/admin');
 
-        $res = $this->actingAs($user)->delete('/admin/model/the-users', ['delete' => $user1->id]);
+        $res = $this->actingAs($user)->delete('/admin/model/User', ['delete' => $user1->id]);
         $res->assertStatus(403);
 
-        \Adminx\Access::add_permission_for_user($user, 'the-users.delete');
+        \Adminx\Access::add_permission_for_user($user, 'User.delete');
 
-        $res = $this->actingAs($user)->delete('/admin/model/the-users', ['delete' => $user1->id]);
+        $res = $this->actingAs($user)->delete('/admin/model/User', ['delete' => $user1->id]);
         $res->assertStatus(302);
         $this->assertEmpty(\App\Models\User::find($user1->id));
 
         $admin = new \Adminx\Core;
         $admin->add_model(\App\Models\User::class, [
-            'slug' => 'the-users',
+            'slug' => 'User',
             'delete_middleware' => (function(){
                 return false;
             }),
         ]);
         $admin->register('/admin');
 
-        $res = $this->actingAs($user)->delete('/admin/model/the-users', ['delete' => $user2->id]);
+        $res = $this->actingAs($user)->delete('/admin/model/User', ['delete' => $user2->id]);
         $res->assertStatus(403);
     }
 }

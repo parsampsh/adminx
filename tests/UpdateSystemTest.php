@@ -20,17 +20,17 @@ class UpdateSystemTest extends TestCase
 
         $admin = new \Adminx\Core;
         $admin->add_model(\App\Models\User::class, [
-            'slug' => 'the-users',
+            'slug' => 'User',
         ]);
         $admin->register('/admin');
 
-        $res = $this->actingAs($user)->get('/admin/model/the-users');
+        $res = $this->actingAs($user)->get('/admin/model/User');
         $res->assertStatus(200);
         $res->assertDontSee('class="btn btn-primary"><i class="fa fa-edit"></i></a>', false);
 
-        \Adminx\Access::add_permission_for_user($user, 'the-users.update');
+        \Adminx\Access::add_permission_for_user($user, 'User.update');
 
-        $res = $this->actingAs($user)->get('/admin/model/the-users');
+        $res = $this->actingAs($user)->get('/admin/model/User');
         $res->assertStatus(200);
         $res->assertSee('class="btn btn-primary"><i class="fa fa-edit"></i></a>', false);
 
@@ -43,7 +43,7 @@ class UpdateSystemTest extends TestCase
         ]);
         $admin->register('/admin');
 
-        $res = $this->actingAs($user)->get('/admin/model/the-users');
+        $res = $this->actingAs($user)->get('/admin/model/User');
         $res->assertStatus(200);
         $res->assertDontSee('class="btn btn-primary"><i class="fa fa-edit"></i></a>', false);
     }
@@ -55,28 +55,28 @@ class UpdateSystemTest extends TestCase
 
         $admin = new \Adminx\Core;
         $admin->add_model(\App\Models\User::class, [
-            'slug' => 'the-users',
+            'slug' => 'User',
         ]);
         $admin->register('/admin');
 
-        $res = $this->actingAs($user)->get('/admin/model/the-users/update/' . $user2->id);
+        $res = $this->actingAs($user)->get('/admin/model/User/update/' . $user2->id);
         $res->assertStatus(403);
 
-        \Adminx\Access::add_permission_for_user($user, 'the-users.update');
+        \Adminx\Access::add_permission_for_user($user, 'User.update');
 
-        $res = $this->actingAs($user)->get('/admin/model/the-users/update/' . $user2->id);
+        $res = $this->actingAs($user)->get('/admin/model/User/update/' . $user2->id);
         $res->assertStatus(200);
 
         $admin = new \Adminx\Core;
         $admin->add_model(\App\Models\User::class, [
-            'slug' => 'the-users',
+            'slug' => 'User',
             'update_middleware' => (function(){
                 return false;
             }),
         ]);
         $admin->register('/admin');
 
-        $res = $this->actingAs($user)->get('/admin/model/the-users/update/' . $user2->id);
+        $res = $this->actingAs($user)->get('/admin/model/User/update/' . $user2->id);
         $res->assertStatus(403);
     }
 

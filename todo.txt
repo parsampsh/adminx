@@ -1,6 +1,5 @@
 Road to complete this project
 
-- handle logs
 - add more default themes
 - backup builtin plugin
 - handle and use cache system to optimize database

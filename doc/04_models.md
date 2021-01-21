@@ -460,4 +460,4 @@ $admin->add_model(\App\Models\Post::class, [
 ---
 
 [Previous: Frontend layout customization](03_frontend_layout_customization.md) |
-[Next: Plugins](05_plugins.md)
+[Next: Log System](05_log_system.md)

@@ -27,6 +27,7 @@ All of keys:
 |`btn.create`|title of create button|`Create new {name}` (you should write exactly `{name}` for model name)|
 |`btn.back`|title of back button|`Back`|
 |`btn.update`|title of update button|`Update`|
+|`btn.log`|title of history button|`History`|
 
 also you can use `get_word` and `get_all_words` methods to get words:
 

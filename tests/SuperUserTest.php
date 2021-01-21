@@ -22,16 +22,16 @@ class SuperUserTest extends TestCase
 
         $admin = new \Adminx\Core;
         $admin->add_model(\App\Models\User::class, [
-            'slug' => 'the-users',
+            'slug' => 'User',
         ]);
         $admin->super_user(function($user){
             return true;
         });
         $admin->register('/admin');
 
-        $this->actingAs($user)->get('/admin/model/the-users')->assertOk();
-        $this->actingAs($user)->get('/admin/model/the-users/create')->assertOk();
-        $this->actingAs($user)->delete('/admin/model/the-users', ['delete' => $user2->id])->assertStatus(302);
+        $this->actingAs($user)->get('/admin/model/User')->assertOk();
+        $this->actingAs($user)->get('/admin/model/User/create')->assertOk();
+        $this->actingAs($user)->delete('/admin/model/User', ['delete' => $user2->id])->assertStatus(302);
         $this->assertEmpty(\App\Models\User::find($user2->id));
     }
 }

@@ -14,6 +14,7 @@ namespace Adminx;
 use Illuminate\Routing\Controller as BaseController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Adminx\Models\Log;
 
 /**
  * The Adminx Controller
@@ -222,6 +223,9 @@ class AdminxController extends BaseController
                 abort(403);
             }
         }
+
+        // add the log
+        Log::add_log($model_config['slug'], $row->id, auth()->id(), 'delete', 'Item ' . $row->id . ' in table ' . $model_config['slug'] . ' was deleted by user ' . auth()->id());
 
         // delete the item
         $row->delete();
@@ -445,6 +449,13 @@ class AdminxController extends BaseController
                 $next_step = $model_config['after_update_go_to'];
             } else {
                 $next_step = $model_config['after_create_go_to'];
+            }
+
+            // add the log
+            if ($is_update) {
+                Log::add_log($model_config['slug'], $row->id, auth()->id(), 'update', 'Item ' . $row->id . ' in table ' . $model_config['slug'] . ' was updated by user ' . auth()->id());
+            } else {
+                Log::add_log($model_config['slug'], $row->id, auth()->id(), 'create', 'Item ' . $row->id . ' in table ' . $model_config['slug'] . ' was created by user ' . auth()->id());
             }
 
             if ($next_step === 'create') {

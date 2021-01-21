@@ -90,4 +90,4 @@ now, that group has NOT `the-permission`.
 
 ---
 
-[Previous: Models](04_models.md)
+[Previous: Plugin system](06_plugins.md)

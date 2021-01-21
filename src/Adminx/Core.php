@@ -217,7 +217,86 @@ class Core
      */
     public function register(string $route='/admin')
     {
+        // add Adminx Log model
+        $admin = $this;
+        $this->add_model(\Adminx\Models\Log::class, [
+            'slug' => 'AdminxLog',
+            'title' => 'Logs',
+            'icon' => 'fa fa-history',
+            'hidden_fields' => ['updated_at'],
+            'fields_titles' => [
+                'created_at' => 'At',
+                'user_id' => 'User',
+                'item_id' => 'Item',
+                'model' => 'Table',
+                'action' => 'Action',
+                'message' => 'Message',
+            ],
+            'fields_values' => [
+                'model' => (function($log) use ($admin) {
+                    return '<a href="' . $admin->url('/model/' . $log->model) . '">' . $log->model . '</a> <a href="?filter_model=' . $log->model . '">(Filter)</a>';
+                }),
+                'item_id' => (function($log) use ($admin) {
+                    return '<a href="' . $admin->url('/model/' . $log->model . '/update/' . $log->item_id) . '?back=' . request()->fullUrl() . '">' . $log->item_id . '</a> <a href="?filter_item=' . $log->item_id . '">(Filter)</a>';
+                }),
+                'user_id' => (function($log) use ($admin) {
+                    return '<a href="' . $admin->url('/model/User/update/' . $log->user_id) . '?back=' . request()->fullUrl() . '">' . $log->user_id . '</a> <a href="?filter_user=' . $log->user_id . '">(Filter)</a>';
+                }),
+            ],
+            'custom_html' => (function() use ($admin){
+                $output = '
+                Filter Model:
+                <form action="'. request()->fullUrl() .'">
+                <select name="filter_model" class="select2-box form-control">
+                <option value="">(None)</option>
+                ';
+                foreach($admin->get_menu() as $item) {
+                    if ($item['type'] === 'model') {
+                        if ($item['config']['slug'] !== 'AdminxLog') {
+                            $selected = '';
+                            if (request()->get('filter_model') === $item['config']['slug']) {
+                                $selected = 'selected';
+                            }
+                            $output .= '<option '.$selected.' value="'. $item['config']['slug'] .'">' . $item['config']['slug'] . '</option>';
+                        }
+                    }
+                }
+                $output .= '
+                </select>
+                <br />
+                <br />
+                <input type="submit" value="Filter" class="btn btn-success" />
+                </form>
+                <br />
+                <a class="btn btn-success" href="'. request()->url() .'">Remove filters</a>
+                <br />
+                <br />
+                ';
+                return $output;
+            }),
+            'delete_middleware' => (function(){return false;}),
+            'update_middleware' => (function(){return false;}),
+            'delete_middleware' => (function(){return false;}),
+            'filter_data' => (function($q) use ($admin) {
+                $q = $q->orderBy('created_at', 'desc');
+                if (!$admin->check_super_user(auth()->user())) {
+                    $q = $q->where('user_id', auth()->user()->id);
+                }
+                if (request()->get('filter_model') !== null) {
+                    $q->where('model', request()->get('filter_model'));
+                }
+                if (request()->get('filter_user') !== null) {
+                    $q->where('user_id', request()->get('filter_user'));
+                }
+                if (request()->get('filter_item') !== null) {
+                    $q->where('item_id', request()->get('filter_item'));
+                }
+                return $q;
+            }),
+        ]);
+
         $this->route_prefix = $route;
+
         static::$core = clone $this;
 
         // register views
@@ -686,6 +765,8 @@ class Core
 
         // handle User model customizations
         if ($config['model'] === \App\Models\User::class) {
+            $config['slug'] = 'User';
+
             // add Groups n2n relation
             array_push($config['n2n'], [
                 'name' => 'User Groups',

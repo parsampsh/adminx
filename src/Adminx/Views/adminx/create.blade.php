@@ -20,10 +20,9 @@
                     <input type="hidden" name="delete" value="{{ $row->id }}" />
                     <button class="btn btn-danger" type="submit"><i class="fa fa-trash"></i></button>
                 </form>
-                <div style="clear: both;"></div>
-
             @endif
         @endif
+        <a class="btn btn-primary" href="{{ $core->url('/model/AdminxLog?filter_model=' . $model_config['slug'] . '&filter_item='. $row->id .'&back=' . request()->fullUrl()) }}">{{ str_replace('{name}', $model_config['slug'], $core->get_word('btn.log', 'History')) }} <i class="fa fa-history"></i></a>
     @else
         <h2>{{ str_replace('{name}', $model_config['slug'], $core->get_word('btn.create', 'Create new {name}')) }}</h2>
     @endif

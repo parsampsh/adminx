@@ -26,15 +26,14 @@ foreach($actions as $k => $v) {
 
 @if($core->check_super_user(auth()->user()) || (\Adminx\Access::user_has_permission(auth()->user(), $model_config['slug'] . '.create') && call_user_func_array($model_config['create_middleware'], [auth()->user()]) === true))
 <a class="btn btn-success" href="{{ $core->url('/model/' . $model_config['slug'] . '/create?back=' . request()->fullUrl()) }}">{{ str_replace('{name}', $model_config['slug'], $core->get_word('btn.create', 'Create new {name}')) }} <i class="fa fa-plus"></i></a>
-<br />
-<br />
 @endif
 
-<div class="card shadow mb-4">
-    <div class="card-header py-3">
-      <h6 class="m-0 font-weight-bold text-primary">{{ $model_config['title'] }}</h6>
-    </div>
-    <div class="card-body">
+@if($model_config['slug'] !== 'AdminxLog')
+<a class="btn btn-primary" href="{{ $core->url('/model/AdminxLog?filter_model=' . $model_config['slug'] . '&back=' . request()->fullUrl()) }}">{{ str_replace('{name}', $model_config['slug'], $core->get_word('btn.log', 'History')) }} <i class="fa fa-history"></i></a>
+@endif
+<br />
+<br />
+
       @if(is_callable($model_config['search']))
         <form class="d-none d-sm-inline-block form-inline mr-auto ml-md-3 my-2 my-md-0 mw-100 navbar-search">
           <div class="input-group">
@@ -133,7 +132,5 @@ foreach($actions as $k => $v) {
       <?php echo $rows->render(); ?>
       @endif
       <?php echo call_user_func_array($model_config['custom_html_bottom'], []); ?>
-    </div>
-</div>
 
 @stop

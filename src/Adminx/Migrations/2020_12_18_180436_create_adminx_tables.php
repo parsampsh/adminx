@@ -53,7 +53,7 @@ class CreateAdminxTables extends Migration
 
         Schema::create('adminx_logs', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('user_id')->constrained()->onDelete('cascade')->onUpdate('cascade');
+            $table->foreignId('user_id');
             $table->integer('item_id');
             $table->string('model');
             $table->string('action');

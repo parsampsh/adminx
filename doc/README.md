@@ -8,5 +8,5 @@ Welcome to the Adminx documentation.
 - [Frontend language Localization](02_lang.md)
 - [Frontend layout customization](03_frontend_layout_customization.md)
 - [Models](04_models.md)
-- [Plugins](05_plugins.md)
-- [Access api](06_access_api.md)
+- [Plugins](06_plugins.md)
+- [Access api](07_access_api.md)
