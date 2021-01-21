@@ -132,6 +132,25 @@ class Core
 
                 return $group;
             }),
+
+            'virtual_fields' => [
+                'Permissions' => (function($group){
+                    $permissions = $group->permissions;
+
+                    $output = '';
+
+                    $i = 0;
+                    foreach ($permissions as $permission) {
+                        $output .= htmlspecialchars($permission->permission);
+                        if ($i < count($permissions)-1) {
+                            $output .= ', ';
+                        }
+                        $i++;
+                    }
+
+                    return $output;
+                }),
+            ],
         ]);
     }
 
