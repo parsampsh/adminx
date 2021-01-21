@@ -26,6 +26,115 @@ class Core
      */
     public static $core;
 
+    function __construct() {
+        // config Adminx Group model
+        $admin = $this;
+        $this->add_model(\Adminx\Models\Group::class, [
+            'title' => 'Groups',
+            'slug' => 'AdminxGroup',
+            'icon' => 'fa fa-object-group',
+            'create_html' => (function() use ($admin){
+                $permissions = [];
+        
+                foreach ($admin->get_menu() as $item) {
+                    if ($item['type'] === 'model') {
+                        array_push($permissions, $item['config']['slug'] . '.create');
+                        array_push($permissions, $item['config']['slug'] . '.update');
+                        array_push($permissions, $item['config']['slug'] . '.delete');
+                    }
+                }
+        
+                $output = "
+                Permissions:
+                <select name='permissions[]' multiple='multiple' class='select2-box form-control'>
+                ";
+                
+                foreach ($permissions as $value) {
+                    $output .= '<option value="' . $value .'">' . $value .'</option>';
+                }
+        
+                $output .= "
+                </select>
+                <br />
+                <br />
+                ";
+        
+                return $output;
+            }),
+        
+            'update_html' => (function($group) use ($admin){
+                $permissions = [];
+        
+                foreach ($admin->get_menu() as $item) {
+                    if ($item['type'] === 'model') {
+                        array_push($permissions, $item['config']['slug'] . '.create');
+                        array_push($permissions, $item['config']['slug'] . '.update');
+                        array_push($permissions, $item['config']['slug'] . '.delete');
+                    }
+                }
+        
+                $output = "
+                Permissions:
+                <select name='permissions[]' multiple='multiple' class='select2-box form-control'>
+                ";
+                
+                foreach ($permissions as $value) {
+                    $selected = '';
+                    if ($group->permissions()->where('permission', $value)->count() > 0) {
+                        $selected = ' selected';
+                    }
+                    $output .= '<option' . $selected . ' value="' . $value .'">' . $value .'</option>';
+                }
+        
+                $output .= "
+                </select>
+                <br />
+                <br />
+                ";
+        
+                return $output;
+            }),
+        
+            'filter_create_data' => (function($group){
+                $permissions = request()->input('permissions');
+        
+                $group->save();
+        
+                if (is_array($permissions)) {
+                    foreach ($permissions as $permission) {
+                        $p = new \Adminx\Models\GroupPermission;
+                        $p->permission = $permission;
+                        $p->adminx_group_id = $group->id;
+                        $p->flag = 1;
+                        $p->save();
+                    }
+                }
+        
+                return $group;
+            }),
+        
+            'filter_update_data' => (function($group){
+                $permissions = request()->input('permissions');
+        
+                $group->save();
+        
+                if (is_array($permissions)) {
+                    $group->permissions()->delete();
+        
+                    foreach ($permissions as $permission) {
+                        $p = new \Adminx\Models\GroupPermission;
+                        $p->permission = $permission;
+                        $p->adminx_group_id = $group->id;
+                        $p->flag = 1;
+                        $p->save();
+                    }
+                }
+
+                return $group;
+            }),
+        ]);
+    }
+
     /**
      * Title of the admin panel
      */
@@ -553,6 +662,20 @@ class Core
         {
             $config['n2n'] = [];
         }
+
+        // handle User model customizations
+        if ($config['model'] === \App\Models\User::class) {
+            // add Groups n2n relation
+            array_push($config['n2n'], [
+                'name' => 'User Groups',
+                'model' => \Adminx\Models\Group::class,
+                'pivot' => \Adminx\Models\UserGroup::class,
+                'pivot_keys' => ['user_id', 'adminx_group_id'],
+                'title' => (function($group){ return $group->name; }),
+                'list' => (function(){ return \Adminx\Models\Group::all(); }),
+            ]);
+        }
+
         array_push($this->menu, [
             'type' => 'model',
             'config' => $config,
