@@ -11,13 +11,15 @@
 
 namespace Adminx;
 
-use Adminx\Controllers\AdminxController;
+use Adminx\AdminxController;
 use Illuminate\Support\Facades\Route;
 
 /**
- * The Adminx Core
- * 
- * This Class only keeps Admin panel configuration
+ * Adminx Core object
+ *
+ * This class is used to define admin panel configurations and register it
+ *
+ * @package Adminx
  */
 class Core
 {

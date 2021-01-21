@@ -9,7 +9,7 @@
  * For more information, please see the LICENSE file.
  */
 
-namespace Adminx\Controllers;
+namespace Adminx;
 
 use Illuminate\Routing\Controller as BaseController;
 use Illuminate\Http\Request;
@@ -22,6 +22,12 @@ class AdminxController extends BaseController
 {
     private $core;
 
+    /**
+     * Finds model config by slug
+     *
+     * @param string $slug
+     * @return mixed|null
+     */
     private function find_model_by_slug(string $slug)
     {
         $model_config = null;
@@ -53,6 +59,9 @@ class AdminxController extends BaseController
         $this->core = \Adminx\Core::$core;
     }
 
+    /**
+     * Checks user is authorized
+     */
     public function run_middleware()
     {
         if ($this->core->check_super_user(auth()->user())){
@@ -64,6 +73,11 @@ class AdminxController extends BaseController
         }
     }
 
+    /**
+     * The index page
+     *
+     * @param Request $request
+     */
     public function index(Request $request)
     {
         $this->run_middleware();
@@ -91,6 +105,12 @@ class AdminxController extends BaseController
         return view('adminx.page', ['output' => $output, 'core' => $this->core, 'page_title' => $page_title]);
     }
 
+    /**
+     * Shows a page
+     *
+     * @param Request $request
+     * @param string $slug
+     */
     public function show_page(Request $request, string $slug)
     {
         $this->run_middleware();
@@ -117,6 +137,12 @@ class AdminxController extends BaseController
         return view('adminx.page', ['output' => $output, 'core' => $this->core, 'page_title' => $page_title]);
     }
 
+    /**
+     * The model index page and datatable
+     *
+     * @param Request $request
+     * @param string $slug
+     */
     public function model_index(Request $request, string $slug)
     {
         $this->run_middleware();
@@ -165,6 +191,12 @@ class AdminxController extends BaseController
         return view('adminx.model', ['core' => $this->core, 'model_config' => $model_config, 'rows' => $rows]);
     }
 
+    /**
+     * Model DELETE request handler
+     *
+     * @param Request $request
+     * @param string $slug
+     */
     public function model_delete(Request $request, string $slug)
     {
         $this->run_middleware();
@@ -197,11 +229,26 @@ class AdminxController extends BaseController
         return redirect($request->fullUrl());
     }
 
+    /**
+     * Model Update page
+     *
+     * @param Request $request
+     * @param string $slug
+     * @param string $id
+     */
     public function model_update(Request $request, string $slug, string $id)
     {
         return $this->model_create($request, $slug, true, $id);
     }
 
+    /**
+     * Model create page
+     *
+     * @param Request $request
+     * @param string $slug
+     * @param bool $is_update
+     * @param null $update_id
+     */
     public function model_create(Request $request, string $slug, bool $is_update=false, $update_id=null)
     {
         $this->run_middleware();
