@@ -475,7 +475,7 @@ $admin->add_model(\App\Models\Post::class, [
 ]);
 ```
 
-TODO : add a image
+<img src="/doc/images/custom-form-html.png" />
 
 ---
 
