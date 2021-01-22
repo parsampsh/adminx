@@ -10,7 +10,7 @@ $admin->set_layout('adminx.layouts.default');
 
 This is the default theme.
 
-TODO : add a image
+<img src="/doc/images/preview.png" />
 
 ## Black While
 
@@ -18,7 +18,7 @@ TODO : add a image
 $admin->set_layout('adminx.layouts.blackwhite');
 ```
 
-TODO : add a image
+<img src="/doc/images/theme-blackwhite.png" />
 
 ---
 
