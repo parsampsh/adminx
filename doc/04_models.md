@@ -477,6 +477,34 @@ $admin->add_model(\App\Models\Post::class, [
 
 <img src="/doc/images/custom-form-html.png" />
 
+### Groups and Permissions
+An important thing in Adminx, is User Permissions.
+
+By default, you can see `Groups` item in the admin panel menu.
+
+Group is a collection from permissions that if a user is in a group, has all of that group permissions.
+
+Actually, Groups are Roles. for example `admin`, `writer`, `operator`...
+
+You can manage Groups in the group page by clicking on menu `Groups` item.
+
+<img src="/doc/images/groups.png" />
+
+<img src="/doc/images/group-create.png" />
+
+You can see a group can have 0, 1 or more permissions.
+
+Now if you add `User` model, Groups of user will be set automatically in Update and Create form for users.
+
+<img src="/doc/images/user-groups.png" />
+
+You can set that which users are in which groups.
+
+Structure of Permissions is easy: `<Model-Slug>.<Action>`.
+For example, `Post.create`, `Post.delete`, `Category.update`...
+
+`Model.create` is create access, `Model.update` is Update access and `Model.delete` is delete access.
+
 ---
 
 [Previous: Frontend layout customization](03_frontend_layout_customization.md) |
