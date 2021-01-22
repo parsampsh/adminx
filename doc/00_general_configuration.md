@@ -15,7 +15,7 @@ $admin->get_title();
 
 now, you can see this title in the admin panel.
 
-TODO : add a image
+<img src="/doc/images/title.png" />
 
 ## The Footer Copyright message
 You can set the footer copyright message.
