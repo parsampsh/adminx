@@ -35,7 +35,7 @@ Some of Adminx Features:
 
 ## Preview
 
-TODO : add a preview image
+<img src="/doc/images/preview.png" />
 
 ## Authors
 this package is written by [parsampsh](https://github.com/parsampsh).
