@@ -10,4 +10,5 @@ Welcome to the Adminx documentation.
 - [Models](04_models.md)
 - [Log System](05_log_system.md)
 - [Plugin System](06_plugins.md)
-- [Permission Access API](07_access_api.md)
+- [Themes](07_themes.md)
+- [Permission Access API](08_access_api.md)

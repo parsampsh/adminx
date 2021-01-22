@@ -28,6 +28,7 @@ All of keys:
 |`btn.back`|title of back button|`Back`|
 |`btn.update`|title of update button|`Update`|
 |`btn.log`|title of history button|`History`|
+|`user.btn.log`|title of history button in user menu|`Activity History`|
 
 also you can use `get_word` and `get_all_words` methods to get words:
 

@@ -19,7 +19,7 @@ Some of Adminx Features:
 - Able to Customize frontend layout
 - Able to Customizing by language and localization
 - RTL layout
-- Has Multiple Selectable Beautiful Default layouts (coming soon...)
+- Has Multiple Selectable Beautiful Default themes
 - Advance Permission and Group handling
 - Customizing Authorization
 - Advance options for model Datatable
@@ -30,7 +30,7 @@ Some of Adminx Features:
 - Able to Use for End-User
 - Match with laravel Auth
 - Plugin system
-- Builtin Data Backup plugin
+- Builtin Data Backup plugin (coming soon...)
 - Cache Handling to Optimize database usage (coming soon...)
 
 ## Authors

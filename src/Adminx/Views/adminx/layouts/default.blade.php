@@ -121,7 +121,7 @@ $logout_url = url($core->get_logout());
               <div class="dropdown-menu dropdown-menu-right shadow animated--grow-in" aria-labelledby="userDropdown">
                 <a class="dropdown-item" href="{{ $core->url('/model/AdminxLog?filter_user=' . auth()->id()) }}">
                   <i class="fa fa-history fa-sm fa-fw mr-2 text-gray-400"></i>
-                  Activity History
+                  {{ $core->get_word('user.btn.log', 'Activity History') }}
                 </a>
                 <div class="dropdown-divider"></div>
                 <a class="dropdown-item" href="#" data-toggle="modal" data-target="#logoutModal">
@@ -146,7 +146,7 @@ $logout_url = url($core->get_logout());
             <br />
             <span>Theme by <a target="_blank" href="https://startbootstrap.com/theme/sb-admin-2">startbootstrap</a></span>
             <br />
-            <span>Powered by <a target="_blank" href="https://github.com/parsampsh/adminx">adminx</a></span>
+            <span>Powered by <a target="_blank" href="https://github.com/parsampsh/adminx">Adminx</a></span>
           </div>
         </div>
       </footer>
