@@ -41,7 +41,7 @@ All of config options:
 | `only_top_pagination` | bool | Only show top pagination |
 | `only_bottom_pagination` | bool | Only show bottom pagination |
 
-TODO : add a image
+<img src="/doc/images/model-table.png" />
 
 ### `hidden_fields`
 This option makes some fields hidden in the table.
@@ -67,8 +67,6 @@ $admin->add_model(\App\Models\User::class, [
 ]);
 ```
 
-TODO : add a image
-
 ### `fields_values`
 This option helps you to change default original value of a column in table(only for show).
 
@@ -85,8 +83,6 @@ $admin->add_model(\App\Models\User::class, [
     // ...
 ]);
 ```
-
-TODO : add a image
 
 ### `filter_data`
 This option can customize table rows. This should be a Closure and gets the Query Builder, then you can customize the query and return changed query.
@@ -119,8 +115,6 @@ $admin->add_model(\App\Models\Post::class, [
     // ...
 ]);
 ```
-
-TODO : add a image
 
 ### `custom_html` & `custom_html_bottom`
 This options help you to show a custom html/text in the top and bottom of the table.
@@ -205,6 +199,10 @@ $admin->add_model(\App\Models\Post::class, [
 ]);
 ```
 
+The Create form:
+
+TODO : add a image from create form
+
 ### Update middleware
 This option is like `create_middle` but for update action. by default, this permission is handled by adminx permission system but you can check some exceptions by this option.
 
@@ -262,8 +260,6 @@ $admin->add_model(\App\Models\Post::class, [
     // ...
 ]);
 ```
-
-TODO : add a image from create form
 
 ### `fields_comments`
 This option sets comment for fields. this comment will be showed as placeholder in create and update forms.
