@@ -204,7 +204,7 @@ class ModelDataTableTest extends TestCase
 
         $res = $this->actingAs($user)->get('/admin/model/User');
         $res->assertStatus(200);
-        $res->assertDontSee('<input value="" name="search" type="text" class="form-control bg-light border-0 small" placeholder="Search here..." aria-label="Search" aria-describedby="basic-addon2">', false);
+        $res->assertDontSee('<input style="background-color: #fff !important" value="" name="search" type="text" class="form-control bg-light border-0 small" placeholder="Search here..." aria-label="Search" aria-describedby="basic-addon2">', false);
 
         $admin = new \Adminx\Core;
         $admin->add_model(\App\Models\User::class, [
@@ -217,11 +217,11 @@ class ModelDataTableTest extends TestCase
 
         $res = $this->actingAs($user)->get('/admin/model/User');
         $res->assertStatus(200);
-        $res->assertSee('<input value="" name="search" type="text" class="form-control bg-light border-0 small" placeholder="Search here..." aria-label="Search" aria-describedby="basic-addon2">', false);
+        $res->assertSee('<input style="background-color: #fff !important" value="" name="search" type="text" class="form-control bg-light border-0 small" placeholder="Search here..." aria-label="Search" aria-describedby="basic-addon2">', false);
 
         $res = $this->actingAs($user)->get('/admin/model/User?search=hello');
         $res->assertStatus(200);
-        $res->assertSee('<input value="hello" name="search" type="text" class="form-control bg-light border-0 small" placeholder="Search here..." aria-label="Search" aria-describedby="basic-addon2">', false);
+        $res->assertSee('<input style="background-color: #fff !important" value="hello" name="search" type="text" class="form-control bg-light border-0 small" placeholder="Search here..." aria-label="Search" aria-describedby="basic-addon2">', false);
 
         $admin = new \Adminx\Core;
         $admin->add_model(\App\Models\User::class, [
@@ -235,7 +235,7 @@ class ModelDataTableTest extends TestCase
 
         $res = $this->actingAs($user)->get('/admin/model/User');
         $res->assertStatus(200);
-        $res->assertSee('<input value="" name="search" type="text" class="form-control bg-light border-0 small" placeholder="search for something" aria-label="Search" aria-describedby="basic-addon2">', false);
+        $res->assertSee('<input style="background-color: #fff !important" value="" name="search" type="text" class="form-control bg-light border-0 small" placeholder="search for something" aria-label="Search" aria-describedby="basic-addon2">', false);
 
         $admin = new \Adminx\Core;
         $admin->add_model(\App\Models\User::class, [

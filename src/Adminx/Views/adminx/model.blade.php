@@ -37,7 +37,7 @@ foreach($actions as $k => $v) {
       @if(is_callable($model_config['search']))
         <form class="d-none d-sm-inline-block form-inline mr-auto ml-md-3 my-2 my-md-0 mw-100 navbar-search">
           <div class="input-group">
-            <input value="{{ request()->get('search') }}" name="search" type="text" class="form-control bg-light border-0 small" placeholder="{{ $model_config['search_hint'] }}" aria-label="Search" aria-describedby="basic-addon2">
+            <input style="background-color: #fff !important" value="{{ request()->get('search') }}" name="search" type="text" class="form-control bg-light border-0 small" placeholder="{{ $model_config['search_hint'] }}" aria-label="Search" aria-describedby="basic-addon2">
             <div class="input-group-append">
               <button class="btn btn-primary" type="submit">
                 <i class="fas fa-search fa-sm"></i>
