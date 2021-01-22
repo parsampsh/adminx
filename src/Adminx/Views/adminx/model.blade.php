@@ -46,6 +46,7 @@ foreach($actions as $k => $v) {
           </div>
         </form>
         <br />
+        <br />
       @endif
       <?php echo call_user_func_array($model_config['custom_html'], []); ?>
       @if($model_config['only_bottom_pagination'] === false)
