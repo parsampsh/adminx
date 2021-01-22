@@ -201,7 +201,7 @@ $admin->add_model(\App\Models\Post::class, [
 
 The Create form:
 
-TODO : add a image from create form
+<img src="/doc/images/create.png" />
 
 ### Update middleware
 This option is like `create_middle` but for update action. by default, this permission is handled by adminx permission system but you can check some exceptions by this option.
