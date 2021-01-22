@@ -1,6 +1,7 @@
 Road to complete this project
 
-- clean up documentation and add some example images and configs
+- clean up documentation
+- add rtl support for blackwhite theme
 - fix bugs and clean up
 - release 0.1
 - backup builtin plugin
