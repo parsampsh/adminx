@@ -141,7 +141,7 @@ $admin->add_model(\App\Models\Post::class, [
 
 You can use this feature to create advance filter options for you data, etc.
 
-TODO : add a image
+<img src="/doc/images/custom-html.png" />
 
 ### Searching
 You can add a text search option for model.
