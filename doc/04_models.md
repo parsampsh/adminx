@@ -311,7 +311,7 @@ In the above example, column `user_id` will be set as a foreign key and instead 
 The title will be showed as value of column, and also in Create and Update forms, A select box
 will be showed and user can select a item. (The 1 To N relationship)
 
-TODO : add a image
+<img src="/doc/images/foreign.png" />
 
 ### Foreign Keys: N to N Relations
 Adminx can handle N to N relations between models.
