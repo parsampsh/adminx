@@ -41,6 +41,8 @@ All of config options:
 | `only_top_pagination` | bool | Only show top pagination |
 | `only_bottom_pagination` | bool | Only show bottom pagination |
 
+TODO : add a image
+
 ### `hidden_fields`
 This option makes some fields hidden in the table.
 
@@ -65,6 +67,8 @@ $admin->add_model(\App\Models\User::class, [
 ]);
 ```
 
+TODO : add a image
+
 ### `fields_values`
 This option helps you to change default original value of a column in table(only for show).
 
@@ -81,6 +85,8 @@ $admin->add_model(\App\Models\User::class, [
     // ...
 ]);
 ```
+
+TODO : add a image
 
 ### `filter_data`
 This option can customize table rows. This should be a Closure and gets the Query Builder, then you can customize the query and return changed query.
@@ -114,6 +120,8 @@ $admin->add_model(\App\Models\Post::class, [
 ]);
 ```
 
+TODO : add a image
+
 ### `custom_html` & `custom_html_bottom`
 This options help you to show a custom html/text in the top and bottom of the table.
 
@@ -139,6 +147,8 @@ $admin->add_model(\App\Models\Post::class, [
 
 You can use this feature to create advance filter options for you data, etc.
 
+TODO : add a image
+
 ### Searching
 You can add a text search option for model.
 
@@ -161,6 +171,8 @@ $admin->add_model(\App\Models\Post::class, [
 You should set `search` option to a closure. Then, a search box will be added to your model page. user can search with that box. when user are searching something, the query builder and searched word will be passed to your closure. then you can filter the query by searched word and return new query.
 
 Also you can write a hint for search box by `search_hint` option(default value for this, is `Search here...`).
+
+TODO : add a image
 
 ### Delete middleware
 This option is for handling delete permission. by default, adminx checks user permission for delete the item. for example, user should have `user.delete` permission in database(You will learn about this is the **Access API** next part) to delete a item in users table. But also you can handle some exceptions by using this `delete_middleware` to customize this action permissions.
@@ -251,6 +263,8 @@ $admin->add_model(\App\Models\Post::class, [
 ]);
 ```
 
+TODO : add a image from create form
+
 ### `fields_comments`
 This option sets comment for fields. this comment will be showed as placeholder in create and update forms.
 
@@ -261,6 +275,8 @@ $admin->add_model(\App\Models\Post::class, [
     // ...
 ]);
 ```
+
+TODO : add a image
 
 ### Foreign Keys
 Handling foreign keys is so easy in adminx.
@@ -299,6 +315,8 @@ In the above example, column `user_id` will be set as a foreign key and instead 
 The title will be showed as value of column, and also in Create and Update forms, A select box
 will be showed and user can select a item. (The 1 To N relationship)
 
+TODO : add a image
+
 ### Foreign Keys: N to N Relations
 Adminx can handle N to N relations between models.
 
@@ -332,6 +350,8 @@ $admin->add_model(\App\Models\Post::class, [
 
 Then, Adminx loads categories with `list` closure and shows that as a multiple select box
 in Create/Update forms for Post model.
+
+TODO : add a image
 
 ### `filter_create_data`, `filter_update_data`
 `filter_create_data` option, is a option to customize user entered data for Create action.
@@ -425,6 +445,8 @@ $admin->add_model(\App\Models\Post::class, [
 ]);
 ```
 
+TODO : add a image
+
 ### `create_html`, `update_html`
 This option can make a custom html inside create/update form.
 
@@ -456,6 +478,8 @@ $admin->add_model(\App\Models\Post::class, [
     // ...
 ]);
 ```
+
+TODO : add a image
 
 ---
 

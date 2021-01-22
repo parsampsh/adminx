@@ -20,6 +20,8 @@ Also, By default Adminx has a page to show logs in `/admin/model/AdminxLog`.
 Other models and items have a `History` button that is a link to this page.
 Also this page has some options to filter the logs.
 
+TODO : add a images
+
 ---
 
 [Previous: Models](04_models.md) | [Next: Plugin system](06_plugins.md)

@@ -56,6 +56,8 @@ also you can disable the rtl mode by passing `false` to `enable_rtl` method:
 $admin->enable_rtl(false);
 ```
 
+TODO : add a image
+
 ## Font
 You can change default font of Adminx default layouts.
 

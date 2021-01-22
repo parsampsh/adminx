@@ -10,11 +10,15 @@ $admin->set_layout('adminx.layouts.default');
 
 This is the default theme.
 
+TODO : add a image
+
 ## Black While
 
 ```php
 $admin->set_layout('adminx.layouts.blackwhite');
 ```
+
+TODO : add a image
 
 ---
 

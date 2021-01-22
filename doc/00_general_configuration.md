@@ -15,6 +15,8 @@ $admin->get_title();
 
 now, you can see this title in the admin panel.
 
+TODO : add a image
+
 ## The Footer Copyright message
 You can set the footer copyright message.
 
@@ -26,6 +28,8 @@ $admin->get_copyright();
 ```
 
 now, you can see this copyright message at the footer of admin panel.
+
+TODO : add a image
 
 ## Access middleware
 The important question is that **Who can access to the admin panel?**
@@ -68,6 +72,8 @@ $admin->get_logout();
 
 default value for this item is `/auth/logout`.
 
+TODO : add a image
+
 ## User info
 In the adminx panel, in top right is user information: Username and image.
 
@@ -90,6 +96,8 @@ also you can get user info by using `get_userinfo` method.
 $user_info = $admin->get_userinfo();
 var_dump($user_info); // {'username' => '...', 'image' => '...'}
 ```
+
+TODO : add a image
 
 ## Super user
 There is a important thing in admin panels: The manager or Super user.

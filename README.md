@@ -33,6 +33,10 @@ Some of Adminx Features:
 - Builtin Data Backup plugin (coming soon...)
 - Cache Handling to Optimize database usage (coming soon...)
 
+## Preview
+
+TODO : add a preview image
+
 ## Authors
 this package is written by [parsampsh](https://github.com/parsampsh).
 
