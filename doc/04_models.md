@@ -166,7 +166,7 @@ You should set `search` option to a closure. Then, a search box will be added to
 
 Also you can write a hint for search box by `search_hint` option(default value for this, is `Search here...`).
 
-TODO : add a image
+<img src="/doc/images/search.png" />
 
 ### Delete middleware
 This option is for handling delete permission. by default, adminx checks user permission for delete the item. for example, user should have `user.delete` permission in database(You will learn about this is the **Access API** next part) to delete a item in users table. But also you can handle some exceptions by using this `delete_middleware` to customize this action permissions.
