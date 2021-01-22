@@ -347,7 +347,7 @@ $admin->add_model(\App\Models\Post::class, [
 Then, Adminx loads categories with `list` closure and shows that as a multiple select box
 in Create/Update forms for Post model.
 
-TODO : add a image
+<img src="/doc/images/n2n.png" />
 
 ### `filter_create_data`, `filter_update_data`
 `filter_create_data` option, is a option to customize user entered data for Create action.
