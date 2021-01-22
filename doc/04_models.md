@@ -441,7 +441,7 @@ $admin->add_model(\App\Models\Post::class, [
 ]);
 ```
 
-TODO : add a image
+<img src="/doc/images/actions.png" />
 
 ### `create_html`, `update_html`
 This option can make a custom html inside create/update form.
