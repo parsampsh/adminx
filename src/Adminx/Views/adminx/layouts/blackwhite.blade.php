@@ -10,10 +10,35 @@ $username = $core->get_userinfo()['username'];
         <meta name="description" content="" />
         <meta name="author" content="" />
         <title>{{ $core->get_title() }} - @yield('adminx_title')</title>
-        <link href="{{ url('/adminx-public/blackwhile/styles.css') }}" rel="stylesheet" />
+        <link href="{{ url('/adminx-public/blackwhite/styles.css') }}" rel="stylesheet" />
         <link href="{{ url('/adminx-public/blackwhite/dataTables.bootstrap4.min.css') }}" rel="stylesheet" crossorigin="anonymous" />
         <link href="{{ url('/adminx-public/default/select2/select2.min.css') }}" rel="stylesheet" crossorigin="anonymous" />
         <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.1/js/all.min.js" crossorigin="anonymous"></script>
+        @if($core->is_rtl())
+  <link href="{{ url('/adminx-public/default/bootstrap-rtl.css') }}" rel="stylesheet">
+  <style>
+    *{
+      direction: rtl !important;
+      text-align: right !important;
+    }
+
+    .nav-link div{
+      margin: 5px;
+    }
+  </style>
+  @endif
+  @if($core->get_font() !== '')
+    <style>
+    @font-face {
+    font-family: customfont;
+    src: url('{{ $core->get_font() }}');
+    }
+
+    *{
+    font-family: customfont;
+    }
+    </style>
+  @endif
     </head>
     <body class="sb-nav-fixed">
         <nav class="sb-topnav navbar navbar-expand navbar-dark bg-dark">
