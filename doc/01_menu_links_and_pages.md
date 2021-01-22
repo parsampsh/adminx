@@ -22,8 +22,6 @@ also you can set icon of the item in menu using classes.
 $admin->add_link('Title of the link', 'https://example.com/foo/bar', 'blank', 'fa fa-user'); // fontawesome
 ```
 
-TODO : add a image
-
 ## Pages
 You can add custom pages to your admin panel. they will be accessible from the menu.
 
@@ -38,7 +36,9 @@ $admin->add_page('Title of the page in menu', 'the-slug-of-page-in-url', functio
 }, 'fa fa-user(icons as class)', 'blank(target, default is none)');
 ```
 
-TODO : add a image
+<img src="/doc/images/page-in-menu.png" />
+
+<img src="/doc/images/page.png" />
 
 ### Index page
 To set the index page(http://localhost:yyyy/admin/), you should use `.` for slug option.
@@ -50,8 +50,6 @@ $admin->add_page('Welcome', '.', function($request){
     return view('my.custom.index.page');
 });
 ```
-
-TODO : add a image
 
 ---
 
