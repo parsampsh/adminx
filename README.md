@@ -78,3 +78,12 @@ Enjoy it!
 
 ## Documentation
 To learn how to use **Adminx**, read the documentation in [doc folder](/doc).
+
+## Contribution Guide
+If you want to Contribute to this project, Read [This Contribution Guide](/CONTRIBUTING.md)
+
+## Changelog
+See the Changelog of Adminx in [Here](/CHANGELOG.md).
+
+## Security Policy
+See the Adminx Security Policy [Here](/SECURITY.md).
