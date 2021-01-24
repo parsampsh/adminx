@@ -10,8 +10,15 @@
     // Add active state to sidbar nav links
     var path = window.location.href; // because the 'href' property of the DOM element is the absolute path
         $("#layoutSidenav_nav .sb-sidenav a.nav-link").each(function() {
-            if (this.href.startsWith(path)) {
-                $(this).addClass("active");
+            dashboard_item_path = $('#dashborad-item').prop('href')
+            if (path === dashboard_item_path) {
+                if (this.href === '/') {
+                    $(this).addClass("active");
+                }
+            } else {
+                if (this.href.startsWith(path)) {
+                    $(this).addClass("active");
+                }
             }
         });
 
@@ -19,6 +26,8 @@
     $("#sidebarToggle").on("click", function(e) {
         e.preventDefault();
         $("body").toggleClass("sb-sidenav-toggled");
-        $('.sb-nav-fixed #layoutSidenav #layoutSidenav_content').toggleClass('sb-sidenav-toggled-content');
+        if (is_rtl) {
+            $('.sb-nav-fixed #layoutSidenav #layoutSidenav_content').toggleClass('sb-sidenav-toggled-content');
+        }
     });
 })(jQuery);

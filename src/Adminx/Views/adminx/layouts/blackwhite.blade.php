@@ -25,6 +25,34 @@ $username = $core->get_userinfo()['username'];
     .nav-link div{
       margin: 5px;
     }
+
+    @media (max-width: 1000px) {
+        .sb-nav-fixed #layoutSidenav #layoutSidenav_content {
+            padding-right: 30px !important;
+        }
+    }
+
+    #layoutSidenav #layoutSidenav_nav {
+        flex-basis: 225px;
+    }
+
+    #layoutSidenav #layoutSidenav_content {
+        padding-left: 0 !important;
+    }
+
+    @media (min-width: 992px) {
+        .sb-sidenav-toggled #layoutSidenav #layoutSidenav_nav {
+            transform: translateX(225px);
+        }
+
+        .sb-sidenav-toggled #layoutSidenav #layoutSidenav_content {
+        }
+    }
+
+    .sb-nav-fixed #layoutSidenav #layoutSidenav_content {
+        padding-right: 225px;
+    }
+
   </style>
   @endif
   @if($core->get_font() !== '')
@@ -61,7 +89,7 @@ $username = $core->get_userinfo()['username'];
                 <nav class="sb-sidenav accordion sb-sidenav-dark" id="sidenavAccordion">
                     <div class="sb-sidenav-menu">
                         <div class="nav">
-                            <a class="nav-link" href="{{ $core->url('/') }}">
+                            <a id="dashborad-item" class="nav-link" href="{{ $core->url('/') }}">
                                 <div class="sb-nav-link-icon"><i class="fas fa-tachometer-alt"></i></div>
                                 {{ $core->get_word('menu.dashboard', 'Dashboard') }}
                             </a>
@@ -115,6 +143,15 @@ $username = $core->get_userinfo()['username'];
                 </footer>
             </div>
         </div>
+        @if($core->is_rtl())
+        <script>
+            var is_rtl = true;
+        </script>
+        @else
+        <script>
+            var is_rtl = false;
+        </script>
+        @endif
         <script src="{{ url('/adminx-public/blackwhite/jquery-3.5.1.slim.min.js') }}" crossorigin="anonymous"></script>
         <script src="{{ url('/adminx-public/blackwhite/bootstrap.bundle.min.js') }}" crossorigin="anonymous"></script>
         <script src="{{ url('/adminx-public/blackwhite/scripts.js') }}"></script>
