@@ -85,3 +85,6 @@ See the Changelog of Adminx in [Here](/CHANGELOG.md).
 
 ## Security Policy
 See the Adminx Security Policy [Here](/SECURITY.md).
+
+## License
+Adminx is licensed under [MIT](/LICENSE).
