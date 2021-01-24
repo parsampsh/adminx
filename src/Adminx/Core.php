@@ -23,6 +23,8 @@ use Illuminate\Support\Facades\Route;
  */
 class Core
 {
+    public $adminx_version = '0.1';
+
     /**
      * The current registered admin panel
      */
