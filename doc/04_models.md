@@ -106,7 +106,7 @@ For example, we have Posts table and posts have Comments. We want to show count 
 $admin->add_model(\App\Models\Post::class, [
     // ...
     'virtual_fields' => [
-        'Posts Count' => (function($post){
+        'Comments Count' => (function($post){
             return $post->comments()->count();
             // or use html tags
             return '<a>' . $post->comments()->count() . '</a>';
@@ -212,7 +212,7 @@ $admin->add_model(\App\Models\Post::class, [
     // this closure should return boolean
     'update_middleware' => (function($user, $post){
         // for example:
-        return $user->id === $post->id;
+        return $user->id === $post->user_id;
     }),
     // ...
 ]);
@@ -293,7 +293,7 @@ $admin->add_model(\App\Models\Post::class, [
                 // in the `list` closure, you should return list of foreign table
                 // (This will be used for Create ad Update forms)
                 return \App\Models\User::all();
-                // also you can optimize your query and select only tha thing you want to use
+                // also you can optimize your query and select only that thing you want to use
                 return \App\Models\User::all(['id', 'username']);
             }),
             'title' => (function($row){
