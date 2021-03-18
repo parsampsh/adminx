@@ -28,8 +28,6 @@ Some of Adminx Features:
 - Able to Use for End-User
 - Match with laravel Auth
 - Plugin system
-- Builtin Data Backup plugin (coming soon...)
-- Cache Handling to Optimize database usage (coming soon...)
 
 ## Preview
 
