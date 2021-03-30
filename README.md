@@ -1,4 +1,7 @@
 # Adminx Library
+
+[![Latest Stable Version](https://img.shields.io/packagist/v/parsampsh/adminx.svg)](https://packagist.org/packages/parsampsh/adminx)
+
 Adminx is a library to create and handle admin panel automaticaly in laravel applications.
 
 ## Why Adminx?
