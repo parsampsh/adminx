@@ -18,16 +18,14 @@ use Illuminate\Support\ServiceProvider;
  */
 class AdminxServiceProvider extends ServiceProvider
 {
-    public function boot()
-    {
+    public function boot() {
         $this->loadMigrationsFrom(__DIR__.'/Migrations');
         if ($this->app->runningInConsole()) {
             $this->mergePublic();
         }
     }
 
-    private function mergePublic()
-    {
+    private function mergePublic() {
         $this->publishes([__DIR__ . '/../../public' => public_path('/adminx-public')], 'adminx-public');
     }
 }

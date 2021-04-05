@@ -15,13 +15,14 @@ use Illuminate\Routing\Controller as BaseController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Adminx\Models\Log;
+use Adminx\Core;
 
 /**
  * The Adminx Controller
  */
 class AdminxController extends BaseController
 {
-    private $core;
+    private ?Core $core;
 
     /**
      * Finds model config by slug
@@ -57,7 +58,7 @@ class AdminxController extends BaseController
 
     public function __construct()
     {
-        $this->core = \Adminx\Core::$core;
+        $this->core = Core::$core;
     }
 
     /**

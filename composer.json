@@ -19,7 +19,8 @@
     "require-dev": {
         "orchestra/testbench": "^6.0",
         "phpunit/phpunit": "^9.3",
-        "friendsofphp/php-cs-fixer": "^2.17"
+        "friendsofphp/php-cs-fixer": "^2.17",
+        "phpstan/phpstan": "^0.12.83"
     },
     "autoload": {
         "psr-4": {
@@ -42,8 +43,9 @@
         }
     },
     "scripts": {
-        "test": "php vendor/bin/phpunit",
+        "test": "vendor/bin/phpunit",
         "format": "PHP_CS_FIXER_IGNORE_ENV=1 php vendor/bin/php-cs-fixer fix",
-        "all": "composer format && composer test"
+        "all": "composer format && composer test",
+	"phpstan": "vendor/bin/phpstan.phar analyse src tests"
     }
 }

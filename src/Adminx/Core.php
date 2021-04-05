@@ -23,12 +23,12 @@ use Illuminate\Support\Facades\Route;
  */
 class Core
 {
-    public $adminx_version = '0.1';
+    public string $adminx_version = '0.1';
 
     /**
      * The current registered admin panel
      */
-    public static $core;
+    public static ?Core $core;
 
     function __construct() {
         // config Adminx Group model
@@ -213,6 +213,11 @@ class Core
     }
 
     /**
+     * The Default route prefix for admin panel routes
+     */
+    protected string $route_prefix = '/';
+
+    /**
      * Register configured admin panel on routes
      * 
      * @param string $route
@@ -276,7 +281,7 @@ class Core
                 ';
                 return $output;
             }),
-            'delete_middleware' => (function(){return false;}),
+            'create_middleware' => (function(){return false;}),
             'update_middleware' => (function(){return false;}),
             'delete_middleware' => (function(){return false;}),
             'filter_data' => (function($q) use ($admin) {
