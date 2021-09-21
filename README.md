@@ -7,29 +7,29 @@ Adminx is a library to create and handle admin panel automaticaly in laravel app
 ## Why Adminx?
 Some of Adminx Features:
 
-- Easy to Install and Configure
+- Easy to install and configure
 - Secure
 - Beautiful default frontend
 - Customizing Admin panel general information
-- Adding custom pages and links to admin panel Menu
-- Automatic and Advance CRUD for models with useful options
-- Fully match with your database models
+- Adding custom pages and links to the admin panel Menu
+- Automatic and advanced CRUD for models with useful options
+- Fully matched with your database models
 - Handling 1 to n and n to n relations in database
 - Custom actions for model datatable
-- Handling Admins Activity and Logs
-- Able to Customize frontend layout
-- Able to Customizing by language and localization
+- Handling admins Activities and logs
+- Customizable frontend layout
+- Customizable language and localization
 - RTL layout
-- Has Multiple Selectable Beautiful Default themes
-- Advance Permission and Group handling
+- Several builtin themes
+- Advanced permission and group handling
 - Customizing Authorization
-- Advance options for model Datatable
+- Advanced options for model datatable
 - Virtual fields for models
-- Search
-- Advance options for filtering data in datatable
-- Customizing Create/Update forms
+- Search system
+- Advanced options for filtering data in datatable
+- Customizable Create/Update forms
 - Able to Use for End-User
-- Match with laravel Auth
+- Matched with laravel authentication system
 - Plugin system
 
 ## Preview
@@ -37,16 +37,16 @@ Some of Adminx Features:
 <img src="/doc/images/preview.png" />
 
 ## Authors
-this package is written by [parsampsh](https://github.com/parsampsh).
+This library is written by [parsampsh](https://github.com/parsampsh).
 
 ## Get started
-to get started with this package, do the following steps in your laravel project:
+To get started with this package, do the following steps in your laravel project:
 
 - Add the package via composer: `$ composer require parsampsh/adminx`
 - Publish public assets: `$ php artisan vendor:publish --provider="Adminx\AdminxServiceProvider"`
 - Run the migrations: `$ php artisan migrate`
 
-then, adminx is ready to use. create `routes/adminx.php` file and go to `app/Providers/RouteServiceProvider.php` and inclue that in **End of `boot` method**:
+Then, adminx is ready to be used. create `routes/adminx.php` file and go to `app/Providers/RouteServiceProvider.php` and inclue that in **End of the `boot` method**:
 
 ```php
 // ...
@@ -56,7 +56,7 @@ include base_path('routes/adminx.php');
 // ...
 ```
 
-then, write this code in `routes/adminx.php`:
+Then, write this code in `routes/adminx.php`:
 
 ```php
 // ...
@@ -71,7 +71,7 @@ $admin->register('/admin'); // `/admin` is the route of admin panel
 // ...
 ```
 
-now, run `$ php artisan optimize`, `$ php artisan serve` and goto `/admin` page. Remember that to access to the admin panel you should be login using laravel auth.
+Now, run `$ php artisan optimize`, `$ php artisan serve` and goto `/admin` page. Remember that to access to the admin panel you must be logged in using the laravel auth.
 
 Enjoy it!
 
@@ -82,10 +82,10 @@ To learn how to use **Adminx**, read the documentation in [doc folder](/doc).
 If you want to Contribute to this project, Read [This Contribution Guide](/CONTRIBUTING.md)
 
 ## Changelog
-See the Changelog of Adminx in [Here](/CHANGELOG.md).
+See the Changelog of Adminx [here](/CHANGELOG.md).
 
 ## Security Policy
-See the Adminx Security Policy [Here](/SECURITY.md).
+See the Adminx security policy [here](/SECURITY.md).
 
 ## License
 Adminx is licensed under [MIT](/LICENSE).

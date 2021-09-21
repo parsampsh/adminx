@@ -25,7 +25,7 @@ To run php cs fixer:
 $ composer format
 ```
 
-This command makes style fixes changes on the source code.
+This command makes style fixes on the source code.
 
 ## Make ready environment
 After cloning this project, do the following steps to make ready development environment:
@@ -41,7 +41,7 @@ composer install
 composer all
 ```
 
-Enjoy it!
+Start coding!
 
 ## Idea
 If you want to find a task for contribution:
