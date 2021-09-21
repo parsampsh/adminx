@@ -22,7 +22,7 @@ $admin->add_plugin(MyAdminxPlugin::class); // then, plugin makes effects on your
 $admin->register();
 ```
 
-In the plugin defining, method `run` of plugin class will be runed and admin core object will be
+In the plugin defining, method `run` of plugin class will be ran and admin core object will be
 passed to that. Then, plugin can make effects on admin panel in that method.
 
 Also there is a second argument, `$options`. this argument contains user passed options:

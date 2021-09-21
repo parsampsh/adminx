@@ -425,7 +425,7 @@ $admin->add_model(\App\Models\Post::class, [
                 return $user->id === $row->user_id; // exmaple
             }),
             'run' => (function($post){
-                // will be runed when button is pressed for $post
+                // will be ran when button is pressed for $post
                 // do something...
                 
                 // return the response
