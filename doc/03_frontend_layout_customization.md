@@ -29,7 +29,7 @@ Structure of your layout should be something like this:
 The `adminx_layout` section contents page body content. you should yield this in your layout.
 
 ## 2. Page title
-You should set page title of page like this example:
+You should set title of page like this example:
 
 ```blade
 <!--- ... --->
@@ -41,10 +41,10 @@ You should set page title of page like this example:
 
 The `$core->get_title()` returns admin panel base title and `@yield('adminx_title')` returns current page title.
 
-Also you can use another `$core` methods.
+Also you can use another `$core` methods (That's an instance from `\Adminx\Core` class).
 
 ## 3. Urls
-To generate urls to admin panel, you can use `$core->url('...')` method.
+To generate urls in admin panel, you can use `$core->url('...')` method.
 
 for example:
 
@@ -55,7 +55,7 @@ for example:
 Actually, the `$core->url()` method returns something like this: `<admin-panel-base-route>/<the-route>`. for example `$core->url('/some/place')` returns `/admin/some/place`.
 
 ## 4. Menu
-You can show admin panel menu under this structure:
+You can show admin panel menu with this structure:
 
 ```blade
 @foreach($core->get_menu() as $item)

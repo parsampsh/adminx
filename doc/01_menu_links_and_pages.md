@@ -1,8 +1,8 @@
 # Admin panel menu links and pages
-you can add links and custom pages to the admin panel sidebar.
+You can add links and custom pages in the admin panel sidebar.
 
 ## Links
-to add the links, use `add_link` method.
+To add the links, use `add_link` method.
 
 ```php
 $admin->add_link('Title of the link', '<link>');
@@ -10,13 +10,13 @@ $admin->add_link('Title of the link', '<link>');
 $admin->add_link('Title of the link', 'https://example.com/foo/bar');
 ```
 
-also you can set the target of the link. if you set `blank`, link will be opened in new tab. by default, link will be opened in current tab.
+Also you can set the target of the link. If you set it to `blank`, link will be opened in new tab. By default, link will be opened in the current tab.
 
 ```php
 $admin->add_link('Title of the link', 'https://example.com/foo/bar', 'blank');
 ```
 
-also you can set icon of the item in menu using classes.
+Also you can set icon of the item in menu using classes.
 
 ```php
 $admin->add_link('Title of the link', 'https://example.com/foo/bar', 'blank', 'fa fa-user'); // fontawesome
@@ -28,10 +28,10 @@ You can add custom pages to your admin panel. they will be accessible from the m
 ```php
 $admin->add_page('Title of the page in menu', 'the-slug-of-page-in-url', function($request){
     // this is your action
-    // return value will be showed to user in the main content section of the view
+    // returned value will be shown to the user in the main content section of the template
     // also you can use $request variable
     return 'hello world! i am a simple page.';
-    // or use view
+    // or use a view
     return view('some.view');
 }, 'fa fa-user(icons as class)', 'blank(target, default is none)');
 ```
@@ -53,4 +53,4 @@ $admin->add_page('Welcome', '.', function($request){
 
 ---
 
-[Previous: General Configuration](00_general_configuration.md) | [Next: Frontend language customization](02_lang.md)
+[Previous: General configuration](00_general_configuration.md) | [Next: Frontend language customization](02_lang.md)

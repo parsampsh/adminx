@@ -1,7 +1,7 @@
 # Frontend language customization
 You can customize the language of admin panel.
 
-This is too easy. You only need to use `set_word` method.
+This is so easy. You just need to use `set_word` method.
 
 For example:
 
@@ -11,26 +11,26 @@ $admin->set_word('foo', 'bar');
 // ...
 ```
 
-The first argument is `key` and the second argument is value. In the above example, `menu.dashboard` key points to admin panel menu home page link. In the above example, default value `Dashboard` will be changed to `Huvudsida`.
+The first argument is the `key` and the second argument is the value. In the above example, `menu.dashboard` key points to admin panel menu home page link. In the above example, default value `Dashboard` will be changed to `Huvudsida` (a swedeish word).
 
 All of keys:
 
 |Key|Description|Default|
 |---|-----------|-------|
-|`logout.title`|title of logout window|`Ready to leave?`|
-|`logout.btn`|text of logout button|`Logout`|
-|`logout.message`|the message of logout window|`Select "Logout" below if you are ready to end your current session.`|
-|`logout.cancel`|text of logout cancel button|`Cancel`|
-|`menu.dashboard`|text of menu dashboard link|`Dashboard`|
-|`btn.delete`|text of model delete button|`Delete`|
-|`tbl.action`|title of actions column in models table|`Actions`|
-|`btn.create`|title of create button|`Create new {name}` (you should write exactly `{name}` for model name)|
-|`btn.back`|title of back button|`Back`|
-|`btn.update`|title of update button|`Update`|
-|`btn.log`|title of history button|`History`|
-|`user.btn.log`|title of history button in user menu|`Activity History`|
+|`logout.title`|Title of logout window|`Ready to leave?`|
+|`logout.btn`|Text of logout button|`Logout`|
+|`logout.message`|The message of logout window|`Select "Logout" below if you are ready to end your current session.`|
+|`logout.cancel`|Text of logout cancel button|`Cancel`|
+|`menu.dashboard`|Text of menu dashboard link|`Dashboard`|
+|`btn.delete`|Text of model delete button|`Delete`|
+|`tbl.action`|Title of actions column in models table|`Actions`|
+|`btn.create`|Title of create button|`Create new {name}` (you should write exactly `{name}` for model name)|
+|`btn.back`|Title of back button|`Back`|
+|`btn.update`|Title of update button|`Update`|
+|`btn.log`|Title of history button|`History`|
+|`user.btn.log`|Title of history button in user menu|`Activity History`|
 
-also you can use `get_word` and `get_all_words` methods to get words:
+Also you can use `get_word` and `get_all_words` methods to get words:
 
 ```php
 $admin->get_word('key');
@@ -38,19 +38,19 @@ $admin->get_all_words(); // array
 ```
 
 ## Right to left
-You can set the admin panel layout Right to left.
+You can set the admin panel layout to right to left mode.
 
 ```php
 $admin->enable_rtl(); // this method enables the rtl mode
 ```
 
-also you can check is rtl enable:
+Also you can check that is the rtl enabled:
 
 ```php
 echo $admin->is_rtl(); // returns boolean
 ```
 
-also you can disable the rtl mode by passing `false` to `enable_rtl` method:
+Also you can disable the rtl mode by passing `false` to `enable_rtl` method:
 
 ```php
 $admin->enable_rtl(false);
@@ -59,7 +59,7 @@ $admin->enable_rtl(false);
 <img src="/doc/images/rtl.png" />
 
 ## Font
-You can change default font of Adminx default layouts.
+You can change the default font of Adminx default layouts.
 
 You can use `set_font` method:
 
@@ -71,7 +71,7 @@ $admin->set_font('/fonts/Some-font.ttf');
 $admin->set_font('https://example.com/font.woff');
 ```
 
-Also you can get current font with `get_font`:
+Also you can get the current font with `get_font` method:
 
 ```php
 echo $admin->get_font();

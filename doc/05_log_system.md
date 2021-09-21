@@ -1,12 +1,12 @@
 # Log system
-Adminx handles log system. Adminx stores Create, Update and Delete actions log for models.
+Adminx handles the log system. Adminx stores Create, Update and Delete actions logs for models.
 
 Log fields:
-- User: This log is about which user (who does this action): id of user
+- User: This log is about which user (who did this action): id of user
 - Model: This log is about which model: slug of model
 - Item: This log is about which item in the model: id of item
-- Action: what user does (`create`, `update`, `delete`)
-- Message: a message for log
+- Action: What user did (`create`, `update`, `delete`)
+- Message: A message for log
 
 You can store a custom log by yourself using `Adminx\Models\Log::add_log()` method:
 

@@ -1,12 +1,12 @@
 # Plugins
-Adminx has an useful plugin system. You can write your own plugin or use other plugins.
+Adminx has an useful plugin system. You can write your own plugin or use other's plugins.
 
-Plugin system is so simple, plugin is a class that can make effect on admin panel configurations.
+Plugin system is so simple, plugin is a class that can make effects on admin panel configurations.
 
 For example:
 
 ```php
-// define the plugin
+// define a plugin
 class MyAdminxPlugin {
     public function run(\Adminx\Core $admin, array $options=[]) {
         // example
@@ -23,9 +23,9 @@ $admin->register();
 ```
 
 In the plugin defining, method `run` of plugin class will be ran and admin core object will be
-passed to that. Then, plugin can make effects on admin panel in that method.
+passed to that. Then, plugin can make effects on admin panel inside of that method.
 
-Also there is a second argument, `$options`. this argument contains user passed options:
+Also there is a second argument, `$options`. This argument contains user passed options:
 
 ```php
 $admin->add_plugin(MyAdminxPlugin::class, [

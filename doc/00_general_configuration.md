@@ -13,11 +13,11 @@ $admin->set_title('My admin panel');
 $admin->get_title();
 ```
 
-now, you can see this title in the admin panel.
+Now, you can see this title in the admin panel.
 
 <img src="/doc/images/title.png" />
 
-## The Footer Copyright message
+## The footer copyright message
 You can set the footer copyright message.
 
 ```php
@@ -27,14 +27,14 @@ $admin->set_copyright('All rights reserved.');
 $admin->get_copyright();
 ```
 
-now, you can see this copyright message at the footer of admin panel.
+Now, you can see this copyright message at the footer of the admin panel.
 
 <img src="/doc/images/copyright.png" />
 
 ## Access middleware
-The important question is that **Who can access to the admin panel?**
+One important question is **Who can access to the admin panel?**
 
-to set that which users can access to the admin panel, you can use `set_middleware` method.
+To determine that which users can access to the admin panel, you should use `set_middleware` method.
 
 ```php
 $admin->set_middleware(function(){
@@ -43,17 +43,17 @@ $admin->set_middleware(function(){
 });
 
 $admin->set_middleware(function($user){
-    // the logged in user is in $user. we can check conditions on thsi
+    // the logged in user is in $user. we can check conditions on this
     // for example
     return $user->access_level === 'manager' || $user->access_level === 'admin';
 });
 ```
 
-This method gets a `Closure` and runs that and passes the current user as argument to that(you can don't set the argument and that is optional), then, if return value of function is `true`, means access is allowed for that user.
+This method gets a `Closure` and runs that and passes the current user as an argument to that(you can don't set the argument and that is optional), then if return value of function is `true`, means access is allowed for that user.
 
 By default, if you don't set this middleware, default value is `true`.
 
-also you can check this middleware manually:
+Also you can check this middleware manually:
 
 ```php
 $result = $admin->run_middleware();
@@ -61,7 +61,7 @@ var_dump($result); // true or false
 ```
 
 ## Logout url of user
-The Adminx panel, has a logout button. you can set the link of that button to logout user.
+The Adminx panel, has a logout button. you can set the link of that button to a route you determined for user to logout.
 
 ```php
 $admin->set_logout('/user/logout');
@@ -70,28 +70,28 @@ $admin->set_logout('/user/logout');
 $admin->get_logout();
 ```
 
-default value for this item is `/auth/logout`.
+Default value for this item is `/auth/logout`.
 
 <img src="/doc/images/logout-btn.png" />
 <img src="/doc/images/logout-window.png" />
 
 ## User info
-In the Adminx panel, in top right is user information: Username and image.
+There is user information at the Adminx panel top right: Username and image.
 
-you can set value of them by using `set_userinfo` method.
+You can set values of them by using `set_userinfo` method.
 
 ```php
 $admin->set_userinfo(function($user){
     return [
         'username' => $user->name,
-        'image' => '/link/to/user/images/' . $user->img,
+        'image' => '/link/to/users/images/' . $user->img,
     ];
 });
 ```
 
-this method gets closure and passes user object to that(`$user` argument is optional) and this closure should return a dictonary contains two keys: `username` and `image`. the `username` will be showed as username of user and `image` will be used as user profile image link.
+This method gets a closure and passes the user object to that(`$user` argument is optional) and this closure should return a dictonary contains two keys: `username` and `image`. The `username` will be shown as username of the user and `image` will be used as user profile image address.
 
-also you can get user info by using `get_userinfo` method.
+Also you can get user info by using `get_userinfo` method.
 
 ```php
 $user_info = $admin->get_userinfo();
@@ -103,7 +103,7 @@ var_dump($user_info); // {'username' => '...', 'image' => '...'}
 ## Super user
 There is an important thing in admin panels: The manager or Super user.
 
-Super user is an user that can do everything!
+Super user is an user who can do everything!
 
 To determine that who is super user in Adminx, you should use `super_user` method:
 
@@ -116,7 +116,7 @@ $admin->super_user(function($user){
 This method gets a closure and that closure should recive user object and return a boolean.
 If true is returned, means that user is Super user.
 
-## An Example
+## An example
 
 ```php
 $admin = new \Adminx\Core;
