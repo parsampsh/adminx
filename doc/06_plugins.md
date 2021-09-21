@@ -1,5 +1,5 @@
 # Plugins
-Adminx has a useful plugin system. You can write your own plugin or use other plugins.
+Adminx has an useful plugin system. You can write your own plugin or use other plugins.
 
 Plugin system is so simple, plugin is a class that can make effect on admin panel configurations.
 

@@ -12,7 +12,7 @@ $user = \App\Models\User::find(1); // the user model
 ```
 
 ## add_permission_for_user
-this methods adds a permission for a user.
+this methods adds a permission for an user.
 
 ```php
 $user = \App\Models\User::find(1); // the user model
@@ -40,7 +40,7 @@ $group = \Adminx\Models\Group::find($x);
 now, the user is added to that group and has all of the group permissions.
 
 ## user_is_in_group
-this method checks a user is in a group.
+this method checks an user is in a group.
 
 ```php
 $user = User::find(1);
@@ -51,7 +51,7 @@ $result = \Adminx\Access::user_is_in_group($user, $group); // true or false
 the output is a boolean.
 
 ## remove_user_from_group
-this method removes a user from a group.
+this method removes an user from a group.
 
 ```php
 $user = User::find(1);

@@ -101,9 +101,9 @@ var_dump($user_info); // {'username' => '...', 'image' => '...'}
 <img src="/doc/images/userinfo.png" />
 
 ## Super user
-There is a important thing in admin panels: The manager or Super user.
+There is an important thing in admin panels: The manager or Super user.
 
-Super user is a user that can do everything!
+Super user is an user that can do everything!
 
 To determine that who is super user in Adminx, you should use `super_user` method:
 

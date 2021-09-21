@@ -25,7 +25,7 @@ $admin->add_model(\App\Models\Product::class, [
 ]);
 ```
 
-This feature adds a item to admin panel menu and users can manage that model by clicking that link.
+This feature adds an item to admin panel menu and users can manage that model by clicking that link.
 
 All of config options:
 
@@ -169,7 +169,7 @@ Also you can write a hint for search box by `search_hint` option(default value f
 <img src="/doc/images/search.png" />
 
 ### Delete middleware
-This option is for handling delete permission. by default, Adminx checks user permission for delete the item. for example, user should have `user.delete` permission in database(You will learn about this is the **Access API** next part) to delete a item in users table. But also you can handle some exceptions by using this `delete_middleware` to customize this action permissions.
+This option is for handling delete permission. by default, Adminx checks user permission for delete the item. for example, user should have `user.delete` permission in database(You will learn about this is the **Access API** next part) to delete an item in users table. But also you can handle some exceptions by using this `delete_middleware` to customize this action permissions.
 
 ```php
 $admin->add_model(\App\Models\Post::class, [
@@ -277,14 +277,14 @@ $admin->add_model(\App\Models\Post::class, [
 ### Foreign Keys
 Handling foreign keys is so easy in Adminx.
 
-You should set a option named `foreign_keys`.
+You should set an option named `foreign_keys`.
 
 `1 to N` example:
 
 ```php
 $admin->add_model(\App\Models\Post::class, [
     // ...
-    // for example, posts have a user_id:
+    // for example, posts have an user_id:
     'foreign_keys' => [
         'user_id' => [
             // you should set model of foreign table with `model` option
@@ -309,7 +309,7 @@ $admin->add_model(\App\Models\Post::class, [
 
 In the above example, column `user_id` will be set as a foreign key and instead of `user_id`,
 The title will be showed as value of column, and also in Create and Update forms, A select box
-will be showed and user can select a item. (The 1 To N relationship)
+will be showed and user can select an item. (The 1 To N relationship)
 
 <img src="/doc/images/foreign.png" />
 
@@ -350,7 +350,7 @@ in Create/Update forms for Post model.
 <img src="/doc/images/n2n.png" />
 
 ### `filter_create_data`, `filter_update_data`
-`filter_create_data` option, is a option to customize user entered data for Create action.
+`filter_create_data` option, is an option to customize user entered data for Create action.
 By default, Adminx Validates user data, sets data on a model object, But you can customize the data(Optional).
 
 For example:
@@ -482,7 +482,7 @@ An important thing in Adminx, is User Permissions.
 
 By default, you can see `Groups` item in the admin panel menu.
 
-Group is a collection from permissions that if a user is in a group, has all of that group permissions.
+Group is a collection from permissions that if an user is in a group, has all of that group permissions.
 
 Actually, Groups are Roles. for example `admin`, `writer`, `operator`...
 
