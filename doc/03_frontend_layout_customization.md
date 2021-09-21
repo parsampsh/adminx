@@ -1,5 +1,5 @@
 # Frontend Layout Customization
-You can customize adminx frontend **Base Layout view**. The default view as layout is `adminx.layouts.default`.
+You can customize Adminx frontend **Base Layout view**. The default view as layout is `adminx.layouts.default`.
 
 To customize it, you can use `set_layout` method:
 
@@ -13,7 +13,7 @@ also you can get the seted view:
 $admin->get_layout();
 ```
 
-If should design your view(in above example, `my.view`) under the adminx standards.
+If should design your view(in above example, `my.view`) under the Adminx standards.
 
 ## 1. Body content
 Structure of your layout should be something like this:

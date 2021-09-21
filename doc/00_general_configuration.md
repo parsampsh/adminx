@@ -61,7 +61,7 @@ var_dump($result); // true or false
 ```
 
 ## Logout url of user
-The adminx panel, has a logout button. you can set the link of that button to logout user.
+The Adminx panel, has a logout button. you can set the link of that button to logout user.
 
 ```php
 $admin->set_logout('/user/logout');
@@ -76,7 +76,7 @@ default value for this item is `/auth/logout`.
 <img src="/doc/images/logout-window.png" />
 
 ## User info
-In the adminx panel, in top right is user information: Username and image.
+In the Adminx panel, in top right is user information: Username and image.
 
 you can set value of them by using `set_userinfo` method.
 
@@ -105,7 +105,7 @@ There is a important thing in admin panels: The manager or Super user.
 
 Super user is a user that can do everything!
 
-To determine that who is super user in adminx, you should use `super_user` method:
+To determine that who is super user in Adminx, you should use `super_user` method:
 
 ```php
 $admin->super_user(function($user){

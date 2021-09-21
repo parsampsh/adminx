@@ -1,7 +1,7 @@
 # Models
 Adminx can handel CRUD(Create/Read/Update/Delete) actions for your database models fully automaticaly.
 
-To Config your models in adminx, you can use `add_model` method:
+To Config your models in Adminx, you can use `add_model` method:
 
 ```php
 $admin->add_model(\App\Models\Product::class, [
@@ -169,7 +169,7 @@ Also you can write a hint for search box by `search_hint` option(default value f
 <img src="/doc/images/search.png" />
 
 ### Delete middleware
-This option is for handling delete permission. by default, adminx checks user permission for delete the item. for example, user should have `user.delete` permission in database(You will learn about this is the **Access API** next part) to delete a item in users table. But also you can handle some exceptions by using this `delete_middleware` to customize this action permissions.
+This option is for handling delete permission. by default, Adminx checks user permission for delete the item. for example, user should have `user.delete` permission in database(You will learn about this is the **Access API** next part) to delete a item in users table. But also you can handle some exceptions by using this `delete_middleware` to customize this action permissions.
 
 ```php
 $admin->add_model(\App\Models\Post::class, [
@@ -185,7 +185,7 @@ $admin->add_model(\App\Models\Post::class, [
 ```
 
 ### Create middleware
-This option is like `delete_middleware` but for create action. by default, this permission is handled by adminx permission system but you can check some exceptions by this option.
+This option is like `delete_middleware` but for create action. by default, this permission is handled by Adminx permission system but you can check some exceptions by this option.
 
 ```php
 $admin->add_model(\App\Models\Post::class, [
@@ -204,7 +204,7 @@ The Create form:
 <img src="/doc/images/create.png" />
 
 ### Update middleware
-This option is like `create_middle` but for update action. by default, this permission is handled by adminx permission system but you can check some exceptions by this option.
+This option is like `create_middle` but for update action. by default, this permission is handled by Adminx permission system but you can check some exceptions by this option.
 
 ```php
 $admin->add_model(\App\Models\Post::class, [
@@ -275,7 +275,7 @@ $admin->add_model(\App\Models\Post::class, [
 <img src="/doc/images/field-comment.png" />
 
 ### Foreign Keys
-Handling foreign keys is so easy in adminx.
+Handling foreign keys is so easy in Adminx.
 
 You should set a option named `foreign_keys`.
 
