@@ -15,7 +15,7 @@ use Adminx\Tests\TestCase;
 
 class DeleteSystemTest extends TestCase
 {
-    public function test_delete_button_will_be_showed(){
+    public function test_delete_button_will_be_shown(){
         $user = \App\Models\User::factory()->create();
 
         $admin = new \Adminx\Core;

@@ -15,7 +15,7 @@ use Adminx\Tests\TestCase;
 
 class CreateSystemTest extends TestCase
 {
-    public function test_create_button_will_be_showed(){
+    public function test_create_button_will_be_shown(){
         $user = \App\Models\User::factory()->create();
 
         $admin = new \Adminx\Core;
@@ -182,7 +182,7 @@ class CreateSystemTest extends TestCase
         $this->assertNotEmpty($post);
     }
 
-    public function test_custom_html_is_showed()
+    public function test_custom_html_is_shown()
     {
         $user = \App\Models\User::factory()->create();
 

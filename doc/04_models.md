@@ -61,7 +61,7 @@ This option changes title of a column in table. Default title is name of column.
 $admin->add_model(\App\Models\User::class, [
     // ...
     'fields_titles' => [
-        'email' => 'The Email', // `The Email` will be showed as title of column `email` in table
+        'email' => 'The Email', // `The Email` will be shown as title of column `email` in table
     ]
     // ...
 ]);
@@ -262,7 +262,7 @@ $admin->add_model(\App\Models\Post::class, [
 ```
 
 ### `fields_comments`
-This option sets comment for fields. this comment will be showed as placeholder in create and update forms.
+This option sets comment for fields. this comment will be shown as placeholder in create and update forms.
 
 ```php
 $admin->add_model(\App\Models\Post::class, [
@@ -298,7 +298,7 @@ $admin->add_model(\App\Models\Post::class, [
             }),
             'title' => (function($row){
                 // determine a title for item
-		// remember, this output will be showed as html! if you want to make this secure, use `htmlspecialchars()`
+		// remember, this output will be shown as html! if you want to make this secure, use `htmlspecialchars()`
                 return $row->email;
             }),
         ]
@@ -308,8 +308,8 @@ $admin->add_model(\App\Models\Post::class, [
 ```
 
 In the above example, column `user_id` will be set as a foreign key and instead of `user_id`,
-The title will be showed as value of column, and also in Create and Update forms, A select box
-will be showed and user can select an item. (The 1 To N relationship)
+The title will be shown as value of column, and also in Create and Update forms, A select box
+will be shown and user can select an item. (The 1 To N relationship)
 
 <img src="/doc/images/foreign.png" />
 
@@ -458,7 +458,7 @@ $admin->add_model(\App\Models\Post::class, [
 ]);
 ```
 
-Then, in create form, output of this closure will be showed in end of create form.
+Then, in create form, output of this closure will be shown in end of create form.
 For example, You can make custom inputs for form and use them in `filter_create_data`. 
 
 Also `update_html` is even like `create_html` but this closure can get `$row` user are editing:

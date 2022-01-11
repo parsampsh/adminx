@@ -63,7 +63,7 @@ class HttpControllerTest extends TestCase
         $this->actingAs($user)->get('/admin')->assertStatus(200);
     }
 
-    public function test_user_info_is_showed()
+    public function test_user_info_is_shown()
     {
         $admin = new \Adminx\Core;
         
@@ -139,7 +139,7 @@ class HttpControllerTest extends TestCase
         $res->assertSee('<span>All rights reserved</span>', false);
     }
 
-    public function test_links_in_menu_is_showed()
+    public function test_links_in_menu_is_shown()
     {
         (new \Adminx\Core)
             ->add_link('Test link', 'https://example.com', 'blank', 'fa fa-user')

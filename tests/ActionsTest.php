@@ -15,7 +15,7 @@ use Adminx\Tests\TestCase;
 
 class ActionsTest extends TestCase
 {
-    public function test_action_middleware_works_and_action_will_be_runed()
+    public function test_action_middleware_works_and_action_will_be_ran()
     {
         $user = \App\Models\User::factory()->create();
         $user2 = \App\Models\User::factory()->create();

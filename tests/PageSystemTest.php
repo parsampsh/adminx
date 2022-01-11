@@ -15,7 +15,7 @@ use Adminx\Tests\TestCase;
 
 class PageSystemTest extends TestCase
 {
-    public function test_page_is_showed_in_menu()
+    public function test_page_is_shown_in_menu()
     {
         $admin = new \Adminx\Core;
         $admin->add_page('Test page', 'my-page', function () {
@@ -30,7 +30,7 @@ class PageSystemTest extends TestCase
         $res->assertSee('<i class="fa fa-user"></i><span>Test page</span></a>', false);
     }
 
-    public function test_page_can_be_showed()
+    public function test_page_can_be_shown()
     {
         $admin = new \Adminx\Core;
         $admin->add_page('Test page', 'my-page', function () {
@@ -45,7 +45,7 @@ class PageSystemTest extends TestCase
         $res->assertSee('hello world. i am a page', false);
     }
 
-    public function test_page_can_be_showed_with_request_object()
+    public function test_page_can_be_shown_with_request_object()
     {
         $admin = new \Adminx\Core;
         $admin->add_page('Test page', 'my-page', function ($request) {

@@ -15,7 +15,7 @@ use Adminx\Tests\TestCase;
 
 class UpdateSystemTest extends TestCase
 {
-    public function test_update_button_will_be_showed(){
+    public function test_update_button_will_be_shown(){
         $user = \App\Models\User::factory()->create();
 
         $admin = new \Adminx\Core;
@@ -170,7 +170,7 @@ class UpdateSystemTest extends TestCase
         $this->assertEquals('hello world-filter-' . $old_body, $post->body);
     }
 
-    public function test_custom_html_is_showed()
+    public function test_custom_html_is_shown()
     {
         $user = \App\Models\User::factory()->create();
         $post = \App\Models\Post::factory()->create();
