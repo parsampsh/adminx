@@ -13,7 +13,7 @@ $admin->set_title('My admin panel');
 $admin->get_title();
 ```
 
-Now, you can see this title in the admin panel.
+Now, you can see this title here:
 
 <img src="/doc/images/title.png" />
 
@@ -49,7 +49,7 @@ $admin->set_middleware(function($user){
 });
 ```
 
-This method gets a `Closure` and runs that and passes the current user as an argument to that(you can don't set the argument and that is optional), then if return value of function is `true`, means access is allowed for that user.
+This method gets a `Closure` and runs that and passes the current user as an argument to that(you can don't set the argument and that is optional), then if return value of the function is `true`, means access is allowed for that user.
 
 By default, if you don't set this middleware, default value is `true`.
 
@@ -76,9 +76,9 @@ Default value for this item is `/auth/logout`.
 <img src="/doc/images/logout-window.png" />
 
 ## User info
-There is user information at the Adminx panel top right: Username and image.
+There are user information at the Adminx panel top right: Username and image.
 
-You can set values of them by using `set_userinfo` method.
+You can set value of them using `set_userinfo` method.
 
 ```php
 $admin->set_userinfo(function($user){
@@ -89,9 +89,9 @@ $admin->set_userinfo(function($user){
 });
 ```
 
-This method gets a closure and passes the user object to that(`$user` argument is optional) and this closure should return a dictonary contains two keys: `username` and `image`. The `username` will be shown as username of the user and `image` will be used as user profile image address.
+This method gets a closure and passes the user object to that(`$user` argument is optional) and this closure should return a dictonary contains two keys: `username` and `image`. The `username` will be shown as username of the user and `image` will be used as user profile image url.
 
-Also you can get user info by using `get_userinfo` method.
+Also you can get user info using `get_userinfo` method.
 
 ```php
 $user_info = $admin->get_userinfo();
@@ -101,9 +101,9 @@ var_dump($user_info); // {'username' => '...', 'image' => '...'}
 <img src="/doc/images/userinfo.png" />
 
 ## Super user
-There is an important thing in admin panels: The manager or Super user.
+There is an important thing in admin panels: The manager or super user.
 
-Super user is an user who can do everything!
+Super user is an user who can do anything!
 
 To determine that who is super user in Adminx, you should use `super_user` method:
 
@@ -113,7 +113,7 @@ $admin->super_user(function($user){
 });
 ```
 
-This method gets a closure and that closure should recive user object and return a boolean.
+This method gets a closure and that closure should receive user object and return a boolean.
 If true is returned, means that user is Super user.
 
 ## An example

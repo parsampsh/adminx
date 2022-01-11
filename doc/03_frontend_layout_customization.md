@@ -13,7 +13,7 @@ also you can get the seted view:
 $admin->get_layout();
 ```
 
-If should design your view(in above example, `my.view`) under the Adminx standards.
+You should design your view(in above example, `my.view`) under the Adminx standards.
 
 ## 1. Body content
 Structure of your layout should be something like this:
@@ -26,7 +26,7 @@ Structure of your layout should be something like this:
 <!--- Footer --->
 ```
 
-The `adminx_layout` section contents page body content. you should yield this in your layout.
+The `adminx_layout` section contains page body content. You should yield this in your layout.
 
 ## 2. Page title
 You should set title of page like this example:
@@ -52,7 +52,7 @@ for example:
 <a href="{{ $core->url('/') }}">Link to admin panel main page</a>
 ```
 
-Actually, the `$core->url()` method returns something like this: `<admin-panel-base-route>/<the-route>`. for example `$core->url('/some/place')` returns `/admin/some/place`.
+Actually, the `$core->url()` method returns something like this: `<admin-panel-base-route>/<the-route>`. for example `$core->url('/some/place')` returns `/admin/some/place` (the `/admin` will be replaced with the base url you have set using method `register`).
 
 ## 4. Menu
 You can show admin panel menu with this structure:

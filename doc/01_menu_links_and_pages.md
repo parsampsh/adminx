@@ -16,14 +16,14 @@ Also you can set the target of the link. If you set it to `blank`, link will be 
 $admin->add_link('Title of the link', 'https://example.com/foo/bar', 'blank');
 ```
 
-Also you can set icon of the item in menu using classes.
+Also you can set icon of the item in menu using css classes.
 
 ```php
 $admin->add_link('Title of the link', 'https://example.com/foo/bar', 'blank', 'fa fa-user'); // fontawesome
 ```
 
 ## Pages
-You can add custom pages to your admin panel. they will be accessible from the menu.
+You can add custom pages to your admin panel. They will be accessible from the menu.
 
 ```php
 $admin->add_page('Title of the page in menu', 'the-slug-of-page-in-url', function($request){
