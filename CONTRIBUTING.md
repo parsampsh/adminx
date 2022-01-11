@@ -4,9 +4,9 @@ To start contributing to this project:
 - Fork this repository on Github
 - Clone your fork
 - Create a branch
-- Make your changes and commit
+- Make your changes and commit them
 - Push your branch to your fork
-- Make a pull request on github to this project
+- Make a pull request on Github
 
 ## Branch
 Send pull requests to branch `master`.

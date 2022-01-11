@@ -5,30 +5,30 @@
 Adminx is a library to create and handle admin panel automaticaly in laravel applications.
 
 ## Why Adminx?
-Some of Adminx Features:
+Some of Adminx features:
 
 - Easy to install and configure
 - Secure
-- Beautiful default frontend
-- Customizing Admin panel general information
-- Adding custom pages and links to the admin panel Menu
+- Beautiful default template
+- Customizable panel general information
+- Adding custom pages and links to the admin panel menu
 - Automatic and advanced CRUD for models with useful options
 - Fully matched with your database models
 - Handling 1 to n and n to n relations in database
 - Custom actions for model datatable
-- Handling admins Activities and logs
+- Handling admins activities and logs
 - Customizable frontend layout
 - Customizable language and localization
 - RTL layout
 - Several builtin themes
-- Advanced permission and group handling
-- Customizing Authorization
+- Advanced permission and group handling system
+- Customizable authorization
 - Advanced options for model datatable
 - Virtual fields for models
 - Search system
-- Advanced options for filtering data in datatable
-- Customizable Create/Update forms
-- Able to Use for End-User
+- Advanced options for filtering data in datatables
+- Customizable create/update forms
+- Able to be used for End-User
 - Matched with laravel authentication system
 - Plugin system
 
@@ -46,7 +46,7 @@ To get started with this package, do the following steps in your laravel project
 - Publish public assets: `$ php artisan vendor:publish --provider="Adminx\AdminxServiceProvider"`
 - Run the migrations: `$ php artisan migrate`
 
-Then, adminx is ready to be used. create `routes/adminx.php` file and go to `app/Providers/RouteServiceProvider.php` and inclue that in **End of the `boot` method**:
+Then, adminx is ready to be used. create `routes/adminx.php` file and go to `app/Providers/RouteServiceProvider.php` and include that in **End of the `boot` method**:
 
 ```php
 // ...
@@ -79,10 +79,10 @@ Enjoy it!
 To learn how to use **Adminx**, read the documentation in [doc folder](/doc).
 
 ## Contribution Guide
-If you want to Contribute to this project, Read [This Contribution Guide](/CONTRIBUTING.md)
+If you want to contribute to this project, read [This Contribution Guide](/CONTRIBUTING.md)
 
 ## Changelog
-See the Changelog of Adminx [here](/CHANGELOG.md).
+See the changelog of Adminx versions [here](/CHANGELOG.md).
 
 ## Security Policy
 See the Adminx security policy [here](/SECURITY.md).

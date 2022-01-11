@@ -1,5 +1,5 @@
 # Adminx TODO
 
-- Handle and use cache system to optimize the database
-- A builtin Backup plugin
+- Handle and use cache system to optimize the database usage
+- A builtin backup plugin
 - A builtin file manager plugin
