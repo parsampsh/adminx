@@ -9,17 +9,16 @@ Adminx project is Licensed Under MIT.
 For more information, please see the LICENSE file.
 EOF;
 
-$finder = PhpCsFixer\Finder::create()
+$finder = \PhpCsFixer\Finder::create()
     ->files()
     ->in(__DIR__.'/src')
     ->in(__DIR__.'/tests')
     ->name('*.php');
 
-return PhpCsFixer\Config::create()
+return (new \PhpCsFixer\Config)
     ->setUsingCache(true)
     ->setRiskyAllowed(true)
     ->setRules(array(
         'header_comment' => array('header' => $header),
     ))
     ->setFinder($finder);
-
