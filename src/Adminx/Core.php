@@ -13,6 +13,7 @@ namespace Adminx;
 
 use Adminx\AdminxController;
 use Illuminate\Support\Facades\Route;
+use Adminx\Plugins\IPlugin;
 
 /**
  * Adminx Core object
@@ -851,15 +852,25 @@ class Core
     }
 
     /**
+     * The added plugins to the admin panel will be stored at this array
+     * This array is key=>value
+     * The key is the plugin class name and value will be an object from that
+     *
+     * @var array[IPlugin]
+     */
+    protected array $plugins = [];
+
+    /**
      * Adds a plugin
      *
      * @param string $class
      * @param array $options
      */
-    public function addPlugin(string $class, array $options=[])
+    public function addPlugin(IPlugin $plugin, array $options=[])
     {
-        $obj = new $class;
-        call_user_func_array([$obj, 'run'], [$this, $options]);
+        // here we use plugin class name as an unique identifier for the plugins
+        $this->plugins[$plugin::class] = $plugin;
+        call_user_func_array([$this->plugins[$plugin::class], 'run'], [$this, $options]);
         return $this;
     }
 

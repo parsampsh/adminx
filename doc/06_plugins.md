@@ -7,7 +7,7 @@ For example:
 
 ```php
 // define a plugin
-class MyAdminxPlugin {
+class MyAdminxPlugin implements \Adminx\Plugins\IPlugin {
     public function run(\Adminx\Core $admin, array $options=[]) {
         // example
         $admin->addPage('My plugin page', 'my-plugin'...);
@@ -17,7 +17,7 @@ class MyAdminxPlugin {
 $admin = new \Adminx\Core;
 
 // add the plugin to your admin panel
-$admin->addPlugin(MyAdminxPlugin::class); // then, plugin makes effects on your admin panel
+$admin->addPlugin(new MyAdminxPlugin); // then, plugin makes effects on your admin panel
 
 $admin->register();
 ```
@@ -28,11 +28,22 @@ passed to that. Then, plugin can make effects on admin panel inside of that meth
 Also there is a second argument, `$options`. This argument contains user passed options:
 
 ```php
-$admin->addPlugin(MyAdminxPlugin::class, [
+$admin->addPlugin(new MyAdminxPlugin, [
     'option1' => 'value',
     'foo' => 'bar',
     // ...
 ]);
+```
+
+The plugin class has to implement interface `\Adminx\Plugins\IPlugin`.
+
+When you wanna add a plugin to your admin panel, you must pass a object from the plugin class to `addPlugin` method:
+
+```php
+$admin->addPlugin(new MyTestPlugin);
+
+// also you can add additional options
+$admin->addPlugin(new MyTestPlugin, ['foo' => 'bar']);
 ```
 
 Like above example, second argument will be passed to `run` as user options.
