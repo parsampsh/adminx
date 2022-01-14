@@ -8,12 +8,12 @@ Log fields:
 - Action: The action (`create`, `update`, `delete`)
 - Message: A message for log
 
-You can store a custom log using `Adminx\Models\Log::add_log()` method:
+You can store a custom log using `Adminx\Models\Log::addLog()` method:
 
 ```php
-\Adminx\Models\Log::add_log('ModelSlug', $item_id, $user_id, $action, $message);
+\Adminx\Models\Log::addLog('ModelSlug', $item_id, $user_id, $action, $message);
 // for example
-\Adminx\Models\Log::add_log('Post', 12, 5, 'create', 'something was created in table Post');
+\Adminx\Models\Log::addLog('Post', 12, 5, 'create', 'something was created in table Post');
 ```
 
 Also, By default Adminx has a page to show logs in `/admin/model/AdminxLog`.

@@ -17,7 +17,7 @@ class ModelDataTableTest extends TestCase
 {
     public function test_model_page_middleware_works(){
         $admin = new \Adminx\Core;
-        $admin->add_model(\App\Models\User::class, [
+        $admin->addModel(\App\Models\User::class, [
             'slug' => 'User'
         ]);
         $admin->register('/admin');
@@ -31,7 +31,7 @@ class ModelDataTableTest extends TestCase
         $res->assertStatus(200);
 
         $admin = new \Adminx\Core;
-        $admin->add_model(\App\Models\User::class, [
+        $admin->addModel(\App\Models\User::class, [
             'slug' => 'User',
             'middleware' => (function($user){
                 return false;
@@ -45,7 +45,7 @@ class ModelDataTableTest extends TestCase
 
     public function test_fields_titles_option_for_models_works(){
         $admin = new \Adminx\Core;
-        $admin->add_model(\App\Models\User::class, [
+        $admin->addModel(\App\Models\User::class, [
             'slug' => 'User',
             'fields_titles' => [
                 'email' => 'The Email',
@@ -63,7 +63,7 @@ class ModelDataTableTest extends TestCase
 
     public function test_no_table_footer_option_works(){
         $admin = new \Adminx\Core;
-        $admin->add_model(\App\Models\User::class, [
+        $admin->addModel(\App\Models\User::class, [
             'slug' => 'User',
         ]);
         $admin->register('/admin');
@@ -77,7 +77,7 @@ class ModelDataTableTest extends TestCase
         $res->assertSee('</tr></tfoot>', false);
 
         $admin = new \Adminx\Core;
-        $admin->add_model(\App\Models\User::class, [
+        $admin->addModel(\App\Models\User::class, [
             'slug' => 'User',
             'no_table_footer' => true,
         ]);
@@ -92,7 +92,7 @@ class ModelDataTableTest extends TestCase
 
     public function test_fields_values_option_works(){
         $admin = new \Adminx\Core;
-        $admin->add_model(\App\Models\User::class, [
+        $admin->addModel(\App\Models\User::class, [
             'slug' => 'User',
         ]);
         $admin->register('/admin');
@@ -105,7 +105,7 @@ class ModelDataTableTest extends TestCase
         $res->assertSee('<td>' . $user->email . '</td>', false);
 
         $admin = new \Adminx\Core;
-        $admin->add_model(\App\Models\User::class, [
+        $admin->addModel(\App\Models\User::class, [
             'slug' => 'User',
             'fields_values' => [
                 'email' => (function($user){
@@ -127,7 +127,7 @@ class ModelDataTableTest extends TestCase
     public function test_filter_data_option_works(){
         $user = \App\Models\User::factory()->create();
         $admin = new \Adminx\Core;
-        $admin->add_model(\App\Models\User::class, [
+        $admin->addModel(\App\Models\User::class, [
             'slug' => 'User',
             'filter_data' => (function($q) use ($user){
                 return $q->where('email', $user->email);
@@ -140,7 +140,7 @@ class ModelDataTableTest extends TestCase
         $res->assertSee('<td>' . $user->email . '</td>', false);
 
         $admin = new \Adminx\Core;
-        $admin->add_model(\App\Models\User::class, [
+        $admin->addModel(\App\Models\User::class, [
             'slug' => 'the-users',
             'filter_data' => (function($q) use ($user){
                 return $q->where('email', '!=', $user->email);
@@ -157,7 +157,7 @@ class ModelDataTableTest extends TestCase
     {
         $user = \App\Models\User::factory()->create();
         $admin = new \Adminx\Core;
-        $admin->add_model(\App\Models\User::class, [
+        $admin->addModel(\App\Models\User::class, [
             'slug' => 'User',
             'virtual_fields' => [
                 'Something' => (function($row){
@@ -176,7 +176,7 @@ class ModelDataTableTest extends TestCase
     public function test_custom_html_works(){
         $user = \App\Models\User::factory()->create();
         $admin = new \Adminx\Core;
-        $admin->add_model(\App\Models\User::class, [
+        $admin->addModel(\App\Models\User::class, [
             'slug' => 'User',
             'custom_html' => (function(){
                 return 'The top custom html';
@@ -197,7 +197,7 @@ class ModelDataTableTest extends TestCase
         $user = \App\Models\User::factory()->create();
 
         $admin = new \Adminx\Core;
-        $admin->add_model(\App\Models\User::class, [
+        $admin->addModel(\App\Models\User::class, [
             'slug' => 'User',
         ]);
         $admin->register('/admin');
@@ -207,7 +207,7 @@ class ModelDataTableTest extends TestCase
         $res->assertDontSee('<input style="background-color: #fff !important" value="" name="search" type="text" class="form-control bg-light border-0 small" placeholder="Search here..." aria-label="Search" aria-describedby="basic-addon2">', false);
 
         $admin = new \Adminx\Core;
-        $admin->add_model(\App\Models\User::class, [
+        $admin->addModel(\App\Models\User::class, [
             'slug' => 'User',
             'search' => (function($q, $w){
                 return $q;
@@ -224,7 +224,7 @@ class ModelDataTableTest extends TestCase
         $res->assertSee('<input style="background-color: #fff !important" value="hello" name="search" type="text" class="form-control bg-light border-0 small" placeholder="Search here..." aria-label="Search" aria-describedby="basic-addon2">', false);
 
         $admin = new \Adminx\Core;
-        $admin->add_model(\App\Models\User::class, [
+        $admin->addModel(\App\Models\User::class, [
             'slug' => 'User',
             'search' => (function($q, $w){
                 return $q;
@@ -238,7 +238,7 @@ class ModelDataTableTest extends TestCase
         $res->assertSee('<input style="background-color: #fff !important" value="" name="search" type="text" class="form-control bg-light border-0 small" placeholder="search for something" aria-label="Search" aria-describedby="basic-addon2">', false);
 
         $admin = new \Adminx\Core;
-        $admin->add_model(\App\Models\User::class, [
+        $admin->addModel(\App\Models\User::class, [
             'slug' => 'User',
             'search' => (function($q, $w){
                 // reverse search

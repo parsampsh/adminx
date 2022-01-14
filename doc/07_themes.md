@@ -5,7 +5,7 @@ Adminx has some default themes that you can select them.
 You can set this theme by adding this configuration to your admin panel:
 
 ```php
-$admin->set_layout('adminx.layouts.default');
+$admin->setLayout('adminx.layouts.default');
 ```
 
 This is the default theme.
@@ -15,7 +15,7 @@ This is the default theme.
 ## Black While
 
 ```php
-$admin->set_layout('adminx.layouts.blackwhite');
+$admin->setLayout('adminx.layouts.blackwhite');
 ```
 
 <img src="/doc/images/theme-blackwhite.png" />

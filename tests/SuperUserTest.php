@@ -15,16 +15,16 @@ use Adminx\Tests\TestCase;
 
 class SuperUserTest extends TestCase
 {
-    public function test_super_user_can_do_anything()
+    public function test_superUser_can_do_anything()
     {
         $user = \App\Models\User::factory()->create();
         $user2 = \App\Models\User::factory()->create();
 
         $admin = new \Adminx\Core;
-        $admin->add_model(\App\Models\User::class, [
+        $admin->addModel(\App\Models\User::class, [
             'slug' => 'User',
         ]);
-        $admin->super_user(function($user){
+        $admin->superUser(function($user){
             return true;
         });
         $admin->register('/admin');

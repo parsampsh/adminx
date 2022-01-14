@@ -1,16 +1,16 @@
 # Frontend Layout Customization
 You can customize Adminx frontend **Base Layout view**. The default view as layout is `adminx.layouts.default`.
 
-To customize it, you can use `set_layout` method:
+To customize it, you can use `setLayout` method:
 
 ```php
-$admin->set_layout('my.view');
+$admin->setLayout('my.view');
 ```
 
 also you can get the seted view:
 
 ```php
-$admin->get_layout();
+$admin->getLayout();
 ```
 
 You should design your view(in above example, `my.view`) under the Adminx standards.
@@ -34,12 +34,12 @@ You should set title of page like this example:
 ```blade
 <!--- ... --->
 
-<title>{{ $core->get_title() }} - @yield('adminx_title')</title>
+<title>{{ $core->getTitle() }} - @yield('adminx_title')</title>
 
 <!--- ... --->
 ```
 
-The `$core->get_title()` returns admin panel base title and `@yield('adminx_title')` returns current page title.
+The `$core->getTitle()` returns admin panel base title and `@yield('adminx_title')` returns current page title.
 
 Also you can use another `$core` methods (That's an instance from `\Adminx\Core` class).
 
@@ -58,7 +58,7 @@ Actually, the `$core->url()` method returns something like this: `<admin-panel-b
 You can show admin panel menu with this structure:
 
 ```blade
-@foreach($core->get_menu() as $item)
+@foreach($core->getMenu() as $item)
   @if($item['type'] === 'link')
     <li class="nav-item">
       <a class="nav-link" href="{{ $item['link'] }}" target="{{ $item['target'] }}">

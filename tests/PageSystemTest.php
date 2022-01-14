@@ -18,7 +18,7 @@ class PageSystemTest extends TestCase
     public function test_page_is_shown_in_menu()
     {
         $admin = new \Adminx\Core;
-        $admin->add_page('Test page', 'my-page', function () {
+        $admin->addPage('Test page', 'my-page', function () {
         }, 'fa fa-user');
         $admin->register('/admin');
 
@@ -33,7 +33,7 @@ class PageSystemTest extends TestCase
     public function test_page_can_be_shown()
     {
         $admin = new \Adminx\Core;
-        $admin->add_page('Test page', 'my-page', function () {
+        $admin->addPage('Test page', 'my-page', function () {
             return 'hello world. i am a page';
         }, 'fa fa-user');
         $admin->register('/admin');
@@ -48,7 +48,7 @@ class PageSystemTest extends TestCase
     public function test_page_can_be_shown_with_request_object()
     {
         $admin = new \Adminx\Core;
-        $admin->add_page('Test page', 'my-page', function ($request) {
+        $admin->addPage('Test page', 'my-page', function ($request) {
             return 'hello world. i am a page. value is ' . $request->get('the-value');
         }, 'fa fa-user');
         $admin->register('/admin');
@@ -63,7 +63,7 @@ class PageSystemTest extends TestCase
     public function test_index_page_working()
     {
         $admin = new \Adminx\Core;
-        $admin->add_page('The index page for adminx', '.', function ($request) {
+        $admin->addPage('The index page for adminx', '.', function ($request) {
             return 'The index page of adminx';
         });
         $admin->register('/admin');

@@ -30,10 +30,10 @@ class AdminxController extends BaseController
      * @param string $slug
      * @return mixed|null
      */
-    private function find_model_by_slug(string $slug)
+    private function findModelBySlug(string $slug)
     {
         $model_config = null;
-        foreach($this->core->get_menu() as $item)
+        foreach($this->core->getMenu() as $item)
         {
             if($item['type'] === 'model'){
                 if($item['config']['slug'] === $slug){
@@ -46,7 +46,7 @@ class AdminxController extends BaseController
             abort(404);
         }
 
-        if(!$this->core->check_super_user(auth()->user())) {
+        if(!$this->core->checkSuperUser(auth()->user())) {
             $middleware_result = call_user_func_array($model_config['middleware'], [auth()->user()]);
             if ($middleware_result !== true) {
                 abort(403);
@@ -64,12 +64,12 @@ class AdminxController extends BaseController
     /**
      * Checks user is authorized
      */
-    public function run_middleware()
+    public function runMiddleware()
     {
-        if ($this->core->check_super_user(auth()->user())){
+        if ($this->core->checkSuperUser(auth()->user())){
             return;
         }
-        $result = $this->core->run_middleware();
+        $result = $this->core->runMiddleware();
         if ($result === false) {
             abort(403);
         }
@@ -82,11 +82,11 @@ class AdminxController extends BaseController
      */
     public function index(Request $request)
     {
-        $this->run_middleware();
+        $this->runMiddleware();
 
         $action = null;
         $page_title = null;
-        foreach ($this->core->get_menu() as $item) {
+        foreach ($this->core->getMenu() as $item) {
             if ($item['type'] === 'page') {
                 if ($item['slug'] === '.') {
                     $action = $item['action'];
@@ -113,13 +113,13 @@ class AdminxController extends BaseController
      * @param Request $request
      * @param string $slug
      */
-    public function show_page(Request $request, string $slug)
+    public function showPage(Request $request, string $slug)
     {
-        $this->run_middleware();
+        $this->runMiddleware();
         // check page exists
         $action = null;
         $page_title = null;
-        foreach ($this->core->get_menu() as $item) {
+        foreach ($this->core->getMenu() as $item) {
             if ($item['type'] === 'page') {
                 if ($item['slug'] === $slug) {
                     $action = $item['action'];
@@ -145,10 +145,10 @@ class AdminxController extends BaseController
      * @param Request $request
      * @param string $slug
      */
-    public function model_index(Request $request, string $slug)
+    public function modelIndex(Request $request, string $slug)
     {
-        $this->run_middleware();
-        $model_config = $this->find_model_by_slug($slug);
+        $this->runMiddleware();
+        $model_config = $this->findModelBySlug($slug);
 
         // check is a action clicked
         if ($request->method() == 'POST') {
@@ -199,14 +199,14 @@ class AdminxController extends BaseController
      * @param Request $request
      * @param string $slug
      */
-    public function model_delete(Request $request, string $slug)
+    public function modelDelete(Request $request, string $slug)
     {
-        $this->run_middleware();
-        $model_config = $this->find_model_by_slug($slug);
+        $this->runMiddleware();
+        $model_config = $this->findModelBySlug($slug);
 
         // has user delete permission
-        if(!$this->core->check_super_user(auth()->user())) {
-            if (!\Adminx\Access::user_has_permission(auth()->user(), $slug . '.delete')) {
+        if(!$this->core->checkSuperUser(auth()->user())) {
+            if (!\Adminx\Access::userHasPermission(auth()->user(), $slug . '.delete')) {
                 abort(403);
             }
         }
@@ -219,14 +219,14 @@ class AdminxController extends BaseController
         }
 
         // check the delete middleware
-        if(!$this->core->check_super_user(auth()->user())) {
+        if(!$this->core->checkSuperUser(auth()->user())) {
             if (!call_user_func_array($model_config['delete_middleware'], [auth()->user(), $row])) {
                 abort(403);
             }
         }
 
         // add the log
-        Log::add_log($model_config['slug'], $row->id, auth()->id(), 'delete', 'Item ' . $row->id . ' in table ' . $model_config['slug'] . ' was deleted by user ' . auth()->id());
+        Log::addLog($model_config['slug'], $row->id, auth()->id(), 'delete', 'Item ' . $row->id . ' in table ' . $model_config['slug'] . ' was deleted by user ' . auth()->id());
 
         // delete the item
         $row->delete();
@@ -241,9 +241,9 @@ class AdminxController extends BaseController
      * @param string $slug
      * @param string $id
      */
-    public function model_update(Request $request, string $slug, string $id)
+    public function modelUpdate(Request $request, string $slug, string $id)
     {
-        return $this->model_create($request, $slug, true, $id);
+        return $this->modelCreate($request, $slug, true, $id);
     }
 
     /**
@@ -254,19 +254,19 @@ class AdminxController extends BaseController
      * @param bool $is_update
      * @param null $update_id
      */
-    public function model_create(Request $request, string $slug, bool $is_update=false, $update_id=null)
+    public function modelCreate(Request $request, string $slug, bool $is_update=false, $update_id=null)
     {
-        $this->run_middleware();
-        $model_config = $this->find_model_by_slug($slug);
+        $this->runMiddleware();
+        $model_config = $this->findModelBySlug($slug);
 
-        if(!$this->core->check_super_user(auth()->user())) {
+        if(!$this->core->checkSuperUser(auth()->user())) {
             // has user create/update permission
             $permission = '.create';
             if ($is_update) {
                 $permission = '.update';
             }
 
-            if (!\Adminx\Access::user_has_permission(auth()->user(), $slug . $permission)) {
+            if (!\Adminx\Access::userHasPermission(auth()->user(), $slug . $permission)) {
                 abort(403);
             }
 
@@ -299,7 +299,7 @@ class AdminxController extends BaseController
         }
 
         // load model fields
-        $columns = $this->core->get_model_columns($model_config, false);
+        $columns = $this->core->getModelColumns($model_config, false);
         $new_columns = [];
         $table_name = (new $model_config['model'])->getTable();
 
@@ -454,9 +454,9 @@ class AdminxController extends BaseController
 
             // add the log
             if ($is_update) {
-                Log::add_log($model_config['slug'], $row->id, auth()->id(), 'update', 'Item ' . $row->id . ' in table ' . $model_config['slug'] . ' was updated by user ' . auth()->id());
+                Log::addLog($model_config['slug'], $row->id, auth()->id(), 'update', 'Item ' . $row->id . ' in table ' . $model_config['slug'] . ' was updated by user ' . auth()->id());
             } else {
-                Log::add_log($model_config['slug'], $row->id, auth()->id(), 'create', 'Item ' . $row->id . ' in table ' . $model_config['slug'] . ' was created by user ' . auth()->id());
+                Log::addLog($model_config['slug'], $row->id, auth()->id(), 'create', 'Item ' . $row->id . ' in table ' . $model_config['slug'] . ' was created by user ' . auth()->id());
             }
 
             if ($next_step === 'create') {

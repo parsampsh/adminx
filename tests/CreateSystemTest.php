@@ -19,23 +19,23 @@ class CreateSystemTest extends TestCase
         $user = \App\Models\User::factory()->create();
 
         $admin = new \Adminx\Core;
-        $admin->add_model(\App\Models\User::class, [
+        $admin->addModel(\App\Models\User::class, [
             'slug' => 'User',
         ]);
         $admin->register('/admin');
 
         $res = $this->actingAs($user)->get('/admin/model/User');
         $res->assertStatus(200);
-        $res->assertDontSee('<a class="btn btn-success" href="'. $admin->url('/model/User/create?back=' . request()->fullUrl()) . '">'. str_replace('{name}', 'the-users', $admin->get_word('btn.create', 'Create new {name}')) .' <i class="fa fa-plus"></i></a>', false);
+        $res->assertDontSee('<a class="btn btn-success" href="'. $admin->url('/model/User/create?back=' . request()->fullUrl()) . '">'. str_replace('{name}', 'the-users', $admin->getWord('btn.create', 'Create new {name}')) .' <i class="fa fa-plus"></i></a>', false);
 
-        \Adminx\Access::add_permission_for_user($user, 'User.create');
+        \Adminx\Access::addPermissionForUser($user, 'User.create');
 
         $res = $this->actingAs($user)->get('/admin/model/User');
         $res->assertStatus(200);
-        $res->assertSee('<a class="btn btn-success" href="'. $admin->url('/model/User/create?back=' . request()->fullUrl()) . '">'. str_replace('{name}', 'User', $admin->get_word('btn.create', 'Create new {name}')) .' <i class="fa fa-plus"></i></a>', false);
+        $res->assertSee('<a class="btn btn-success" href="'. $admin->url('/model/User/create?back=' . request()->fullUrl()) . '">'. str_replace('{name}', 'User', $admin->getWord('btn.create', 'Create new {name}')) .' <i class="fa fa-plus"></i></a>', false);
 
         $admin = new \Adminx\Core;
-        $admin->add_model(\App\Models\User::class, [
+        $admin->addModel(\App\Models\User::class, [
             'slug' => 'User',
             'create_middleware' => (function(){
                 return false;
@@ -45,7 +45,7 @@ class CreateSystemTest extends TestCase
 
         $res = $this->actingAs($user)->get('/admin/model/User');
         $res->assertStatus(200);
-        $res->assertDontSee('<a class="btn btn-success" href="'. $admin->url('/model/User/create?back=' . request()->fullUrl()) . '">'. str_replace('{name}', 'the-users', $admin->get_word('btn.create', 'Create new {name}')) .' <i class="fa fa-plus"></i></a>', false);
+        $res->assertDontSee('<a class="btn btn-success" href="'. $admin->url('/model/User/create?back=' . request()->fullUrl()) . '">'. str_replace('{name}', 'the-users', $admin->getWord('btn.create', 'Create new {name}')) .' <i class="fa fa-plus"></i></a>', false);
     }
 
     public function test_user_needs_permission_to_see_create_page()
@@ -53,7 +53,7 @@ class CreateSystemTest extends TestCase
         $user = \App\Models\User::factory()->create();
 
         $admin = new \Adminx\Core;
-        $admin->add_model(\App\Models\User::class, [
+        $admin->addModel(\App\Models\User::class, [
             'slug' => 'User',
         ]);
         $admin->register('/admin');
@@ -61,13 +61,13 @@ class CreateSystemTest extends TestCase
         $res = $this->actingAs($user)->get('/admin/model/User/create');
         $res->assertStatus(403);
 
-        \Adminx\Access::add_permission_for_user($user, 'User.create');
+        \Adminx\Access::addPermissionForUser($user, 'User.create');
 
         $res = $this->actingAs($user)->get('/admin/model/User/create');
         $res->assertStatus(200);
 
         $admin = new \Adminx\Core;
-        $admin->add_model(\App\Models\User::class, [
+        $admin->addModel(\App\Models\User::class, [
             'slug' => 'User',
             'create_middleware' => (function(){
                 return false;
@@ -84,10 +84,10 @@ class CreateSystemTest extends TestCase
         $user = \App\Models\User::factory()->create();
 
         $admin = new \Adminx\Core;
-        $admin->super_user(function($u) use ($user){
+        $admin->superUser(function($u) use ($user){
             return $user->id === $u->id;
         });
-        $admin->add_model(\App\Models\User::class, [
+        $admin->addModel(\App\Models\User::class, [
             'slug' => 'User',
             'fields_titles' => [
                 'email' => 'User Email',
@@ -102,10 +102,10 @@ class CreateSystemTest extends TestCase
         $res->assertSee('name="email" class="form-control" />', false);
 
         $admin = new \Adminx\Core;
-        $admin->super_user(function($u) use ($user){
+        $admin->superUser(function($u) use ($user){
             return $user->id === $u->id;
         });
-        $admin->add_model(\App\Models\User::class, [
+        $admin->addModel(\App\Models\User::class, [
             'slug' => 'User',
             'readonly_fields' => ['email'],
         ]);
@@ -117,10 +117,10 @@ class CreateSystemTest extends TestCase
         $res->assertDontSee('name="email" class="form-control" />', false);
 
         $admin = new \Adminx\Core;
-        $admin->super_user(function($u) use ($user){
+        $admin->superUser(function($u) use ($user){
             return $user->id === $u->id;
         });
-        $admin->add_model(\App\Models\User::class, [
+        $admin->addModel(\App\Models\User::class, [
             'slug' => 'User',
             'readonly_fields' => ['email'],
             'only_addable_fields' => ['email'],
@@ -138,10 +138,10 @@ class CreateSystemTest extends TestCase
         $user = \App\Models\User::factory()->create();
 
         $admin = new \Adminx\Core;
-        $admin->super_user(function($u) use ($user){
+        $admin->superUser(function($u) use ($user){
             return $user->id === $u->id;
         });
-        $admin->add_model(\App\Models\Post::class, [
+        $admin->addModel(\App\Models\Post::class, [
             'slug' => 'Post',
             'foreign_keys' => [
                 'user_id' => [
@@ -187,10 +187,10 @@ class CreateSystemTest extends TestCase
         $user = \App\Models\User::factory()->create();
 
         $admin = new \Adminx\Core;
-        $admin->super_user(function($u) use ($user){
+        $admin->superUser(function($u) use ($user){
             return $user->id === $u->id;
         });
-        $admin->add_model(\App\Models\Post::class, [
+        $admin->addModel(\App\Models\Post::class, [
             'slug' => 'Post',
             'create_html' => (function(){ return 'hello create_html'; }),
         ]);

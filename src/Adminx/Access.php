@@ -32,35 +32,35 @@ class Access
      * @param string $permission
      * @return bool
      */
-    public static function user_has_permission(User $user, string $permission): bool
+    public static function userHasPermission(User $user, string $permission): bool
     {
         $groups = $user->belongsToMany(Group::class, 'adminx_user_groups', 'user_id', 'adminx_group_id')->get();
-        $allowed_permissions = [];
-        $disallowed_permissions = [];
+        $allowedPermissions = [];
+        $disallowedPermissions = [];
         foreach ($groups as $group) {
             foreach ($group->permissions as $gp) {
                 if ($gp->flag) {
-                    array_push($allowed_permissions, $gp->permission);
+                    array_push($allowedPermissions, $gp->permission);
                 } else {
-                    array_push($disallowed_permissions, $gp->permission);
+                    array_push($disallowedPermissions, $gp->permission);
                 }
             }
         }
 
         foreach (UserPermission::where('user_id', $user->id)->get() as $up) {
             if ($up->flag) {
-                array_push($allowed_permissions, $up->permission);
+                array_push($allowedPermissions, $up->permission);
             } else {
-                array_push($disallowed_permissions, $up->permission);
+                array_push($disallowedPermissions, $up->permission);
             }
         }
 
         // check user has the permission
-        if (in_array($permission, $disallowed_permissions)) {
+        if (in_array($permission, $disallowedPermissions)) {
             return false;
         }
 
-        if (in_array($permission, $allowed_permissions)) {
+        if (in_array($permission, $allowedPermissions)) {
             return true;
         }
 
@@ -78,7 +78,7 @@ class Access
      * @param bool $flag
      * @return bool
      */
-    public static function add_permission_for_user(User $user, string $permission, bool $flag=true): bool
+    public static function addPermissionForUser(User $user, string $permission, bool $flag=true): bool
     {
         // check already exists
         $up = UserPermission::where('user_id', $user->id)->where('permission', $permission)->first();
@@ -98,7 +98,7 @@ class Access
      * @param Group $group
      * @return bool
      */
-    public static function user_is_in_group(User $user, Group $group): bool
+    public static function userIsInGroup(User $user, Group $group): bool
     {
         $ug = UserGroup::where('user_id', $user->id)->where('adminx_group_id', $group->id)->first();
         if ($ug !== null) {
@@ -114,10 +114,10 @@ class Access
      * @param Group $group
      * @return bool
      */
-    public static function add_user_to_group(User $user, Group $group): bool
+    public static function addUserToGroup(User $user, Group $group): bool
     {
         // check already is in group
-        if (Access::user_is_in_group($user, $group)) {
+        if (Access::userIsInGroup($user, $group)) {
             return true;
         }
         $ug = new UserGroup;
@@ -133,10 +133,10 @@ class Access
      * @param Group $group
      * @return bool
      */
-    public static function remove_user_from_group(User $user, Group $group): bool
+    public static function removeUserFromGroup(User $user, Group $group): bool
     {
         // check already is in group
-        if (!Access::user_is_in_group($user, $group)) {
+        if (!Access::userIsInGroup($user, $group)) {
             return true;
         }
         return UserGroup::where('user_id', $user->id)->where('adminx_group_id', $group->id)->delete();
@@ -149,7 +149,7 @@ class Access
      * @param string $permission
      * @param bool $flag
      */
-    public static function add_permission_for_group(Group $group, string $permission, bool $flag=true): bool
+    public static function addPermissionForGroup(Group $group, string $permission, bool $flag=true): bool
     {
         // check already exists
         $gp = GroupPermission::where('adminx_group_id', $group->id)->where('permission', $permission)->first();
@@ -169,7 +169,7 @@ class Access
      * @param string $permission
      * @return bool
      */
-    public static function remove_permission_from_group(Group $group, string $permission): bool
+    public static function removePermissionFromGroup(Group $group, string $permission): bool
     {
         return GroupPermission::where('adminx_group_id', $group->id)->where('permission', $permission)->delete();
     }

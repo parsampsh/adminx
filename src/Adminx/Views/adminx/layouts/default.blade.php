@@ -1,7 +1,7 @@
 <?php
-$username = $core->get_userinfo()['username'];
-$userimage = $core->get_userinfo()['image'];
-$logout_url = url($core->get_logout());
+$username = $core->getUserinfo()['username'];
+$userimage = $core->getUserinfo()['image'];
+$logout_url = url($core->getLogout());
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -9,12 +9,12 @@ $logout_url = url($core->get_logout());
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-  <title>{{ $core->get_title() }} - @yield('adminx_title')</title>
+  <title>{{ $core->getTitle() }} - @yield('adminx_title')</title>
   <link href="{{ url('/adminx-public/default/font-awesome.css') }}" rel="stylesheet" type="text/css">
   <link href="{{ url('/adminx-public/default/styles.css') }}" rel="stylesheet" type="text/css">
   <link href="{{ url('/adminx-public/default/select2/select2.min.css') }}" rel="stylesheet" type="text/css">
   <link href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i" rel="stylesheet">
-  @if($core->is_rtl())
+  @if($core->isRtl())
   <link href="{{ url('/adminx-public/default/bootstrap-rtl.css') }}" rel="stylesheet">
   <style>
     *{
@@ -41,11 +41,11 @@ $logout_url = url($core->get_logout());
     }
   </style>
   @endif
-  @if($core->get_font() !== '')
+  @if($core->getFont() !== '')
     <style>
     @font-face {
     font-family: customfont;
-    src: url('{{ $core->get_font() }}');
+    src: url('{{ $core->getFont() }}');
     }
 
     *{
@@ -61,7 +61,7 @@ $logout_url = url($core->get_logout());
         <div class="sidebar-brand-icon rotate-n-15">
           <i class="fas fa-laugh-wink"></i>
         </div>
-        <div class="sidebar-brand-text mx-3">{{ $core->get_title() }}</div>
+        <div class="sidebar-brand-text mx-3">{{ $core->getTitle() }}</div>
       </a>
 
       <hr class="sidebar-divider my-0">
@@ -69,12 +69,12 @@ $logout_url = url($core->get_logout());
       <li class="nav-item">
         <a class="nav-link" href="{{ $core->url('/') }}">
           <i class="fas fa-fw fa-tachometer-alt"></i>
-          <span>{{ $core->get_word('menu.dashboard', 'Dashboard') }}</span></a>
+          <span>{{ $core->getWord('menu.dashboard', 'Dashboard') }}</span></a>
       </li>
 
       <hr class="sidebar-divider">
 
-      @foreach($core->get_menu() as $item)
+      @foreach($core->getMenu() as $item)
         @if($item['type'] === 'link')
           <li class="nav-item">
             <a class="nav-link" href="{{ $item['link'] }}" target="{{ $item['target'] }}">
@@ -121,11 +121,11 @@ $logout_url = url($core->get_logout());
               <div class="dropdown-menu dropdown-menu-right shadow animated--grow-in" aria-labelledby="userDropdown">
                 <a class="dropdown-item" href="{{ $core->url('/model/AdminxLog?filter_user=' . auth()->id()) }}">
                   <i class="fa fa-history fa-sm fa-fw mr-2 text-gray-400"></i>
-                  {{ $core->get_word('user.btn.log', 'Activity History') }}
+                  {{ $core->getWord('user.btn.log', 'Activity History') }}
                 </a>
                 <div class="dropdown-divider"></div>
                 <a class="dropdown-item" href="#" data-toggle="modal" data-target="#logoutModal">
-                  <i class="fas fa-sign-out-alt fa-sm fa-fw mr-2 text-gray-400"></i>{{ $core->get_word('logout.btn', 'Logout') }}</a>
+                  <i class="fas fa-sign-out-alt fa-sm fa-fw mr-2 text-gray-400"></i>{{ $core->getWord('logout.btn', 'Logout') }}</a>
               </div>
             </li>
 
@@ -142,7 +142,7 @@ $logout_url = url($core->get_logout());
       <footer class="sticky-footer bg-white">
         <div class="container my-auto">
           <div class="copyright text-center my-auto">
-            <span>{{ $core->get_copyright() }}</span>
+            <span>{{ $core->getCopyright() }}</span>
             <br />
             <span>Theme by <a target="_blank" href="https://startbootstrap.com/theme/sb-admin-2">startbootstrap</a></span>
             <br />
@@ -161,15 +161,15 @@ $logout_url = url($core->get_logout());
     <div class="modal-dialog" role="document">
       <div class="modal-content">
         <div class="modal-header">
-          <h5 class="modal-title" id="exampleModalLabel">{{ $core->get_word('logout.title', 'Ready to Leave?') }}</h5>
+          <h5 class="modal-title" id="exampleModalLabel">{{ $core->getWord('logout.title', 'Ready to Leave?') }}</h5>
           <button class="close" type="button" data-dismiss="modal" aria-label="Close">
             <span aria-hidden="true">×</span>
           </button>
         </div>
-        <div class="modal-body">{{ $core->get_word('logout.message', 'Select "Logout" below if you are ready to end your current session.') }}</div>
+        <div class="modal-body">{{ $core->getWord('logout.message', 'Select "Logout" below if you are ready to end your current session.') }}</div>
         <div class="modal-footer">
-          <button class="btn btn-secondary" type="button" data-dismiss="modal">{{ $core->get_word('logout.cancel', 'Cancel') }}</button>
-          <a class="btn btn-primary" href="{{ $logout_url }}">{{ $core->get_word('logout.btn', 'Logout') }}</a>
+          <button class="btn btn-secondary" type="button" data-dismiss="modal">{{ $core->getWord('logout.cancel', 'Cancel') }}</button>
+          <a class="btn btn-primary" href="{{ $logout_url }}">{{ $core->getWord('logout.btn', 'Logout') }}</a>
         </div>
       </div>
     </div>

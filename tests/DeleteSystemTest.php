@@ -19,7 +19,7 @@ class DeleteSystemTest extends TestCase
         $user = \App\Models\User::factory()->create();
 
         $admin = new \Adminx\Core;
-        $admin->add_model(\App\Models\User::class, [
+        $admin->addModel(\App\Models\User::class, [
             'slug' => 'User',
         ]);
         $admin->register('/admin');
@@ -28,14 +28,14 @@ class DeleteSystemTest extends TestCase
         $res->assertStatus(200);
         $res->assertDontSee('<input type="hidden" name="delete" value="' . $user->id . '" />', false);
 
-        \Adminx\Access::add_permission_for_user($user, 'User.delete');
+        \Adminx\Access::addPermissionForUser($user, 'User.delete');
 
         $res = $this->actingAs($user)->get('/admin/model/User');
         $res->assertStatus(200);
         $res->assertSee('<input type="hidden" name="delete" value="' . $user->id . '" />', false);
 
         $admin = new \Adminx\Core;
-        $admin->add_model(\App\Models\User::class, [
+        $admin->addModel(\App\Models\User::class, [
             'slug' => 'User',
             'delete_middleware' => (function(){
                 return false;
@@ -55,7 +55,7 @@ class DeleteSystemTest extends TestCase
         $user2 = \App\Models\User::factory()->create();
 
         $admin = new \Adminx\Core;
-        $admin->add_model(\App\Models\User::class, [
+        $admin->addModel(\App\Models\User::class, [
             'slug' => 'User',
         ]);
         $admin->register('/admin');
@@ -63,14 +63,14 @@ class DeleteSystemTest extends TestCase
         $res = $this->actingAs($user)->delete('/admin/model/User', ['delete' => $user1->id]);
         $res->assertStatus(403);
 
-        \Adminx\Access::add_permission_for_user($user, 'User.delete');
+        \Adminx\Access::addPermissionForUser($user, 'User.delete');
 
         $res = $this->actingAs($user)->delete('/admin/model/User', ['delete' => $user1->id]);
         $res->assertStatus(302);
         $this->assertEmpty(\App\Models\User::find($user1->id));
 
         $admin = new \Adminx\Core;
-        $admin->add_model(\App\Models\User::class, [
+        $admin->addModel(\App\Models\User::class, [
             'slug' => 'User',
             'delete_middleware' => (function(){
                 return false;

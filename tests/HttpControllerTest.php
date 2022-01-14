@@ -19,7 +19,7 @@ class HttpControllerTest extends TestCase
     {
         $admin = new \Adminx\Core;
 
-        $admin->set_title('Sometitle');
+        $admin->setTitle('Sometitle');
         
         $admin->register('/admin');
 
@@ -34,7 +34,7 @@ class HttpControllerTest extends TestCase
     {
         $admin = new \Adminx\Core;
 
-        $admin->set_middleware(function () {
+        $admin->setMiddleware(function () {
             return false;
         });
         
@@ -46,7 +46,7 @@ class HttpControllerTest extends TestCase
 
         $admin = new \Adminx\Core;
 
-        $admin->set_middleware(function ($user) {
+        $admin->setMiddleware(function ($user) {
             return $user->username === 'manager';
         });
 
@@ -78,7 +78,7 @@ class HttpControllerTest extends TestCase
 
         $admin = new \Adminx\Core;
 
-        $admin->set_userinfo(function ($user) {
+        $admin->setUserinfo(function ($user) {
             return [
                 'username' => $user->email,
                 'image' => '/link',
@@ -107,7 +107,7 @@ class HttpControllerTest extends TestCase
 
         $admin = new \Adminx\Core;
 
-        $admin->set_logout('/link/to/logout');
+        $admin->setLogout('/link/to/logout');
         
         $admin->register('/admin');
 
@@ -130,7 +130,7 @@ class HttpControllerTest extends TestCase
 
         $admin = new \Adminx\Core;
 
-        $admin->set_copyright('All rights reserved');
+        $admin->setCopyright('All rights reserved');
         
         $admin->register('/admin');
 
@@ -142,7 +142,7 @@ class HttpControllerTest extends TestCase
     public function test_links_in_menu_is_shown()
     {
         (new \Adminx\Core)
-            ->add_link('Test link', 'https://example.com', 'blank', 'fa fa-user')
+            ->addLink('Test link', 'https://example.com', 'blank', 'fa fa-user')
             ->register('/admin')
             ;
 
@@ -157,11 +157,11 @@ class HttpControllerTest extends TestCase
     public function test_localization_words_working(){
         // note: the following texts used as localization values are "Persian Finglish". ignore them :)
         $admin = new \Adminx\Core;
-        $admin->set_word('logout.title', 'Aya amade logout kardan hastid?');
-        $admin->set_word('logout.btn', 'Khorooj');
-        $admin->set_word('logout.message', 'Baraye Khorooj Rooye dokme zir click konid.');
-        $admin->set_word('logout.cancel', 'Laghv');
-        $admin->set_word('menu.dashboard', 'Safhe asli');
+        $admin->setWord('logout.title', 'Aya amade logout kardan hastid?');
+        $admin->setWord('logout.btn', 'Khorooj');
+        $admin->setWord('logout.message', 'Baraye Khorooj Rooye dokme zir click konid.');
+        $admin->setWord('logout.cancel', 'Laghv');
+        $admin->setWord('menu.dashboard', 'Safhe asli');
         $admin->register('/admin');
 
         $user = \App\Models\User::factory()->create();
@@ -173,6 +173,6 @@ class HttpControllerTest extends TestCase
         $res->assertSee('<div class="modal-body">Baraye Khorooj Rooye dokme zir click konid.</div>', false);
         $res->assertSee('<span>Safhe asli</span></a>', false);
         $res->assertSee('<i class="fas fa-sign-out-alt fa-sm fa-fw mr-2 text-gray-400"></i>Khorooj</a>', false);
-        $res->assertSee('<a class="btn btn-primary" href="' . url($admin->get_logout()) . '">Khorooj</a>', false);
+        $res->assertSee('<a class="btn btn-primary" href="' . url($admin->getLogout()) . '">Khorooj</a>', false);
     }
 }
