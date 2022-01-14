@@ -12,6 +12,8 @@
 namespace Adminx\Tests;
 
 use Adminx\Tests\TestCase;
+use Adminx\Plugins\IPlugin;
+use Adminx\Core;
 
 class PluginTest extends TestCase
 {
@@ -19,23 +21,23 @@ class PluginTest extends TestCase
     {
         $admin = new \Adminx\Core;
 
-        $admin->add_plugin(TheTestPlugin::class);
+        $admin->add_plugin(new TheTestPlugin);
         $this->assertEquals($admin->get_title(), 'Set by plugin');
 
-        $admin->add_plugin(TheTestPlugin2::class, ['op1' => 'hello']);
+        $admin->add_plugin(new TheTestPlugin2, ['op1' => 'hello']);
         $this->assertEquals($admin->get_title(), 'Set by plugin. value: hello');
     }
 }
 
-class TheTestPlugin {
-    public function run($admin)
+class TheTestPlugin implements IPlugin {
+    public function run(Core $admin, array $options=[])
     {
         $admin->set_title('Set by plugin');
     }
 }
 
-class TheTestPlugin2 {
-    public function run($admin, $options=[])
+class TheTestPlugin2 implements IPlugin {
+    public function run(Core $admin, array $options=[])
     {
         $admin->set_title('Set by plugin. value: ' . $options['op1']);
     }
