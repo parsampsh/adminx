@@ -1,6 +1,6 @@
 <?php
-$columns = $core->get_model_columns($model_config);
-$is_superuser = $core->check_super_user(auth()->user());
+$columns = $core->getModelColumns($model_config);
+$is_superuser = $core->checkSuperUser(auth()->user());
 
 $actions = $model_config['actions'];
 foreach($actions as $k => $v) {
@@ -17,19 +17,19 @@ foreach($actions as $k => $v) {
     }
 }
 ?>
-@extends($core->get_layout(), ['core' => $core])
+@extends($core->getLayout(), ['core' => $core])
 @section('adminx_title', $model_config['title'])
 @section('adminx_content')
 
 <h2>{{ $model_config['title'] }}</h2>
 <hr />
 
-@if($core->check_super_user(auth()->user()) || (\Adminx\Access::user_has_permission(auth()->user(), $model_config['slug'] . '.create') && call_user_func_array($model_config['create_middleware'], [auth()->user()]) === true))
-<a class="btn btn-success" href="{{ $core->url('/model/' . $model_config['slug'] . '/create?back=' . request()->fullUrl()) }}">{{ str_replace('{name}', $model_config['slug'], $core->get_word('btn.create', 'Create new {name}')) }} <i class="fa fa-plus"></i></a>
+@if($core->checkSuperUser(auth()->user()) || (\Adminx\Access::userHasPermission(auth()->user(), $model_config['slug'] . '.create') && call_user_func_array($model_config['create_middleware'], [auth()->user()]) === true))
+<a class="btn btn-success" href="{{ $core->url('/model/' . $model_config['slug'] . '/create?back=' . request()->fullUrl()) }}">{{ str_replace('{name}', $model_config['slug'], $core->getWord('btn.create', 'Create new {name}')) }} <i class="fa fa-plus"></i></a>
 @endif
 
 @if($model_config['slug'] !== 'AdminxLog')
-<a class="btn btn-primary" href="{{ $core->url('/model/AdminxLog?filter_model=' . $model_config['slug'] . '&back=' . request()->fullUrl()) }}">{{ str_replace('{name}', $model_config['slug'], $core->get_word('btn.log', 'History')) }} <i class="fa fa-history"></i></a>
+<a class="btn btn-primary" href="{{ $core->url('/model/AdminxLog?filter_model=' . $model_config['slug'] . '&back=' . request()->fullUrl()) }}">{{ str_replace('{name}', $model_config['slug'], $core->getWord('btn.log', 'History')) }} <i class="fa fa-history"></i></a>
 @endif
 <br />
 <br />
@@ -62,7 +62,7 @@ foreach($actions as $k => $v) {
                 @foreach ($model_config['virtual_fields'] as $k => $v)
                     <th>{{ $k }}</th>
                 @endforeach
-                <th>{{ $core->get_word('tbl.action', 'Actions') }}</th>
+                <th>{{ $core->getWord('tbl.action', 'Actions') }}</th>
             </tr>
           </thead>
           @if(!$model_config['no_table_footer'])
@@ -73,7 +73,7 @@ foreach($actions as $k => $v) {
                 @foreach ($model_config['virtual_fields'] as $k => $v)
                     <th>{{ $k }}</th>
                 @endforeach
-                <th>{{ $core->get_word('tbl.action', 'Actions') }}</th>
+                <th>{{ $core->getWord('tbl.action', 'Actions') }}</th>
           </tr></tfoot>
           @endif
           <tbody>
@@ -95,10 +95,10 @@ foreach($actions as $k => $v) {
                     <td><?php echo $value($row) ?></td>
                 @endforeach
                     <td>
-                @if($is_superuser || \Adminx\Access::user_has_permission(auth()->user(), $model_config['slug'] . '.delete'))
+                @if($is_superuser || \Adminx\Access::userHasPermission(auth()->user(), $model_config['slug'] . '.delete'))
                 @if($is_superuser || call_user_func_array($model_config['delete_middleware'], [auth()->user(), $row]))
 
-                  <form method="POST" class="d-inline" onsubmit="return confirm('{{ $core->get_word('delete.msg', 'Are you sure to delete this item?') }}')">
+                  <form method="POST" class="d-inline" onsubmit="return confirm('{{ $core->getWord('delete.msg', 'Are you sure to delete this item?') }}')">
                     <input type="hidden" name="_method" value="DELETE" />
                     @csrf
                     <input type="hidden" name="delete" value="{{ $row->id }}" />
@@ -107,7 +107,7 @@ foreach($actions as $k => $v) {
 
                 @endif
                 @endif
-                    @if($is_superuser || \Adminx\Access::user_has_permission(auth()->user(), $model_config['slug'] . '.update'))
+                    @if($is_superuser || \Adminx\Access::userHasPermission(auth()->user(), $model_config['slug'] . '.update'))
                         @if($is_superuser || call_user_func_array($model_config['update_middleware'], [auth()->user(), $row]))
                             <a href="{{ $core->url('/model/'. $model_config['slug'] . '/update/' . $row->id) . '?back=' . request()->fullUrl() }}" style="margin: 2px;" class="btn btn-primary"><i class="fa fa-edit"></i></a>
                         @endif

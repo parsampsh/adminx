@@ -7,10 +7,10 @@ You can set title of your admin panel.
 ```php
 $admin = new \Adminx\Core;
 
-$admin->set_title('My admin panel');
+$admin->setTitle('My admin panel');
 
 // this methods returns the title
-$admin->get_title();
+$admin->getTitle();
 ```
 
 Now, you can see this title here:
@@ -21,10 +21,10 @@ Now, you can see this title here:
 You can set the footer copyright message.
 
 ```php
-$admin->set_copyright('All rights reserved.');
+$admin->setCopyright('All rights reserved.');
 
 // this methods returns the copyright
-$admin->get_copyright();
+$admin->getCopyright();
 ```
 
 Now, you can see this copyright message at the footer of the admin panel.
@@ -34,15 +34,15 @@ Now, you can see this copyright message at the footer of the admin panel.
 ## Access middleware
 One important question is **Who can access to the admin panel?**
 
-To determine that which users can access to the admin panel, you should use `set_middleware` method.
+To determine that which users can access to the admin panel, you should use `setMiddleware` method.
 
 ```php
-$admin->set_middleware(function(){
+$admin->setMiddleware(function(){
     // check some conditions and return a boolean
     return true;
 });
 
-$admin->set_middleware(function($user){
+$admin->setMiddleware(function($user){
     // the logged in user is in $user. we can check conditions on this
     // for example
     return $user->access_level === 'manager' || $user->access_level === 'admin';
@@ -56,7 +56,7 @@ By default, if you don't set this middleware, default value is `true`.
 Also you can check this middleware manually:
 
 ```php
-$result = $admin->run_middleware();
+$result = $admin->runMiddleware();
 var_dump($result); // true or false
 ```
 
@@ -64,10 +64,10 @@ var_dump($result); // true or false
 The Adminx panel, has a logout button. you can set the link of that button to a route you determined for user to logout.
 
 ```php
-$admin->set_logout('/user/logout');
+$admin->setLogout('/user/logout');
 
 // you can get the link with this method
-$admin->get_logout();
+$admin->getLogout();
 ```
 
 Default value for this item is `/auth/logout`.
@@ -78,10 +78,10 @@ Default value for this item is `/auth/logout`.
 ## User info
 There are user information at the Adminx panel top right: Username and image.
 
-You can set value of them using `set_userinfo` method.
+You can set value of them using `setUserinfo` method.
 
 ```php
-$admin->set_userinfo(function($user){
+$admin->setUserinfo(function($user){
     return [
         'username' => $user->name,
         'image' => '/link/to/users/images/' . $user->img,
@@ -91,10 +91,10 @@ $admin->set_userinfo(function($user){
 
 This method gets a closure and passes the user object to that(`$user` argument is optional) and this closure should return a dictonary contains two keys: `username` and `image`. The `username` will be shown as username of the user and `image` will be used as user profile image url.
 
-Also you can get user info using `get_userinfo` method.
+Also you can get user info using `getUserinfo` method.
 
 ```php
-$user_info = $admin->get_userinfo();
+$user_info = $admin->getUserinfo();
 var_dump($user_info); // {'username' => '...', 'image' => '...'}
 ```
 
@@ -105,10 +105,10 @@ There is an important thing in admin panels: The manager or super user.
 
 Super user is an user who can do anything!
 
-To determine that who is super user in Adminx, you should use `super_user` method:
+To determine that who is super user in Adminx, you should use `superUser` method:
 
 ```php
-$admin->super_user(function($user){
+$admin->superUser(function($user){
     return (bool) $user->is_manager();
 });
 ```
@@ -122,10 +122,10 @@ If true is returned, means that user is Super user.
 $admin = new \Adminx\Core;
 
 $admin
-    ->set_title('My admin panel')
-    ->set_copyright('All rights reserved')
-    ->set_logout('/auth/logout')
-    ->set_userinfo(function($user){
+    ->setTitle('My admin panel')
+    ->setCopyright('All rights reserved')
+    ->setLogout('/auth/logout')
+    ->setUserinfo(function($user){
         return [
             'username' => $user->username
         ];

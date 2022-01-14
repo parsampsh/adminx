@@ -21,7 +21,7 @@ class ActionsTest extends TestCase
         $user2 = \App\Models\User::factory()->create();
 
         $admin = new \Adminx\Core;
-        $admin->add_model(\App\Models\Post::class, [
+        $admin->addModel(\App\Models\Post::class, [
             'slug' => 'Post',
             'actions' => [
                 'my_btn' => [

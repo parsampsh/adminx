@@ -21,24 +21,24 @@ class PluginTest extends TestCase
     {
         $admin = new \Adminx\Core;
 
-        $admin->add_plugin(new TheTestPlugin);
-        $this->assertEquals($admin->get_title(), 'Set by plugin');
+        $admin->addPlugin(new TheTestPlugin);
+        $this->assertEquals($admin->getTitle(), 'Set by plugin');
 
-        $admin->add_plugin(new TheTestPlugin2, ['op1' => 'hello']);
-        $this->assertEquals($admin->get_title(), 'Set by plugin. value: hello');
+        $admin->addPlugin(new TheTestPlugin2, ['op1' => 'hello']);
+        $this->assertEquals($admin->getTitle(), 'Set by plugin. value: hello');
     }
 }
 
 class TheTestPlugin implements IPlugin {
     public function run(Core $admin, array $options=[])
     {
-        $admin->set_title('Set by plugin');
+        $admin->setTitle('Set by plugin');
     }
 }
 
 class TheTestPlugin2 implements IPlugin {
     public function run(Core $admin, array $options=[])
     {
-        $admin->set_title('Set by plugin. value: ' . $options['op1']);
+        $admin->setTitle('Set by plugin. value: ' . $options['op1']);
     }
 }

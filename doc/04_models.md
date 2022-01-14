@@ -1,10 +1,10 @@
 # Models
 Adminx can handel CRUD(Create/Read/Update/Delete) actions for your database models fully automaticaly.
 
-To Config your models in Adminx, you can use `add_model` method:
+To Config your models in Adminx, you can use `addModel` method:
 
 ```php
-$admin->add_model(\App\Models\Product::class, [
+$admin->addModel(\App\Models\Product::class, [
     // config the model in here..
 ]);
 ```
@@ -14,7 +14,7 @@ This method gets two arguments: The model class name and configuration for that 
 look at this example:
 
 ```php
-$admin->add_model(\App\Models\Product::class, [
+$admin->addModel(\App\Models\Product::class, [
     'title' => 'Products',
     'slug' => 'product',
     'icon' => 'fa fa-product-hunt',
@@ -47,7 +47,7 @@ All of config options:
 This option makes some fields hidden in the table.
 
 ```php
-$admin->add_model(\App\Models\User::class, [
+$admin->addModel(\App\Models\User::class, [
     // ...
     'hidden_fields' => ['password'] // the `password` column will be hidden in the table
     // ...
@@ -58,7 +58,7 @@ $admin->add_model(\App\Models\User::class, [
 This option changes title of a column in table. Default title is name of column.
 
 ```php
-$admin->add_model(\App\Models\User::class, [
+$admin->addModel(\App\Models\User::class, [
     // ...
     'fields_titles' => [
         'email' => 'The Email', // `The Email` will be shown as title of column `email` in table
@@ -71,7 +71,7 @@ $admin->add_model(\App\Models\User::class, [
 This option helps you to change default original value of a column in table(only for show).
 
 ```php
-$admin->add_model(\App\Models\User::class, [
+$admin->addModel(\App\Models\User::class, [
     // ...
     'fields_values' => [
         'email' => (function($row){
@@ -88,7 +88,7 @@ $admin->add_model(\App\Models\User::class, [
 This option can customize table rows. This should be a Closure and gets the Query Builder, then you can customize the query and return changed query.
 
 ```php
-$admin->add_model(\App\Models\User::class, [
+$admin->addModel(\App\Models\User::class, [
     // ...
     'filter_data' => (function($query){
         return $query->orderBy('name', 'asc')->where('is_enable', 1); // or other conditions
@@ -103,7 +103,7 @@ This option can create some **Virtual fields**. This helps to add some options t
 For example, we have Posts table and posts have Comments. We want to show count of comments in a column.
 
 ```php
-$admin->add_model(\App\Models\Post::class, [
+$admin->addModel(\App\Models\Post::class, [
     // ...
     'virtual_fields' => [
         'Comments Count' => (function($post){
@@ -122,7 +122,7 @@ This options help you to show a custom html/text in the top and bottom of the ta
 You should set a Closure as value for them. out put of the closure will be showd.
 
 ```php
-$admin->add_model(\App\Models\Post::class, [
+$admin->addModel(\App\Models\Post::class, [
     // ...
     'custom_html' => (function(){
         return 'this is the custom TOP html';
@@ -149,7 +149,7 @@ You can add a text search option for model.
 for example:
 
 ```php
-$admin->add_model(\App\Models\Post::class, [
+$admin->addModel(\App\Models\Post::class, [
     // ...
     'search' => (function($q, $word){
         // filter the query by searching in title
@@ -172,7 +172,7 @@ Also you can write a hint for search box by `search_hint` option(default value f
 This option is for handling delete permission. by default, Adminx checks user permission for delete the item. for example, user should have `user.delete` permission in database(You will learn about this is the **Access API** next part) to delete an item in users table. But also you can handle some exceptions by using this `delete_middleware` to customize this action permissions.
 
 ```php
-$admin->add_model(\App\Models\Post::class, [
+$admin->addModel(\App\Models\Post::class, [
     // ...
     // this closure should return boolean
     'delete_middleware' => (function($user, $post){
@@ -188,7 +188,7 @@ $admin->add_model(\App\Models\Post::class, [
 This option is like `delete_middleware` but for create action. by default, this permission is handled by Adminx permission system but you can check some exceptions by this option.
 
 ```php
-$admin->add_model(\App\Models\Post::class, [
+$admin->addModel(\App\Models\Post::class, [
     // ...
     // this closure should return boolean
     'create_middleware' => (function($user, $post){
@@ -207,7 +207,7 @@ The Create form:
 This option is like `create_middle` but for update action. by default, this permission is handled by Adminx permission system but you can check some exceptions by this option.
 
 ```php
-$admin->add_model(\App\Models\Post::class, [
+$admin->addModel(\App\Models\Post::class, [
     // ...
     // this closure should return boolean
     'update_middleware' => (function($user, $post){
@@ -222,7 +222,7 @@ $admin->add_model(\App\Models\Post::class, [
 The `readonly_fields` option declares some columns READONLY. the readonly column value cannot be set in create and update form.
 
 ```php
-$admin->add_model(\App\Models\Post::class, [
+$admin->addModel(\App\Models\Post::class, [
     // ...
     'readonly_fields' => ['something'],
     // ...
@@ -237,7 +237,7 @@ means you want to set value of this field in CREATE action, but this not be edit
 To do this, you should add that field to `readonly_fields` AND `only_addable_fields`:
 
 ```php
-$admin->add_model(\App\Models\Post::class, [
+$admin->addModel(\App\Models\Post::class, [
     // ...
     'readonly_fields' => ['something'],
     'only_addable_fields' => ['something'],
@@ -253,7 +253,7 @@ If you want to set a field that to don't get value in Create action, but can be 
 You should put that field in `readonly_fields` and `only_editable_fields`:
 
 ```php
-$admin->add_model(\App\Models\Post::class, [
+$admin->addModel(\App\Models\Post::class, [
     // ...
     'readonly_fields' => ['something'],
     'only_editable_fields' => ['something'],
@@ -265,7 +265,7 @@ $admin->add_model(\App\Models\Post::class, [
 This option sets comment for fields. this comment will be shown as placeholder in create and update forms.
 
 ```php
-$admin->add_model(\App\Models\Post::class, [
+$admin->addModel(\App\Models\Post::class, [
     // ...
     'fields_comments' => ['body' => 'Content of the post'],
     // ...
@@ -282,7 +282,7 @@ You should set an option named `foreign_keys`.
 `1 to N` example:
 
 ```php
-$admin->add_model(\App\Models\Post::class, [
+$admin->addModel(\App\Models\Post::class, [
     // ...
     // for example, posts have an user_id:
     'foreign_keys' => [
@@ -319,7 +319,7 @@ Adminx can handle N to N relations between models.
 You should use option `n2n`:
 
 ```php
-$admin->add_model(\App\Models\Post::class, [
+$admin->addModel(\App\Models\Post::class, [
     // ...
     'n2n' => [
         [
@@ -356,7 +356,7 @@ By default, Adminx Validates user data, sets data on a model object, But you can
 For example:
 
 ```php
-$admin->add_model(\App\Models\Post::class, [
+$admin->addModel(\App\Models\Post::class, [
     // ...
     'filter_create_data' => (function($row){
         // make changes on $row and return the $row
@@ -372,7 +372,7 @@ $admin->add_model(\App\Models\Post::class, [
 Also `filter_update_data` is for Update form:
 
 ```php
-$admin->add_model(\App\Models\Post::class, [
+$admin->addModel(\App\Models\Post::class, [
     // ...
     'filter_update_data' => (function($old, $row){
         // $old is the old row data and $row is new edited data!
@@ -397,7 +397,7 @@ Valid values:
 Default is `update`.
 
 ```php
-$admin->add_model(\App\Models\Post::class, [
+$admin->addModel(\App\Models\Post::class, [
     // ...
     'after_create_go_to' => 'table',
     'after_update_go_to' => 'update', // this is even like after_create_go_to but for update form
@@ -413,7 +413,7 @@ You can add some custom buttons to this column using custom actions system.
 For example:
 
 ```php
-$admin->add_model(\App\Models\Post::class, [
+$admin->addModel(\App\Models\Post::class, [
     // ...
     'actions' => [
         'my_custom_button' => [
@@ -447,7 +447,7 @@ $admin->add_model(\App\Models\Post::class, [
 This option can make a custom html inside create/update form.
 
 ```php
-$admin->add_model(\App\Models\Post::class, [
+$admin->addModel(\App\Models\Post::class, [
     // ...
     'create_html' => (function(){
         return 'this is my custom html';
@@ -464,7 +464,7 @@ For example, You can make custom inputs for form and use them in `filter_create_
 Also `update_html` is even like `create_html` but this closure can get `$row` user are editing:
 
 ```php
-$admin->add_model(\App\Models\Post::class, [
+$admin->addModel(\App\Models\Post::class, [
     // ...
     'update_html' => (function($post){
         return 'this is my custom html';

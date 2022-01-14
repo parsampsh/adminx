@@ -21,10 +21,10 @@ class ForeignKeyTest extends TestCase
         $post = \App\Models\Post::factory()->create(['user_id' => $user->id]);
 
         $admin = new \Adminx\Core;
-        $admin->super_user(function(){
+        $admin->superUser(function(){
             return true;
         });
-        $admin->add_model(\App\Models\Post::class, [
+        $admin->addModel(\App\Models\Post::class, [
             'slug' => 'Post',
             'foreign_keys' => [
                 'user_id' => [
@@ -56,10 +56,10 @@ class ForeignKeyTest extends TestCase
         $category2 = \App\Models\Category::factory()->create();
 
         $admin = new \Adminx\Core;
-        $admin->super_user(function(){
+        $admin->superUser(function(){
             return true;
         });
-        $admin->add_model(\App\Models\Post::class, [
+        $admin->addModel(\App\Models\Post::class, [
             'slug' => 'Post',
             'foreign_keys' => [
                 'user_id' => [

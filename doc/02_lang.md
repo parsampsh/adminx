@@ -1,13 +1,13 @@
 # Frontend language customization
 You can customize the language of admin panel.
 
-This is so easy. You just need to use `set_word` method.
+This is so easy. You just need to use `setWord` method.
 
 For example:
 
 ```php
-$admin->set_word('menu.dashboard', 'Huvudsida');
-$admin->set_word('foo', 'bar');
+$admin->setWord('menu.dashboard', 'Huvudsida');
+$admin->setWord('foo', 'bar');
 // ...
 ```
 
@@ -30,30 +30,30 @@ All of keys:
 |`btn.log`|Title of history button|`History`|
 |`user.btn.log`|Title of history button in user menu|`Activity History`|
 
-Also you can use `get_word` and `get_all_words` methods to get words:
+Also you can use `getWord` and `getAllWords` methods to get words:
 
 ```php
-$admin->get_word('key');
-$admin->get_all_words(); // array
+$admin->getWord('key');
+$admin->getAllWords(); // array
 ```
 
 ## Right to left
 You can set the admin panel layout to right to left mode.
 
 ```php
-$admin->enable_rtl(); // this method enables the rtl mode
+$admin->enableRtl(); // this method enables the rtl mode
 ```
 
 Also you can check that is the rtl enabled:
 
 ```php
-echo $admin->is_rtl(); // returns boolean
+echo $admin->isRtl(); // returns boolean
 ```
 
-Also you can disable the rtl mode by passing `false` to `enable_rtl` method:
+Also you can disable the rtl mode by passing `false` to `enableRtl` method:
 
 ```php
-$admin->enable_rtl(false);
+$admin->enableRtl(false);
 ```
 
 <img src="/doc/images/rtl.png" />
@@ -61,20 +61,20 @@ $admin->enable_rtl(false);
 ## Font
 You can change the default font of Adminx default layouts.
 
-You can use `set_font` method:
+You can use `setFont` method:
 
 ```php
-$admin->set_font('/url/to/font');
+$admin->setFont('/url/to/font');
 
 // examples
-$admin->set_font('/fonts/Some-font.ttf');
-$admin->set_font('https://example.com/font.woff');
+$admin->setFont('/fonts/Some-font.ttf');
+$admin->setFont('https://example.com/font.woff');
 ```
 
-Also you can get the current font with `get_font` method:
+Also you can get the current font with `getFont` method:
 
 ```php
-echo $admin->get_font();
+echo $admin->getFont();
 ```
 
 ---

@@ -16,7 +16,7 @@ use \Adminx\Access;
 
 class PermissionTest extends TestCase
 {
-    public function test_user_has_permission_works()
+    public function test_userHasPermission_works()
     {
         $user = \App\Models\User::factory()->create();
 
@@ -26,13 +26,13 @@ class PermissionTest extends TestCase
         $per1->user_id = $user->id;
         $per1->save();
 
-        $this->assertTrue(Access::user_has_permission($user, 'per1'));
-        $this->assertFalse(Access::user_has_permission($user, 'per1111'));
+        $this->assertTrue(Access::userHasPermission($user, 'per1'));
+        $this->assertFalse(Access::userHasPermission($user, 'per1111'));
 
         $per1->flag = false;
         $per1->save();
 
-        $this->assertFalse(Access::user_has_permission($user, 'per1'));
+        $this->assertFalse(Access::userHasPermission($user, 'per1'));
 
         $per1->delete();
 
@@ -47,14 +47,14 @@ class PermissionTest extends TestCase
         $per1->flag = true;
         $per1->save();
 
-        $this->assertFalse(Access::user_has_permission($user, 'gper1'));
+        $this->assertFalse(Access::userHasPermission($user, 'gper1'));
 
         $ug = new \Adminx\Models\UserGroup;
         $ug->user_id = $user->id;
         $ug->adminx_group_id = $group1->id;
         $ug->save();
 
-        $this->assertTrue(Access::user_has_permission($user, 'gper1'));
+        $this->assertTrue(Access::userHasPermission($user, 'gper1'));
 
         $per2 = new \Adminx\Models\UserPermission;
         $per2->permission = 'gper1';
@@ -62,44 +62,25 @@ class PermissionTest extends TestCase
         $per2->user_id = $user->id;
         $per2->save();
 
-        $this->assertFalse(Access::user_has_permission($user, 'gper1'));
+        $this->assertFalse(Access::userHasPermission($user, 'gper1'));
     }
 
-    public function test_add_permission_for_user_works()
+    public function test_addPermissionForUser_works()
     {
         $user = \App\Models\User::factory()->create();
 
-        $this->assertFalse(Access::user_has_permission($user, 'test-per'));
+        $this->assertFalse(Access::userHasPermission($user, 'test-per'));
 
-        Access::add_permission_for_user($user, 'test-per');
+        Access::addPermissionForUser($user, 'test-per');
 
-        $this->assertTrue(Access::user_has_permission($user, 'test-per'));
+        $this->assertTrue(Access::userHasPermission($user, 'test-per'));
 
-        Access::add_permission_for_user($user, 'test-per', false);
+        Access::addPermissionForUser($user, 'test-per', false);
 
-        $this->assertFalse(Access::user_has_permission($user, 'test-per'));
+        $this->assertFalse(Access::userHasPermission($user, 'test-per'));
     }
 
-    public function test_add_user_to_group_works()
-    {
-        $user = \App\Models\User::factory()->create();
-
-        $group1 = new \Adminx\Models\Group;
-        $group1->name = 'test-group';
-        $group1->save();
-
-        $this->assertFalse(Access::user_is_in_group($user, $group1));
-
-        Access::add_user_to_group($user, $group1);
-
-        $this->assertTrue(Access::user_is_in_group($user, $group1));
-
-        Access::remove_user_from_group($user, $group1);
-
-        $this->assertFalse(Access::user_is_in_group($user, $group1));
-    }
-
-    public function test_add_permission_for_group_works()
+    public function test_addUserToGroup_works()
     {
         $user = \App\Models\User::factory()->create();
 
@@ -107,26 +88,45 @@ class PermissionTest extends TestCase
         $group1->name = 'test-group';
         $group1->save();
 
-        Access::add_user_to_group($user, $group1);
+        $this->assertFalse(Access::userIsInGroup($user, $group1));
 
-        $this->assertTrue(Access::user_is_in_group($user, $group1));
+        Access::addUserToGroup($user, $group1);
 
-        $this->assertFalse(Access::user_has_permission($user, 'test-per'));
+        $this->assertTrue(Access::userIsInGroup($user, $group1));
 
-        Access::add_permission_for_group($group1, 'test-per');
+        Access::removeUserFromGroup($user, $group1);
 
-        $this->assertTrue(Access::user_has_permission($user, 'test-per'));
+        $this->assertFalse(Access::userIsInGroup($user, $group1));
+    }
 
-        Access::add_permission_for_group($group1, 'test-per', false);
+    public function test_addPermissionForGroup_works()
+    {
+        $user = \App\Models\User::factory()->create();
 
-        $this->assertFalse(Access::user_has_permission($user, 'test-per'));
+        $group1 = new \Adminx\Models\Group;
+        $group1->name = 'test-group';
+        $group1->save();
 
-        Access::add_permission_for_group($group1, 'test-per');
+        Access::addUserToGroup($user, $group1);
 
-        $this->assertTrue(Access::user_has_permission($user, 'test-per'));
+        $this->assertTrue(Access::userIsInGroup($user, $group1));
 
-        Access::remove_permission_from_group($group1, 'test-per');
+        $this->assertFalse(Access::userHasPermission($user, 'test-per'));
 
-        $this->assertFalse(Access::user_has_permission($user, 'test-per'));
+        Access::addPermissionForGroup($group1, 'test-per');
+
+        $this->assertTrue(Access::userHasPermission($user, 'test-per'));
+
+        Access::addPermissionForGroup($group1, 'test-per', false);
+
+        $this->assertFalse(Access::userHasPermission($user, 'test-per'));
+
+        Access::addPermissionForGroup($group1, 'test-per');
+
+        $this->assertTrue(Access::userHasPermission($user, 'test-per'));
+
+        Access::removePermissionFromGroup($group1, 'test-per');
+
+        $this->assertFalse(Access::userHasPermission($user, 'test-per'));
     }
 }

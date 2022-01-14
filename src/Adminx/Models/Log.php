@@ -30,15 +30,15 @@ class Log extends Model
      * @param string $message
      * @return Log
      */
-    public static function add_log(string $model_slug, int $item_id, int $user_id, string $action, string $message)
+    public static function addLog(string $modelSlug, int $itemId, int $userId, string $action, string $message)
     {
-        if ($model_slug === 'AdminxLog' && $action === 'delete') {
+        if ($modelSlug === 'AdminxLog' && $action === 'delete') {
             return null;
         }
         $log = new Log;
-        $log->model = $model_slug;
-        $log->item_id = $item_id;
-        $log->user_id = $user_id;
+        $log->model = $modelSlug;
+        $log->item_id = $itemId;
+        $log->user_id = $userId;
         $log->action = $action;
         $log->message = $message;
         $log->save();

@@ -26,7 +26,7 @@
     $("#sidebarToggle").on("click", function(e) {
         e.preventDefault();
         $("body").toggleClass("sb-sidenav-toggled");
-        if (is_rtl) {
+        if (isRtl) {
             $('.sb-nav-fixed #layoutSidenav #layoutSidenav_content').toggleClass('sb-sidenav-toggled-content');
         }
     });

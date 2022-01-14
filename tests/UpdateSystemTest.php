@@ -19,7 +19,7 @@ class UpdateSystemTest extends TestCase
         $user = \App\Models\User::factory()->create();
 
         $admin = new \Adminx\Core;
-        $admin->add_model(\App\Models\User::class, [
+        $admin->addModel(\App\Models\User::class, [
             'slug' => 'User',
         ]);
         $admin->register('/admin');
@@ -28,14 +28,14 @@ class UpdateSystemTest extends TestCase
         $res->assertStatus(200);
         $res->assertDontSee('class="btn btn-primary"><i class="fa fa-edit"></i></a>', false);
 
-        \Adminx\Access::add_permission_for_user($user, 'User.update');
+        \Adminx\Access::addPermissionForUser($user, 'User.update');
 
         $res = $this->actingAs($user)->get('/admin/model/User');
         $res->assertStatus(200);
         $res->assertSee('class="btn btn-primary"><i class="fa fa-edit"></i></a>', false);
 
         $admin = new \Adminx\Core;
-        $admin->add_model(\App\Models\User::class, [
+        $admin->addModel(\App\Models\User::class, [
             'slug' => 'the-users',
             'update_middleware' => (function(){
                 return false;
@@ -54,7 +54,7 @@ class UpdateSystemTest extends TestCase
         $user2 = \App\Models\User::factory()->create();
 
         $admin = new \Adminx\Core;
-        $admin->add_model(\App\Models\User::class, [
+        $admin->addModel(\App\Models\User::class, [
             'slug' => 'User',
         ]);
         $admin->register('/admin');
@@ -62,13 +62,13 @@ class UpdateSystemTest extends TestCase
         $res = $this->actingAs($user)->get('/admin/model/User/update/' . $user2->id);
         $res->assertStatus(403);
 
-        \Adminx\Access::add_permission_for_user($user, 'User.update');
+        \Adminx\Access::addPermissionForUser($user, 'User.update');
 
         $res = $this->actingAs($user)->get('/admin/model/User/update/' . $user2->id);
         $res->assertStatus(200);
 
         $admin = new \Adminx\Core;
-        $admin->add_model(\App\Models\User::class, [
+        $admin->addModel(\App\Models\User::class, [
             'slug' => 'User',
             'update_middleware' => (function(){
                 return false;
@@ -86,10 +86,10 @@ class UpdateSystemTest extends TestCase
         $user2 = \App\Models\User::factory()->create();
 
         $admin = new \Adminx\Core;
-        $admin->super_user(function($u) use ($user){
+        $admin->superUser(function($u) use ($user){
             return $user->id === $u->id;
         });
-        $admin->add_model(\App\Models\User::class, [
+        $admin->addModel(\App\Models\User::class, [
             'slug' => 'User',
             'fields_titles' => [
                 'email' => 'User Email',
@@ -102,10 +102,10 @@ class UpdateSystemTest extends TestCase
         $res->assertSee('value="' . $user2->email . '"', false);
 
         $admin = new \Adminx\Core;
-        $admin->super_user(function($u) use ($user){
+        $admin->superUser(function($u) use ($user){
             return $user->id === $u->id;
         });
-        $admin->add_model(\App\Models\User::class, [
+        $admin->addModel(\App\Models\User::class, [
             'slug' => 'User',
             'readonly_fields' => ['email'],
             'only_editable_fields' => ['email'],
@@ -126,10 +126,10 @@ class UpdateSystemTest extends TestCase
         $old_body = $post->body;
 
         $admin = new \Adminx\Core;
-        $admin->super_user(function($u) use ($user){
+        $admin->superUser(function($u) use ($user){
             return $user->id === $u->id;
         });
-        $admin->add_model(\App\Models\Post::class, [
+        $admin->addModel(\App\Models\Post::class, [
             'slug' => 'Post',
             'foreign_keys' => [
                 'user_id' => [
@@ -176,10 +176,10 @@ class UpdateSystemTest extends TestCase
         $post = \App\Models\Post::factory()->create();
 
         $admin = new \Adminx\Core;
-        $admin->super_user(function($u) use ($user){
+        $admin->superUser(function($u) use ($user){
             return $user->id === $u->id;
         });
-        $admin->add_model(\App\Models\Post::class, [
+        $admin->addModel(\App\Models\Post::class, [
             'slug' => 'Post',
             'update_html' => (function($row){ return 'hello ' . $row->id; }),
         ]);

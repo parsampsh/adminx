@@ -19,76 +19,76 @@ class GeneralConfigTest extends TestCase
     {
         $admin = new \Adminx\Core;
 
-        $this->assertEquals($admin->get_title(), 'Adminx Panel');
+        $this->assertEquals($admin->getTitle(), 'Adminx Panel');
 
-        $admin->set_title('Sometitle');
-        $this->assertEquals($admin->get_title(), 'Sometitle');
+        $admin->setTitle('Sometitle');
+        $this->assertEquals($admin->getTitle(), 'Sometitle');
 
-        $admin->set_title('new title');
-        $this->assertEquals($admin->get_title(), 'new title');
+        $admin->setTitle('new title');
+        $this->assertEquals($admin->getTitle(), 'new title');
 
-        $this->assertEquals($admin->get_copyright(), 'Copyright');
+        $this->assertEquals($admin->getCopyright(), 'Copyright');
 
-        $admin->set_copyright('All rights reserved');
-        $this->assertEquals($admin->get_copyright(), 'All rights reserved');
+        $admin->setCopyright('All rights reserved');
+        $this->assertEquals($admin->getCopyright(), 'All rights reserved');
 
-        $admin->set_copyright('new message');
-        $this->assertEquals($admin->get_copyright(), 'new message');
+        $admin->setCopyright('new message');
+        $this->assertEquals($admin->getCopyright(), 'new message');
 
-        $this->assertEquals($admin->get_logout(), '/auth/logout');
+        $this->assertEquals($admin->getLogout(), '/auth/logout');
 
-        $admin->set_logout('/logout');
-        $this->assertEquals($admin->get_logout(), '/logout');
+        $admin->setLogout('/logout');
+        $this->assertEquals($admin->getLogout(), '/logout');
 
-        $admin->set_logout('/somelink');
-        $this->assertEquals($admin->get_logout(), '/somelink');
+        $admin->setLogout('/somelink');
+        $this->assertEquals($admin->getLogout(), '/somelink');
 
-        $this->assertEquals($admin->get_userinfo(), ['username' => 'unset', 'image' => 'unset']);
+        $this->assertEquals($admin->getUserinfo(), ['username' => 'unset', 'image' => 'unset']);
 
-        $admin->set_userinfo(function () {
+        $admin->setUserinfo(function () {
             return [
                 'username' => 'hello world',
                 'image' => '/link'
             ];
         });
-        $this->assertEquals($admin->get_userinfo(), ['username' => 'hello world', 'image' => '/link']);
+        $this->assertEquals($admin->getUserinfo(), ['username' => 'hello world', 'image' => '/link']);
 
-        $admin->set_userinfo(function () {
+        $admin->setUserinfo(function () {
             return [
                 'username' => 'hello world',
                 'fsfgfh' => 'gfghfh',
             ];
         });
-        $this->assertEquals($admin->get_userinfo(), ['username' => 'hello world', 'image' => 'unset']);
+        $this->assertEquals($admin->getUserinfo(), ['username' => 'hello world', 'image' => 'unset']);
 
-        $admin->set_userinfo(function () {
+        $admin->setUserinfo(function () {
             return [
                 'username' => 'hello world',
                 'fsfgfh' => 'gfghfh',
             ];
         });
-        $this->assertEquals($admin->get_userinfo(), ['username' => 'hello world', 'image' => 'unset']);
+        $this->assertEquals($admin->getUserinfo(), ['username' => 'hello world', 'image' => 'unset']);
 
-        $admin->set_userinfo(function ($user) {
+        $admin->setUserinfo(function ($user) {
             return [
                 'username' => 'hello world',
             ];
         });
-        $this->assertEquals($admin->get_userinfo(), ['username' => 'hello world', 'image' => 'unset']);
+        $this->assertEquals($admin->getUserinfo(), ['username' => 'hello world', 'image' => 'unset']);
 
         $user = \App\Models\User::factory()->create();
         auth()->login($user);
 
-        $admin->set_userinfo(function ($user) {
+        $admin->setUserinfo(function ($user) {
             return [
                 'username' => $user->email,
             ];
         });
-        $this->assertEquals($admin->get_userinfo(), ['username' => $user->email, 'image' => 'unset']);
+        $this->assertEquals($admin->getUserinfo(), ['username' => $user->email, 'image' => 'unset']);
 
-        $this->assertEquals($admin->get_layout(), 'adminx.layouts.default');
-        $admin->set_layout('the-layout');
-        $this->assertEquals($admin->get_layout(), 'the-layout');
+        $this->assertEquals($admin->getLayout(), 'adminx.layouts.default');
+        $admin->setLayout('the-layout');
+        $this->assertEquals($admin->getLayout(), 'the-layout');
 
         auth()->logout();
     }
@@ -96,36 +96,36 @@ class GeneralConfigTest extends TestCase
     public function test_localization_words(){
         $admin = new \Adminx\Core;
 
-        $this->assertEquals($admin->get_word('hello'), '');
-        $this->assertEquals($admin->get_word('hello', 'the default'), 'the default');
+        $this->assertEquals($admin->getWord('hello'), '');
+        $this->assertEquals($admin->getWord('hello', 'the default'), 'the default');
 
-        $admin->set_word('hello', 'hello world');
+        $admin->setWord('hello', 'hello world');
 
-        $this->assertEquals($admin->get_word('hello'), 'hello world');
-        $this->assertEquals($admin->get_word('hello', 'the default'), 'hello world');
+        $this->assertEquals($admin->getWord('hello'), 'hello world');
+        $this->assertEquals($admin->getWord('hello', 'the default'), 'hello world');
 
-        $this->assertEquals($admin->get_word('bye'), '');
-        $this->assertEquals($admin->get_word('bye', 'the default'), 'the default');
+        $this->assertEquals($admin->getWord('bye'), '');
+        $this->assertEquals($admin->getWord('bye', 'the default'), 'the default');
 
-        $admin->set_word('bye', 'good bye');
+        $admin->setWord('bye', 'good bye');
 
-        $this->assertEquals($admin->get_word('bye'), 'good bye');
-        $this->assertEquals($admin->get_word('bye', 'the default'), 'good bye');
+        $this->assertEquals($admin->getWord('bye'), 'good bye');
+        $this->assertEquals($admin->getWord('bye', 'the default'), 'good bye');
 
-        $this->assertEquals($admin->get_all_words(), ['hello' => 'hello world', 'bye' => 'good bye']);
+        $this->assertEquals($admin->getAllWords(), ['hello' => 'hello world', 'bye' => 'good bye']);
 
-        $this->assertEquals($admin->get_font(), null);
-        $admin->set_font('/test/font.ttf');
-        $this->assertEquals($admin->get_font(), '/test/font.ttf');
+        $this->assertEquals($admin->getFont(), null);
+        $admin->setFont('/test/font.ttf');
+        $this->assertEquals($admin->getFont(), '/test/font.ttf');
     }
 
     public function test_model_get_fields_works()
     {
         $admin = new \Adminx\Core;
-        $admin->add_model(\App\Models\User::class, [
+        $admin->addModel(\App\Models\User::class, [
         ]);
-        $menu = $admin->get_menu();
-        $columns = $admin->get_model_columns($menu[count($menu)-1]['config']);
+        $menu = $admin->getMenu();
+        $columns = $admin->getModelColumns($menu[count($menu)-1]['config']);
 
         $this->assertEquals($columns, [
             "id",
@@ -138,13 +138,13 @@ class GeneralConfigTest extends TestCase
         ]);
 
         $admin = new \Adminx\Core;
-        $admin->add_model(\App\Models\User::class, [
+        $admin->addModel(\App\Models\User::class, [
             'hidden_fields' => [
                 'password',
             ],
         ]);
-        $menu = $admin->get_menu();
-        $columns = $admin->get_model_columns($menu[count($menu)-1]['config']);
+        $menu = $admin->getMenu();
+        $columns = $admin->getModelColumns($menu[count($menu)-1]['config']);
 
         $this->assertEquals($columns, [
             "id",
