@@ -12,7 +12,7 @@ jobs:
       fail-fast: false
       matrix:
         os: [ubuntu-latest]
-        php: [7.4, 8.0]
+        php: [8.0]
 
     name: ${{ matrix.os }} with PHP ${{ matrix.php }}
 
