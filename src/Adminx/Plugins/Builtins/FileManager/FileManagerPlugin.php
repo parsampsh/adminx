@@ -1,6 +1,6 @@
 <?php
 
-namespace Adminx\Plugins\Builtin;
+namespace Adminx\Plugins\Builtins\FileManager;
 
 use Adminx\Plugins\IPlugin;
 use Adminx\Core;
