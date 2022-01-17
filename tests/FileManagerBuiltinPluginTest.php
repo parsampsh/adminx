@@ -71,4 +71,38 @@ class FileManagerBuiltinPluginTest extends TestCase
         $this->actingAs($user)->get('/admin/page/file-manager')->assertOk();
         $this->actingAs($user2)->get('/admin/page/file-manager')->assertStatus(403);
     }
+
+    public function test_files_can_be_shown()
+    {
+        $user = \App\Models\User::factory()->create();
+
+        $admin = new \Adminx\Core;
+        $admin->addPlugin(new \Adminx\Plugins\Builtins\FileManager\FileManagerPlugin, [
+            'dirs' => [
+                realpath(__DIR__ . '/../tests'),
+                __DIR__ . '/../src',
+            ]
+        ]);
+        $admin->register('/admin');
+
+        $response = $this->actingAs($user)->get('/admin/page/file-manager');
+        $response->assertOk();
+        $response->assertSee('tests');
+        $response->assertSee('src');
+        $response->assertSee(realpath(__DIR__ . '/../tests'));
+        $response->assertSee(realpath(__DIR__ . '/../src'));
+
+        $response = $this->actingAs($user)->get('/admin/page/file-manager?currentLoc=/notfound1234');
+        $response->assertSee('not found');
+
+        $response = $this->actingAs($user)->get('/admin/page/file-manager?currentLoc=' . __DIR__ . '/../tests/testfile.txt');
+        $response->assertSee('hello world from the test file');
+        $response->assertSee(realpath(__DIR__ . '/../tests/testfile.txt'));
+        $response->assertSee(dirname(__DIR__ . '/../tests/testfile.txt'));
+
+        $response = $this->actingAs($user)->get('/admin/page/file-manager?currentLoc=' . __DIR__ . '/../tests/');
+        $response->assertSee('FileManagerBuiltinPluginTest.php');
+        $response->assertSee(realpath(__DIR__ . '/../tests/'));
+        $response->assertSee(dirname(__DIR__ . '/../tests/'));
+    }
 }
