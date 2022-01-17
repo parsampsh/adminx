@@ -1,6 +1,5 @@
 Needed options for file manager:
 
-filter_dirs: filter the final list of dirs
 can_see: see the file in list
 can_read: read the content of it: read content of a file or see items in directory
 can_delete: delete it
