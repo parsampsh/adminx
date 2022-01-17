@@ -21,14 +21,21 @@ class FileManagerPlugin implements IPlugin
      * 
      * @var \Closure
      */
-    protected \Closure $accessMiddleware;
+    public \Closure $accessMiddleware;
 
     /**
      * The slug of the page that plugin creates
      * 
      * @var string
      */
-    protected string $pageSlug = 'file-manager';
+    public string $pageSlug = 'file-manager';
+
+    /**
+     * List of the directories which developer wants to load in file manager
+     * 
+     * @var array
+     */
+    public array $dirs = [];
 
     /**
      * Receives the passed $options to the run method and processes them
@@ -37,7 +44,7 @@ class FileManagerPlugin implements IPlugin
      */
     protected function loadConfiguration(array $options)
     {
-        if (!(isset($options['access_middleware']) && $options['access_middleware'] instanceof \Closure))
+        if (!(isset($options['access_middleware']) && is_callable($options['access_middleware'])))
         {
             $options['access_middleware'] = function () { return true; };
         }
@@ -45,6 +52,11 @@ class FileManagerPlugin implements IPlugin
         if (isset($options['page_slug']) && is_string($options['page_slug']))
         {
             $this->pageSlug = $options['page_slug'];
+        }
+
+        if (isset($options['dirs']) && is_array($options['dirs']))
+        {
+            $this->dirs = $options['dirs'];
         }
 
         $this->accessMiddleware = $options['access_middleware'];
@@ -61,12 +73,7 @@ class FileManagerPlugin implements IPlugin
         $this->loadConfiguration($options);
 
         $admin->addPage($admin->getWord('file-manager.page-title', 'File Manager'), $this->pageSlug, function() {
-            if (!call_user_func_array($this->accessMiddleware, [auth()->user()])) {
-                abort(403);
-                return;
-            }
-
-            return 'welcome to file manager';
+            return (new Controller($this))->handle();
         });
     }
 }
