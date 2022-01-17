@@ -105,4 +105,24 @@ class FileManagerBuiltinPluginTest extends TestCase
         $response->assertSee(realpath(__DIR__ . '/../tests/'));
         $response->assertSee(dirname(__DIR__ . '/../tests/'));
     }
+
+    public function test_path_must_be_valid()
+    {
+        $user = \App\Models\User::factory()->create();
+
+        $admin = new \Adminx\Core;
+        $admin->addPlugin(new \Adminx\Plugins\Builtins\FileManager\FileManagerPlugin, [
+            'dirs' => [
+                realpath(__DIR__ . '/../tests'),
+                __DIR__ . '/../src',
+            ]
+        ]);
+        $admin->register('/admin');
+
+        $response = $this->actingAs($user)->get('/admin/page/file-manager?currentLoc=' . __DIR__ . '/..');
+        $response->assertSee('not found');
+
+        $response = $this->actingAs($user)->get('/admin/page/file-manager?currentLoc=' . realpath(__DIR__ . '/../tests/'));
+        $response->assertDontSee(dirname(__DIR__ . '/../tests/'));
+    }
 }
