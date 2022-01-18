@@ -119,7 +119,7 @@ class Controller
             }
         }
 
-        $items = $newItems;        
+        $items = $newItems;
 
         return view('adminx.builtin_plugins.filemanager.main', [
             'items' => $items,
