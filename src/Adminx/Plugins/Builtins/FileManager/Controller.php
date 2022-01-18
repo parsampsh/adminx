@@ -80,6 +80,10 @@ class Controller
                 $items = glob($currentLoc . '/*');
                 $currentLoc = realpath($currentLoc);
             } else if (is_file($currentLoc) && $isCurrentLocValid) {
+                if (!((new FileItem($currentLoc, $this->plugin))->canRead())) {
+                    abort(404);
+                    return;
+                }
                 $f = fopen($currentLoc, 'r');
                 $content = fread($f, filesize($currentLoc));
                 fclose($f);

@@ -107,7 +107,7 @@ class FileManagerPlugin implements IPlugin
         }
 
         $this->canSee = $options['can_see'];
-        $this->canDead = $options['can_read'];
+        $this->canRead = $options['can_read'];
         $this->canDelete = $options['can_delete'];
         $this->canWrite = $options['can_write'];
     }

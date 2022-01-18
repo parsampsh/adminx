@@ -155,4 +155,35 @@ class FileManagerBuiltinPluginTest extends TestCase
         $response = $this->actingAs($user)->get('/admin/page/file-manager?currentLoc=' . realpath(__DIR__ . '/../tests/'));
         $response->assertSee(realpath(__DIR__ . '/../tests/FileManagerBuiltinPluginTest.php'));
     }
+
+    public function test_can_read_mddleware_works()
+    {
+        $user = \App\Models\User::factory()->create();
+
+        $admin = new \Adminx\Core;
+        $admin->addPlugin(new \Adminx\Plugins\Builtins\FileManager\FileManagerPlugin, [
+            'dirs' => [
+                realpath(__DIR__ . '/../tests'),
+            ],
+            'can_read' => (function ($u, $file) use ($user) {
+                return !($u->id === $user->id && $file->path === realpath(__DIR__ . '/../tests/FileManagerBuiltinPluginTest.php'));
+            }),
+        ]);
+        $admin->register('/admin');
+
+        $response = $this->actingAs($user)->get('/admin/page/file-manager?currentLoc=' . realpath(__DIR__ . '/../tests/FileManagerBuiltinPluginTest.php'));
+        $response->assertStatus(404);
+
+        $admin = new \Adminx\Core;
+        $admin->addPlugin(new \Adminx\Plugins\Builtins\FileManager\FileManagerPlugin, [
+            'dirs' => [
+                realpath(__DIR__ . '/../tests'),
+            ],
+        ]);
+        $admin->register('/admin');
+
+        $response = $this->actingAs($user)->get('/admin/page/file-manager?currentLoc=' . realpath(__DIR__ . '/../tests/FileManagerBuiltinPluginTest.php'));
+        $response->assertOk();
+        $response->assertSee(realpath(__DIR__ . '/../tests/FileManagerBuiltinPluginTest.php'));
+    }
 }
