@@ -38,7 +38,7 @@
 
         @foreach($items as $item)
             <div>
-                <a class='filemanager-item' href='?currentLoc={{ $item }}'><?= is_dir($item) ? '<i class="fa fa-folder"></i>' : '' ?> {{ pathinfo($item)['basename'] }}</a>
+                <a class='filemanager-item' href='?currentLoc={{ $item->path }}'><?= $item->isDir() ? '<i class="fa fa-folder"></i>' : '' ?> {{ $item->name() }}</a>
             </div>
         @endforeach
     @endif

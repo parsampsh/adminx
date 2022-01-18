@@ -103,17 +103,23 @@ class Controller
 
         foreach($items as $item) {
             if (is_dir($item)) {
-                array_push($newItems, $item);
+                $tmp = new FileItem($item, $this->plugin);
+                if ($tmp->canSee()) {
+                    array_push($newItems, $tmp);
+                }
             }
         }
 
         foreach($items as $item) {
             if (is_file($item)) {
-                array_push($newItems, $item);
+                $tmp = new FileItem($item, $this->plugin);
+                if ($tmp->canSee()) {
+                    array_push($newItems, $tmp);
+                }
             }
         }
 
-        $items = $newItems;
+        $items = $newItems;        
 
         return view('adminx.builtin_plugins.filemanager.main', [
             'items' => $items,

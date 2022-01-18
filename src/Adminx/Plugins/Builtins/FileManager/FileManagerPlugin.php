@@ -38,6 +38,34 @@ class FileManagerPlugin implements IPlugin
     public array $dirs = [];
 
     /**
+     * Middleware to check can user see the file in files list
+     * 
+     * @var \Closure
+     */
+    public \Closure $canSee;
+
+    /**
+     * Middleware to check can user read the file
+     * 
+     * @var \Closure
+     */
+    public \Closure $canRead;
+
+    /**
+     * Middleware to check can user delete the file
+     * 
+     * @var \Closure
+     */
+    public \Closure $canDelete;
+
+    /**
+     * Middleware to check can user write on the file
+     * 
+     * @var \Closure
+     */
+    public \Closure $canWrite;
+
+    /**
      * Receives the passed $options to the run method and processes them
      * 
      * @param array $options
@@ -60,6 +88,28 @@ class FileManagerPlugin implements IPlugin
         }
 
         $this->accessMiddleware = $options['access_middleware'];
+
+        if (!(isset($options['can_see']) && is_callable($options['can_see'])))
+        {
+            $options['can_see'] = function () { return true; };
+        }
+        if (!(isset($options['can_read']) && is_callable($options['can_read'])))
+        {
+            $options['can_read'] = function () { return true; };
+        }
+        if (!(isset($options['can_delete']) && is_callable($options['can_delete'])))
+        {
+            $options['can_delete'] = function () { return true; };
+        }
+        if (!(isset($options['can_write']) && is_callable($options['can_write'])))
+        {
+            $options['can_write'] = function () { return true; };
+        }
+
+        $this->canSee = $options['can_see'];
+        $this->canDead = $options['can_read'];
+        $this->canDelete = $options['can_delete'];
+        $this->canWrite = $options['can_write'];
     }
 
     /**

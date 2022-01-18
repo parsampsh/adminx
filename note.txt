@@ -1,6 +1,5 @@
 Needed options for file manager:
 
-can_see: see the file in list
 can_read: read the content of it: read content of a file or see items in directory
 can_delete: delete it
 can_write: write into it: add a file in directory or write content of a file
