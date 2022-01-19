@@ -38,7 +38,7 @@
 
         @foreach($items as $item)
             <div>
-                <a class='filemanager-item' href='?currentLoc={{ $item->path }}'><?= $item->isDir() ? '<i class="fa fa-folder"></i>' : '' ?> {{ $item->name() }}</a>
+                <a class='filemanager-item' <?= $item->canRead() ? "href='?currentLoc=" . htmlspecialchars($item->path) . "'" : '' ?>><?= $item->isDir() ? '<i class="fa fa-folder"></i>' : '' ?> {{ $item->name() }} <?= $item->canRead() ? '' : '<i class="fa fa-lock" title="You cannot read the content of the file"></i>' ?></a>
             </div>
         @endforeach
     @endif
