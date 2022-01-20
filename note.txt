@@ -1,7 +1,8 @@
 Needed options for file manager:
 
-can_delete: delete it
-can_write: write into it: add a file in directory or write content of a file
+- edit
+- rename
+- cut
+- copy
 
 TODO : delete me before merging the branch!
-
