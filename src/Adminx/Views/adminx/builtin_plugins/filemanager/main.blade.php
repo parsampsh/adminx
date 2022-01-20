@@ -38,7 +38,17 @@
 
         @foreach($items as $item)
             <div>
-                <a class='filemanager-item' <?= $item->canRead() ? "href='?currentLoc=" . htmlspecialchars($item->path) . "'" : '' ?>><?= $item->isDir() ? '<i class="fa fa-folder"></i>' : '' ?> {{ $item->name() }} <?= $item->canRead() ? '' : '<i class="fa fa-lock" title="You cannot read the content of the file"></i>' ?></a>
+                <a class='filemanager-item' <?= $item->canRead() ? "href='?currentLoc=" . htmlspecialchars($item->path) . "'" : '' ?>>
+                    <?= $item->isDir() ? '<i class="fa fa-folder"></i>' : '' ?> {{ $item->name() }} <?= $item->canRead() ? '' : '<i class="fa fa-lock" title="You cannot read the content of the file"></i>' ?>
+                    @if($item->canDelete())
+                        <form onsubmit='return confirm("Are you sure you wanna delete this file?")' method='POST' style='float: right;s'>
+                            @csrf
+                            <input type='hidden' name='delete_file' value='{{ $item->path }}' />
+                            <button type='submit' class='btn btn-danger text-light'><i class='fa fa-trash'></i></button>
+                        </form>
+                        <div style='clear: both;'></div>
+                    @endif
+                </a>
             </div>
         @endforeach
     @endif

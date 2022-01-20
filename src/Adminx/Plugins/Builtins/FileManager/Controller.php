@@ -53,6 +53,28 @@ class Controller
         }
 
         $request = request();
+
+        if ($request->post('delete_file') !== null) {
+            if ($this->checkPathIsValid($request->post('delete_file'))) {
+                $file = new FileItem($request->post('delete_file'), $this->plugin);
+
+                if ($file->canDelete())
+                {
+                    if ($file->isDir()) {
+                        DirectoryRemover::deleteDir($file->path);
+                    } else {
+                        unlink($file->path);
+                    }
+
+                    return redirect($request->fullUrl());
+                } else {
+                    abort(403);
+                }
+            } else {
+                abort(403);
+            }
+        }
+
         $currentLoc = '/';
         $items = [];
         $parentDir = null;
@@ -85,7 +107,7 @@ class Controller
                     return;
                 }
                 $f = fopen($currentLoc, 'r');
-                $content = fread($f, filesize($currentLoc));
+                $content = fread($f, filesize($currentLoc)+1);
                 fclose($f);
                 $currentLoc = realpath($currentLoc);
 
