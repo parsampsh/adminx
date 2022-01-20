@@ -192,4 +192,45 @@ class FileManagerBuiltinPluginTest extends TestCase
         $response->assertOk();
         $response->assertSee(realpath(__DIR__ . '/../tests/FileManagerBuiltinPluginTest.php'));
     }
+
+    public function test_can_delete_mddleware_works()
+    {
+        $user = \App\Models\User::factory()->create();
+
+        $admin = new \Adminx\Core;
+        $admin->addPlugin(new \Adminx\Plugins\Builtins\FileManager\FileManagerPlugin, [
+            'dirs' => [
+                realpath(__DIR__ . '/../tests/test-dir'),
+            ],
+            'can_delete' => (function ($u, $file) use ($user) {
+                return ($file->path !== realpath(__DIR__ . '/../tests/test-dir/undeletable.txt') && $file->path !== realpath(__DIR__ . '/../tests/test-dir/dir-undeletable') && $file->path !== realpath(__DIR__ . '/../tests/test-dir/dir-undeletable/sub/a.txt'));
+            }),
+        ]);
+        $admin->register('/admin');
+
+        $response = $this->actingAs($user)->get('/admin/page/file-manager?currentLoc=' . realpath(__DIR__ . '/../tests/test-dir/'));
+        $response->assertSee('fa fa-trash');
+
+        $response = $this->actingAs($user)->get('/admin/page/file-manager?currentLoc=' . realpath(__DIR__ . '/../tests/test-dir/dir-undeletable/sub/'));
+        $response->assertDontSee('fa fa-trash');
+
+        $response = $this->actingAs($user)->post('/admin/page/file-manager', ['delete_file' => realpath(__DIR__ . '/../tests/test-dir/dir-undeletable/sub/a.txt')]);
+        $response->assertStatus(403);
+
+        $response = $this->actingAs($user)->post('/admin/page/file-manager', ['delete_file' => realpath(__DIR__ . '/../tests/test-dir/dir-undeletable/')]);
+        $response->assertStatus(403);
+
+        $response = $this->actingAs($user)->post('/admin/page/file-manager', ['delete_file' => realpath(__DIR__ . '/../tests/test-dir/first.txt')]);
+        $this->assertFalse(file_exists(realpath(__DIR__ . '/../tests/test-dir/first.txt')));
+        touch(__DIR__ . '/../tests/test-dir/first.txt');
+
+        $response = $this->actingAs($user)->post('/admin/page/file-manager', ['delete_file' => realpath(__DIR__ . '/../tests/test-dir/subdir')]);
+        $this->assertFalse(file_exists(realpath(__DIR__ . '/../tests/test-dir/subdir')));
+
+        mkdir(__DIR__ . '/../tests/test-dir/subdir');
+        mkdir(__DIR__ . '/../tests/test-dir/subdir/a');
+        touch(__DIR__ . '/../tests/test-dir/subdir/a/test4.txt');
+        touch(__DIR__ . '/../tests/test-dir/subdir/test2.txt');
+        touch(__DIR__ . '/../tests/test-dir/subdir/test3.txt');
+    }
 }
