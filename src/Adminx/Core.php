@@ -316,8 +316,8 @@ class Core
         // register routes
         Route::prefix($route)->group(function () {
             Route::middleware(['web', 'auth'])->group(function () {
-                Route::get('/', [AdminxController::class, 'index']);
-                Route::get('/page/{slug}', [AdminxController::class, 'showPage']);
+                Route::any('/', [AdminxController::class, 'index']);
+                Route::any('/page/{slug}', [AdminxController::class, 'showPage']);
                 Route::get('/model/{slug}', [AdminxController::class, 'modelIndex']);
                 Route::post('/model/{slug}', [AdminxController::class, 'modelIndex']);
                 Route::delete('/model/{slug}', [AdminxController::class, 'modelDelete']);
