@@ -171,6 +171,9 @@ class FileManagerBuiltinPluginTest extends TestCase
         ]);
         $admin->register('/admin');
 
+        $response = $this->actingAs($user)->get('/admin/page/file-manager?currentLoc=' . realpath(__DIR__ . '/../tests/'));
+        $response->assertSee('fa fa-lock');
+
         $response = $this->actingAs($user)->get('/admin/page/file-manager?currentLoc=' . realpath(__DIR__ . '/../tests/FileManagerBuiltinPluginTest.php'));
         $response->assertStatus(404);
 
@@ -181,6 +184,9 @@ class FileManagerBuiltinPluginTest extends TestCase
             ],
         ]);
         $admin->register('/admin');
+
+        $response = $this->actingAs($user)->get('/admin/page/file-manager?currentLoc=' . realpath(__DIR__ . '/../tests/'));
+        $response->assertDontSee('fa fa-lock');
 
         $response = $this->actingAs($user)->get('/admin/page/file-manager?currentLoc=' . realpath(__DIR__ . '/../tests/FileManagerBuiltinPluginTest.php'));
         $response->assertOk();
