@@ -30,6 +30,15 @@
     @else
         <div class="badge badge-primary">Current Location: {{ $currentLoc }}</div>
 
+        @if(session()->has('adminx_filemanager_clipboard') && $currentLocObj->canWrite() && $currentLoc !== '/')
+            <form method='POST'>
+                @csrf
+                <button value='1' title='Paste' name='paste_file' class='btn btn-primary' type='submit'>
+                    <i class='fa fa-paste'></i> Paste
+                </button>
+            </form>
+        @endif
+
         @if($parentDir !== null)
             <div>
                 <a class='filemanager-item' href='?currentLoc={{ $parentDir }}'>..</a>
@@ -41,13 +50,23 @@
                 <a class='filemanager-item' <?= $item->canRead() ? "href='?currentLoc=" . htmlspecialchars($item->path) . "'" : '' ?>>
                     <?= $item->isDir() ? '<i class="fa fa-folder"></i>' : '' ?> {{ $item->name() }} <?= $item->canRead() ? '' : '<i class="fa fa-lock" title="You cannot read the content of the file"></i>' ?>
                     @if($item->canDelete())
-                        <form onsubmit='return confirm("Are you sure you wanna delete this file?")' method='POST' style='float: right;s'>
+                        <form onsubmit='return confirm("Are you sure you wanna delete this file?")' method='POST' style='float: right; display: inline !important;'>
                             @csrf
                             <input type='hidden' name='delete_file' value='{{ $item->path }}' />
-                            <button type='submit' class='btn btn-danger text-light'><i class='fa fa-trash'></i></button>
+                            <button title='Delete' type='submit' class='btn btn-danger text-light'><i class='fa fa-trash'></i></button>
                         </form>
-                        <div style='clear: both;'></div>
                     @endif
+
+                    @if($item->canRead())
+                        <form method='POST' style='float: right; display: inline !important;'>
+                            @csrf
+                            <input type='hidden' name='copy_file' value='{{ $item->path }}' />
+                            <button title='Copy' type='submit' class='btn btn-success text-light'><i class='fa fa-copy'></i></button>
+                        </form>
+                    @endif
+
+                    <div style='clear: both;'></div>
+
                 </a>
             </div>
         @endforeach

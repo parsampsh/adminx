@@ -1,8 +1,8 @@
 Needed options for file manager:
 
-- edit
-- rename
 - cut
-- copy
+- test for copy and cut
+- rename
+- edit
 
 TODO : delete me before merging the branch!

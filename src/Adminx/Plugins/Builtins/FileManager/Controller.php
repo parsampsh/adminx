@@ -54,6 +54,66 @@ class Controller
 
         $request = request();
 
+        if ($request->post('paste_file') !== null) {
+            if (session()->has('adminx_filemanager_clipboard')) {
+                $clipboard = session()->get('adminx_filemanager_clipboard');
+                if ($this->checkPathIsValid($clipboard) && $this->checkPathIsValid($request->get('currentLoc'))) {
+                    $file = new FileItem($clipboard, $this->plugin);
+
+                    if ($file->canRead()) {
+                        $currentDir = new FileItem($request->get('currentLoc'), $this->plugin);
+
+                        if ($currentDir->canWrite()) {
+                            $basename = $file->name();
+
+                            $dstPath = $currentDir->path . '/' . $basename;
+                            $dstPathBackup = $dstPath;
+
+                            $counter = 1;
+                            while (file_exists($dstPath)) {
+                                $dstPath = $dstPathBackup . $counter;
+                                $counter++;
+                            }
+
+                            if (is_file($file->path)) {
+                                copy($file->path, $dstPath);
+                            } else {
+                                DirectoryUtils::recurseCopy($file->path, $dstPath);
+                            }
+
+                            return redirect($request->fullUrl());
+                        } else {
+                            return 'A';
+                            abort(403);
+                        }
+                    } else {
+                        return 'B';
+                        abort(403);
+                    }
+                } else {
+                    return 'C';
+                    abort(403);
+                }
+            } else {
+                abort(403);
+            }
+        }
+
+        if ($request->post('copy_file') !== null) {
+            if ($this->checkPathIsValid($request->post('copy_file'))) {
+                $file = new FileItem($request->post('copy_file'), $this->plugin);
+
+                if ($file->canRead()) {
+                    session()->put('adminx_filemanager_clipboard', $file->path);
+                    return redirect($request->fullUrl());
+                } else {
+                    abort(403);
+                }
+            } else {
+                abort(403);
+            }
+        }
+
         if ($request->post('delete_file') !== null) {
             if ($this->checkPathIsValid($request->post('delete_file'))) {
                 $file = new FileItem($request->post('delete_file'), $this->plugin);
@@ -61,7 +121,7 @@ class Controller
                 if ($file->canDelete())
                 {
                     if ($file->isDir()) {
-                        DirectoryRemover::deleteDir($file->path);
+                        DirectoryUtils::deleteDir($file->path);
                     } else {
                         unlink($file->path);
                     }
@@ -99,7 +159,7 @@ class Controller
             }
 
             if (is_dir($currentLoc) && $isCurrentLocValid) {
-                $items = glob($currentLoc . '/*');
+                $items = glob($currentLoc . '/*'); // TODO : use readdir instead
                 $currentLoc = realpath($currentLoc);
             } else if (is_file($currentLoc) && $isCurrentLocValid) {
                 if (!((new FileItem($currentLoc, $this->plugin))->canRead())) {
@@ -150,6 +210,7 @@ class Controller
         return view('adminx.builtin_plugins.filemanager.main', [
             'items' => $items,
             'currentLoc' => $currentLoc,
+            'currentLocObj' => new FileItem($currentLoc, $this->plugin),
             'parentDir' => $parentDir,
         ]);
     }
