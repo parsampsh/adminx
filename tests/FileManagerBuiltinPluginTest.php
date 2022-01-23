@@ -220,6 +220,9 @@ class FileManagerBuiltinPluginTest extends TestCase
         $response = $this->actingAs($user)->post('/admin/page/file-manager', ['delete_file' => realpath(__DIR__ . '/../tests/test-dir/dir-undeletable/')]);
         $response->assertStatus(403);
 
+        $response = $this->actingAs($user)->post('/admin/page/file-manager', ['delete_file' => realpath(__DIR__ . '/../tests/')]);
+        $response->assertStatus(403);
+
         $response = $this->actingAs($user)->post('/admin/page/file-manager', ['delete_file' => realpath(__DIR__ . '/../tests/test-dir/first.txt')]);
         $this->assertFalse(file_exists(realpath(__DIR__ . '/../tests/test-dir/first.txt')));
         touch(__DIR__ . '/../tests/test-dir/first.txt');
