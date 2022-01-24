@@ -75,10 +75,21 @@ class Controller
                                 $counter++;
                             }
 
-                            if (is_file($file->path)) {
-                                copy($file->path, $dstPath);
+                            if (session()->has('adminx_filemanager_clipboard_is_cut') === true) {
+                                if ($file->canDelete()) {
+                                    rename($file->path, $dstPath);
+
+                                    session()->remove('adminx_filemanager_clipboard_is_cut');
+                                    session()->remove('adminx_filemanager_clipboard');
+                                } else {
+                                    abort(403);
+                                }
                             } else {
-                                DirectoryUtils::recurseCopy($file->path, $dstPath);
+                                if (is_file($file->path)) {
+                                    copy($file->path, $dstPath);
+                                } else {
+                                    DirectoryUtils::recurseCopy($file->path, $dstPath);
+                                }
                             }
 
                             return redirect($request->fullUrl());
@@ -99,12 +110,18 @@ class Controller
             }
         }
 
-        if ($request->post('copy_file') !== null) {
-            if ($this->checkPathIsValid($request->post('copy_file'))) {
-                $file = new FileItem($request->post('copy_file'), $this->plugin);
+        if ($request->post('copy_file') !== null || $request->post('cut_file') !== null) {
+            $path = $request->post('copy_file') !== null ? $request->post('copy_file') : $request->post('cut_file');
+            if ($this->checkPathIsValid($path)) {
+                $file = new FileItem($path, $this->plugin);
 
-                if ($file->canRead()) {
+                if ($file->canRead() && ($request->post('cut_file') === null || $file->canDelete())) {
                     session()->put('adminx_filemanager_clipboard', $file->path);
+                    if ($request->post('cut_file') !== null) {
+                        session()->put('adminx_filemanager_clipboard_is_cut', true);
+                    } else {
+                        session()->put('adminx_filemanager_clipboard_is_cut', false);
+                    }
                     return redirect($request->fullUrl());
                 } else {
                     abort(403);

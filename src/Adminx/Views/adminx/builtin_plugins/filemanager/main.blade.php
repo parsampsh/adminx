@@ -63,6 +63,14 @@
                             <input type='hidden' name='copy_file' value='{{ $item->path }}' />
                             <button title='Copy' type='submit' class='btn btn-success text-light'><i class='fa fa-copy'></i></button>
                         </form>
+
+                        @if($item->canDelete())
+                            <form method='POST' style='float: right; display: inline !important;'>
+                                @csrf
+                                <input type='hidden' name='cut_file' value='{{ $item->path }}' />
+                                <button title='Cut' type='submit' class='btn btn-primary text-light'><i class='fa fa-cut'></i></button>
+                            </form>
+                        @endif
                     @endif
 
                     <div style='clear: both;'></div>

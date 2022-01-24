@@ -1,6 +1,5 @@
 Needed options for file manager:
 
-- cut
 - test for copy and cut
 - rename
 - edit
