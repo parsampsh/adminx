@@ -50,10 +50,24 @@ class FileItem
     }
 
     /**
+     * Says that is this file in the main files list or not
+     * 
+     * @return bool
+     */
+    public function isMainDir(): bool
+    {
+        return in_array(realpath($this->path), $this->plugin->dirs);
+    }
+
+    /**
      * Check user permission to delete this file
      */
     public function canDelete(): bool
     {
+        if ($this->isMainDir()) {
+            return false;
+        }
+
         return (bool) call_user_func_array($this->plugin->canDelete, [$this->getUser(), $this]);
     }
 
