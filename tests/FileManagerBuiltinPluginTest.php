@@ -202,7 +202,7 @@ class FileManagerBuiltinPluginTest extends TestCase
             'dirs' => [
                 realpath(__DIR__ . '/../tests/test-dir'),
             ],
-            'can_delete' => (function ($u, $file) use ($user) {
+            'can_delete' => (function ($u, $file) {
                 return ($file->path !== realpath(__DIR__ . '/../tests/test-dir/undeletable.txt') && $file->path !== realpath(__DIR__ . '/../tests/test-dir/dir-undeletable') && $file->path !== realpath(__DIR__ . '/../tests/test-dir/dir-undeletable/sub/a.txt'));
             }),
         ]);
@@ -235,5 +235,160 @@ class FileManagerBuiltinPluginTest extends TestCase
         touch(__DIR__ . '/../tests/test-dir/subdir/a/test4.txt');
         touch(__DIR__ . '/../tests/test-dir/subdir/test2.txt');
         touch(__DIR__ . '/../tests/test-dir/subdir/test3.txt');
+    }
+
+    public function test_copy_and_cut_work()
+    {
+        $user = \App\Models\User::factory()->create();
+        $admin = new \Adminx\Core;
+        $admin->addPlugin(new \Adminx\Plugins\Builtins\FileManager\FileManagerPlugin, [
+            'dirs' => [
+                realpath(__DIR__ . '/../tests/test-dir'),
+            ],
+            'can_delete' => (function ($u, $file) {
+                return ($file->path !== realpath(__DIR__ . '/../tests/test-dir/undeletable.txt') && $file->path !== realpath(__DIR__ . '/../tests/test-dir/dir-undeletable') && $file->path !== realpath(__DIR__ . '/../tests/test-dir/dir-undeletable/sub/a.txt'));
+            }),
+            'can_read' => (function ($u, $file) {
+                return ($file->path !== realpath(__DIR__ . '/../tests/test-dir/un-readable.txt'));
+            }),
+            'can_write' => (function ($u, $file) {
+                return ($file->path !== realpath(__DIR__ . '/../tests/test-dir/un-writable'));
+            }),
+        ]);
+        $admin->register('/admin');
+
+        $response = $this->actingAs($user)->post('/admin/page/file-manager?currentLoc='.realpath(__DIR__ . '/../tests/test-dir/') , [
+            'copy_file' => realpath(__DIR__ . '/../tests/test-dir/un-readable.txt'),
+        ]);
+        $response->assertStatus(403);
+
+        $response = $this->withSession([
+            'adminx_filemanager_clipboard' => realpath(__DIR__ . '/../tests/test-dir/un-readable.txt'),
+        ])->actingAs($user)->post('/admin/page/file-manager?currentLoc='.realpath(__DIR__ . '/../tests/test-dir/') , [
+            'paste_file' => '1',
+        ]);
+        $response->assertStatus(403);
+
+        $response = $this->actingAs($user)->post('/admin/page/file-manager?currentLoc='.realpath(__DIR__ . '/../tests/test-dir/') , [
+            'cut_file' => realpath(__DIR__ . '/../tests/test-dir/un-readable.txt'),
+        ]);
+        $response->assertStatus(403);
+
+        $response = $this->withSession([
+            'adminx_filemanager_clipboard' => realpath(__DIR__ . '/../tests/test-dir/un-readable.txt'),
+            'adminx_filemanager_clipboard_is_cut' => true,
+        ])->actingAs($user)->post('/admin/page/file-manager?currentLoc='.realpath(__DIR__ . '/../tests/test-dir/') , [
+            'paste_file' => '1',
+        ]);
+        $response->assertStatus(403);
+
+        $response = $this->actingAs($user)->post('/admin/page/file-manager?currentLoc='.realpath(__DIR__ . '/../tests/test-dir/') , [
+            'cut_file' => realpath(__DIR__ . '/../tests/test-dir/undeletable.txt'),
+        ]);
+        $response->assertStatus(403);
+
+        $response = $this->withSession([
+            'adminx_filemanager_clipboard' => realpath(__DIR__ . '/../tests/test-dir/undeletable.txt'),
+            'adminx_filemanager_clipboard_is_cut' => true,
+        ])->actingAs($user)->post('/admin/page/file-manager?currentLoc='.realpath(__DIR__ . '/../tests/test-dir/') , [
+            'paste_file' => '1',
+        ]);
+        $response->assertStatus(403);
+
+        $response = $this->actingAs($user)->post('/admin/page/file-manager?currentLoc='.realpath(__DIR__ . '/../tests/test-dir/') , [
+            'copy_file' => realpath(__DIR__ . '/../tests/test-dir/first.txt'),
+        ]);
+        $response->assertStatus(200);
+        $response->assertSessionHas('adminx_filemanager_clipboard', realpath(__DIR__ . '/../tests/test-dir/first.txt'));
+        $response->assertSessionHas('adminx_filemanager_clipboard_is_cut', false);
+
+        $response = $this->actingAs($user)->post('/admin/page/file-manager?currentLoc='.realpath(__DIR__ . '/../tests/test-dir/') , [
+            'cut_file' => realpath(__DIR__ . '/../tests/test-dir/first.txt'),
+        ]);
+        $response->assertStatus(200);
+        $response->assertSessionHas('adminx_filemanager_clipboard', realpath(__DIR__ . '/../tests/test-dir/first.txt'));
+        $response->assertSessionHas('adminx_filemanager_clipboard_is_cut', true);
+
+        $response = $this->actingAs($user)->post('/admin/page/file-manager?currentLoc='.realpath(__DIR__ . '/../tests/test-dir/') , [
+            'cut_file' => realpath(__DIR__ . '/../tests/test-dir/'),
+        ]);
+        $response->assertStatus(403);
+
+        $response = $this->withSession([
+            'adminx_filemanager_clipboard' => realpath(__DIR__ . '/../tests/test-dir/'),
+            'adminx_filemanager_clipboard_is_cut' => true,
+        ])->actingAs($user)->post('/admin/page/file-manager?currentLoc='.realpath(__DIR__ . '/../tests/test-dir/') , [
+            'paste_file' => '1',
+        ]);
+        $response->assertStatus(403);
+
+        $this->assertFalse(file_exists(realpath(__DIR__ . '/../tests/test-dir/subdir/first.txt')));
+        $this->assertFalse(file_exists(realpath(__DIR__ . '/../tests/test-dir/subdir/first.txt1')));
+        $response = $this->withSession([
+            'adminx_filemanager_clipboard' => realpath(__DIR__ . '/../tests/test-dir/first.txt'),
+            'adminx_filemanager_clipboard_is_cut' => false,
+        ])->actingAs($user)->post('/admin/page/file-manager?currentLoc='.realpath(__DIR__ . '/../tests/test-dir/subdir') , [
+            'paste_file' => '1',
+        ]);
+        $response->assertStatus(200);
+        $this->assertTrue(file_exists(realpath(__DIR__ . '/../tests/test-dir/subdir/first.txt')));
+
+        $response = $this->withSession([
+            'adminx_filemanager_clipboard' => realpath(__DIR__ . '/../tests/test-dir/first.txt'),
+            'adminx_filemanager_clipboard_is_cut' => false,
+        ])->actingAs($user)->post('/admin/page/file-manager?currentLoc='.realpath(__DIR__ . '/../tests/test-dir/subdir') , [
+            'paste_file' => '1',
+        ]);
+        $response->assertStatus(200);
+        $this->assertTrue(file_exists(realpath(__DIR__ . '/../tests/test-dir/subdir/first.txt1')));
+        unlink(realpath(__DIR__ . '/../tests/test-dir/subdir/first.txt'));
+        unlink(realpath(__DIR__ . '/../tests/test-dir/subdir/first.txt1'));
+
+        $this->assertFalse(file_exists(realpath(__DIR__ . '/../tests/test-dir/un-writable/first.txt')));
+        $response = $this->withSession([
+            'adminx_filemanager_clipboard' => realpath(__DIR__ . '/../tests/test-dir/first.txt'),
+            'adminx_filemanager_clipboard_is_cut' => false,
+        ])->actingAs($user)->post('/admin/page/file-manager?currentLoc='.realpath(__DIR__ . '/../tests/test-dir/un-writable') , [
+            'paste_file' => '1',
+        ]);
+        $response->assertStatus(403);
+        $this->assertFalse(file_exists(realpath(__DIR__ . '/../tests/test-dir/un-writable/first.txt')));
+
+        $response = $this->withSession([
+            'adminx_filemanager_clipboard' => realpath(__DIR__ . '/../tests/test-dir/first.txt'),
+            'adminx_filemanager_clipboard_is_cut' => false,
+        ])->actingAs($user)->post('/admin/page/file-manager?currentLoc=/a', [
+            'paste_file' => '1',
+        ]);
+        $response->assertStatus(403);
+
+        $this->assertFalse(file_exists(realpath(__DIR__ . '/../tests/test-dir/subdir/first.txt')));
+        $response = $this->withSession([
+            'adminx_filemanager_clipboard' => realpath(__DIR__ . '/../tests/test-dir/first.txt'),
+            'adminx_filemanager_clipboard_is_cut' => true,
+        ])->actingAs($user)->post('/admin/page/file-manager?currentLoc='.realpath(__DIR__ . '/../tests/test-dir/subdir') , [
+            'paste_file' => '1',
+        ]);
+        $response->assertStatus(200);
+        $this->assertTrue(file_exists(realpath(__DIR__ . '/../tests/test-dir/subdir/first.txt')));
+        $this->assertFalse(file_exists(realpath(__DIR__ . '/../tests/test-dir/first.txt')));
+        unlink(realpath(__DIR__ . '/../tests/test-dir/subdir/first.txt'));
+        touch(__DIR__ . '/../tests/test-dir/first.txt');
+
+        $response = $this->withSession([
+            'adminx_filemanager_clipboard' => realpath(__DIR__ . '/../tests/test-dir/first.txt'),
+            'adminx_filemanager_clipboard_is_cut' => true,
+        ])->actingAs($user)->post('/admin/page/file-manager?currentLoc='.realpath(__DIR__ . '/../tests/test-dir/un-writable') , [
+            'paste_file' => '1',
+        ]);
+        $response->assertStatus(403);
+
+        $response = $this->withSession([
+            'adminx_filemanager_clipboard' => realpath(__DIR__ . '/../tests/test-dir/undeletable.txt'),
+            'adminx_filemanager_clipboard_is_cut' => true,
+        ])->actingAs($user)->post('/admin/page/file-manager?currentLoc='.realpath(__DIR__ . '/../tests/test-dir/') , [
+            'paste_file' => '1',
+        ]);
+        $response->assertStatus(403);
     }
 }
