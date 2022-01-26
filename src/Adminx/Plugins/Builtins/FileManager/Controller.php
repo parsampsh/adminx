@@ -30,6 +30,9 @@ class Controller
     protected function checkPathIsValid(string $path): bool
     {
         $realPath = realpath($path);
+        if ($realPath === false) {
+            return false;
+        }
         $isPathValid = false;
         foreach ($this->plugin->dirs as $mainDir) {
             $mainDir = realpath($mainDir);
@@ -75,7 +78,7 @@ class Controller
                                 $counter++;
                             }
 
-                            if (session()->has('adminx_filemanager_clipboard_is_cut') === true) {
+                            if (session()->get('adminx_filemanager_clipboard_is_cut') === true) {
                                 if ($file->canDelete()) {
                                     rename($file->path, $dstPath);
 
@@ -94,15 +97,12 @@ class Controller
 
                             return redirect($request->fullUrl());
                         } else {
-                            return 'A';
                             abort(403);
                         }
                     } else {
-                        return 'B';
                         abort(403);
                     }
                 } else {
-                    return 'C';
                     abort(403);
                 }
             } else {
