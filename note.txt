@@ -1,6 +1,9 @@
 Needed options for file manager:
 
 - rename
+- download
 - edit
+- create
+- upload
 
 TODO : delete me before merging the branch!
