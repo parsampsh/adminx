@@ -40,6 +40,17 @@ $admin->addPage('Title of the page in menu', 'the-slug-of-page-in-url', function
 
 <img src="/doc/images/page.png" />
 
+If you don't want to put response of your custom page inside of the base view template and you want to return it directly, you can use `Adminx\Views\NoBaseViewResponse` class to do it:
+
+```php
+$admin->addPage('Test', 'test', function($request){
+    //return 'hello world! i am a simple page.';
+    return new \Adminx\Views\NoBaseViewResponse('hello world! i am a simple page.');
+    return new \Adminx\Views\NoBaseViewResponse(redirect('/somewhere'));
+    //...
+}, 'fa fa-user(icons as class)', 'blank(target, default is none)');
+```
+
 ### Index page
 To set the index page(http://localhost:yyyy/admin/), you should use `.` for slug option.
 
