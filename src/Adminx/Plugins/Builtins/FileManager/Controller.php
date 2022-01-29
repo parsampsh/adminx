@@ -11,6 +11,8 @@
 
 namespace Adminx\Plugins\Builtins\FileManager;
 
+use Adminx\Views\NoBaseViewResponse;
+
 /**
  * HTTP Controller for file manager
  */
@@ -48,14 +50,12 @@ class Controller
         return $isPathValid;
     }
 
-    public function handle()
+    public function handle($request)
     {
         if (!call_user_func_array($this->plugin->accessMiddleware, [auth()->user()])) {
             abort(403);
             return;
         }
-
-        $request = request();
 
         if ($request->get('download') !== null) {
             $file = new FileItem($request->get('download'), $this->plugin);
@@ -109,7 +109,7 @@ class Controller
                                 }
                             }
 
-                            return redirect($request->fullUrl());
+                            return new NoBaseViewResponse(redirect($request->fullUrl()));
                         } else {
                             abort(403);
                         }
@@ -136,7 +136,7 @@ class Controller
                     } else {
                         session()->put('adminx_filemanager_clipboard_is_cut', false);
                     }
-                    return redirect($request->fullUrl());
+                    return new NoBaseViewResponse(redirect($request->fullUrl()));
                 } else {
                     abort(403);
                 }
@@ -157,7 +157,7 @@ class Controller
                         unlink($file->path);
                     }
 
-                    return redirect($request->fullUrl());
+                    return new NoBaseViewResponse(redirect($request->fullUrl()));
                 } else {
                     abort(403);
                 }

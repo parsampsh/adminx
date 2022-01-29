@@ -122,8 +122,8 @@ class FileManagerPlugin implements IPlugin
     {
         $this->loadConfiguration($options);
 
-        $admin->addPage($admin->getWord('file-manager.page-title', 'File Manager'), $this->pageSlug, function() {
-            return (new Controller($this))->handle();
+        $admin->addPage($admin->getWord('file-manager.page-title', 'File Manager'), $this->pageSlug, function($request) {
+            return (new Controller($this))->handle($request);
         });
     }
 }

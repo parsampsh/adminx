@@ -298,14 +298,14 @@ class FileManagerBuiltinPluginTest extends TestCase
         $response = $this->actingAs($user)->post('/admin/page/file-manager?currentLoc='.realpath(__DIR__ . '/../tests/test-dir/') , [
             'copy_file' => realpath(__DIR__ . '/../tests/test-dir/first.txt'),
         ]);
-        $response->assertStatus(200);
+        $response->assertStatus(302);
         $response->assertSessionHas('adminx_filemanager_clipboard', realpath(__DIR__ . '/../tests/test-dir/first.txt'));
         $response->assertSessionHas('adminx_filemanager_clipboard_is_cut', false);
 
         $response = $this->actingAs($user)->post('/admin/page/file-manager?currentLoc='.realpath(__DIR__ . '/../tests/test-dir/') , [
             'cut_file' => realpath(__DIR__ . '/../tests/test-dir/first.txt'),
         ]);
-        $response->assertStatus(200);
+        $response->assertStatus(302);
         $response->assertSessionHas('adminx_filemanager_clipboard', realpath(__DIR__ . '/../tests/test-dir/first.txt'));
         $response->assertSessionHas('adminx_filemanager_clipboard_is_cut', true);
 
@@ -330,7 +330,7 @@ class FileManagerBuiltinPluginTest extends TestCase
         ])->actingAs($user)->post('/admin/page/file-manager?currentLoc='.realpath(__DIR__ . '/../tests/test-dir/subdir') , [
             'paste_file' => '1',
         ]);
-        $response->assertStatus(200);
+        $response->assertStatus(302);
         $this->assertTrue(file_exists(realpath(__DIR__ . '/../tests/test-dir/subdir/first.txt')));
 
         $response = $this->withSession([
@@ -339,7 +339,7 @@ class FileManagerBuiltinPluginTest extends TestCase
         ])->actingAs($user)->post('/admin/page/file-manager?currentLoc='.realpath(__DIR__ . '/../tests/test-dir/subdir') , [
             'paste_file' => '1',
         ]);
-        $response->assertStatus(200);
+        $response->assertStatus(302);
         $this->assertTrue(file_exists(realpath(__DIR__ . '/../tests/test-dir/subdir/first.txt1')));
         unlink(realpath(__DIR__ . '/../tests/test-dir/subdir/first.txt'));
         unlink(realpath(__DIR__ . '/../tests/test-dir/subdir/first.txt1'));
@@ -369,7 +369,7 @@ class FileManagerBuiltinPluginTest extends TestCase
         ])->actingAs($user)->post('/admin/page/file-manager?currentLoc='.realpath(__DIR__ . '/../tests/test-dir/subdir') , [
             'paste_file' => '1',
         ]);
-        $response->assertStatus(200);
+        $response->assertStatus(302);
         $this->assertTrue(file_exists(realpath(__DIR__ . '/../tests/test-dir/subdir/first.txt')));
         $this->assertFalse(file_exists(realpath(__DIR__ . '/../tests/test-dir/first.txt')));
         unlink(realpath(__DIR__ . '/../tests/test-dir/subdir/first.txt'));
