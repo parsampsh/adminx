@@ -64,6 +64,14 @@
                             <button title='Copy' type='submit' class='btn btn-success text-light'><i class='fa fa-copy'></i></button>
                         </form>
 
+                        @if(!$item->isDir())
+                            <form style='float: right; display: inline !important;'>
+                                <a class='btn btn-dark' href="?download={{ htmlspecialchars($item->path) }}">
+                                    <i class='fa fa-download'></i>
+                                </a>
+                            </form>
+                        @endif
+
                         @if($item->canDelete())
                             <form method='POST' style='float: right; display: inline !important;'>
                                 @csrf

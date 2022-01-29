@@ -391,4 +391,29 @@ class FileManagerBuiltinPluginTest extends TestCase
         ]);
         $response->assertStatus(403);
     }
+
+    public function test_file_can_be_downloaded()
+    {
+        $user = \App\Models\User::factory()->create();
+        $admin = new \Adminx\Core;
+        $admin->addPlugin(new \Adminx\Plugins\Builtins\FileManager\FileManagerPlugin, [
+            'dirs' => [
+                realpath(__DIR__ . '/../tests/test-dir'),
+            ],
+            'can_read' => (function ($u, $file) {
+                return ($file->path !== realpath(__DIR__ . '/../tests/test-dir/un-readable.txt'));
+            }),
+        ]);
+        $admin->register('/admin');
+
+        $response = $this->actingAs($user)->get('/admin/page/file-manager?download='.realpath(__DIR__ . '/../tests/test-dir/un-readable.txt'));
+        $response->assertStatus(403);
+
+        $response = $this->actingAs($user)->get('/admin/page/file-manager?download='.(__DIR__ . '/../tests/test-dir/not-found.txt'));
+        $response->assertStatus(404);
+
+        $response = $this->actingAs($user)->get('/admin/page/file-manager?download='.realpath(__DIR__ . '/../tests/test-dir/first.txt'));
+        $response->assertStatus(200);
+        $this->assertNotEmpty($response->getFile());
+    }
 }

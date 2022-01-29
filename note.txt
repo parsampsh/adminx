@@ -1,9 +1,10 @@
 Needed options for file manager:
 
 - rename
-- download
+- add copy/cut/delete/download buttons in the file show page too
 - edit
 - create
 - upload
+- documentation
 
 TODO : delete me before merging the branch!

@@ -57,6 +57,20 @@ class Controller
 
         $request = request();
 
+        if ($request->get('download') !== null) {
+            $file = new FileItem($request->get('download'), $this->plugin);
+
+            if (is_file($file->path)) {
+                if ($file->canRead()) {
+                    return new \Adminx\Views\NoBaseViewResponse(response()->file($file->path));
+                } else {
+                    abort(403);
+                }
+            } else {
+                abort(404);
+            }
+        }
+
         if ($request->post('paste_file') !== null) {
             if (session()->has('adminx_filemanager_clipboard')) {
                 $clipboard = session()->get('adminx_filemanager_clipboard');
