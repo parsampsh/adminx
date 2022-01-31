@@ -206,6 +206,7 @@ class Controller
                     'fileContent' => $content,
                     'currentLoc' => $currentLoc,
                     'parentDir' => $parentDir,
+                    'fileItem' => new FileItem($currentLoc, $this->plugin),
                 ]);
             } else {
                 // file not found

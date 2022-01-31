@@ -25,6 +25,9 @@
             <a href='?currentLoc={{ $parentDir }}'>Back</a>
         </div>
         <div class="badge badge-primary">File: {{ $currentLoc }}</div>
+
+        @include('adminx.builtin_plugins.filemanager.buttons', ['item' => $fileItem])
+
         <hr />
         <pre>{{ $fileContent }}</pre>
     @else
@@ -49,40 +52,7 @@
             <div>
                 <a class='filemanager-item' <?= $item->canRead() ? "href='?currentLoc=" . htmlspecialchars($item->path) . "'" : '' ?>>
                     <?= $item->isDir() ? '<i class="fa fa-folder"></i>' : '' ?> {{ $item->name() }} <?= $item->canRead() ? '' : '<i class="fa fa-lock" title="You cannot read the content of the file"></i>' ?>
-                    @if($item->canDelete())
-                        <form onsubmit='return confirm("Are you sure you wanna delete this file?")' method='POST' style='float: right; display: inline !important;'>
-                            @csrf
-                            <input type='hidden' name='delete_file' value='{{ $item->path }}' />
-                            <button title='Delete' type='submit' class='btn btn-danger text-light'><i class='fa fa-trash'></i></button>
-                        </form>
-                    @endif
-
-                    @if($item->canRead())
-                        <form method='POST' style='float: right; display: inline !important;'>
-                            @csrf
-                            <input type='hidden' name='copy_file' value='{{ $item->path }}' />
-                            <button title='Copy' type='submit' class='btn btn-success text-light'><i class='fa fa-copy'></i></button>
-                        </form>
-
-                        @if(!$item->isDir())
-                            <form style='float: right; display: inline !important;'>
-                                <a class='btn btn-dark' href="?download={{ htmlspecialchars($item->path) }}">
-                                    <i class='fa fa-download'></i>
-                                </a>
-                            </form>
-                        @endif
-
-                        @if($item->canDelete())
-                            <form method='POST' style='float: right; display: inline !important;'>
-                                @csrf
-                                <input type='hidden' name='cut_file' value='{{ $item->path }}' />
-                                <button title='Cut' type='submit' class='btn btn-primary text-light'><i class='fa fa-cut'></i></button>
-                            </form>
-                        @endif
-                    @endif
-
-                    <div style='clear: both;'></div>
-
+                    @include('adminx.builtin_plugins.filemanager.buttons', ['item' => $item])
                 </a>
             </div>
         @endforeach
