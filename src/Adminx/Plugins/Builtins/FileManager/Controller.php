@@ -50,97 +50,105 @@ class Controller
         return $isPathValid;
     }
 
-    public function handle($request)
+    /**
+     * Handles the rename operation
+     * 
+     * @param \Request $request
+     */
+    public function rename($request)
     {
-        if (!call_user_func_array($this->plugin->accessMiddleware, [auth()->user()])) {
-            abort(403);
-            return;
+        $file = new FileItem($request->get('rename_file'), $this->plugin);
+
+        if (file_exists($file->path)) {
+            if ($file->canRead() && $file->canDelete()) {
+                $renameTo = $request->post('rename_to');
+                $renameTo = str_replace('/', '', $renameTo);
+                $renameTo = str_replace('\\', '', $renameTo);
+
+                $newFilePath = $file->dirname() . '/' . $renameTo;
+
+                if (file_exists($newFilePath)) {
+                    abort(403); // TODO : show an alert instead
+                } else {
+                    // eveything is ok
+                    // renaming the file
+                    rename($file->path, $newFilePath);
+
+                    return new NoBaseViewResponse(redirect($request->fullUrl()));
+                }
+            } else {
+                abort(403);
+            }
+        } else {
+            abort(404);
         }
+    }
 
-        if ($request->post('rename_file') !== null && $request->post('rename_to') !== null) {
-            $file = new FileItem($request->get('rename_file'), $this->plugin);
+    /**
+     * Handles the download operation
+     * 
+     * @param \Request $request
+     */
+    public function download($request)
+    {
+        $file = new FileItem($request->get('download'), $this->plugin);
 
-            if (file_exists($file->path)) {
-                if ($file->canRead() && $file->canDelete()) {
-                    $renameTo = $request->post('rename_to');
-                    $renameTo = str_replace('/', '', $renameTo);
-                    $renameTo = str_replace('\\', '', $renameTo);
+        if (is_file($file->path)) {
+            if ($file->canRead()) {
+                return new \Adminx\Views\NoBaseViewResponse(response()->file($file->path));
+            } else {
+                abort(403);
+            }
+        } else {
+            abort(404);
+        }
+    }
 
-                    $newFilePath = $file->dirname() . '/' . $renameTo;
+    /**
+     * Handles the paste operation
+     * 
+     * @param \Request $request
+     */
+    public function paste($request)
+    {
+        if (session()->has('adminx_filemanager_clipboard')) {
+            $clipboard = session()->get('adminx_filemanager_clipboard');
+            if ($this->checkPathIsValid($clipboard) && $this->checkPathIsValid($request->get('currentLoc'))) {
+                $file = new FileItem($clipboard, $this->plugin);
 
-                    if (file_exists($newFilePath)) {
-                        abort(403); // TODO : show an alert instead
-                    } else {
-                        // eveything is ok
-                        // renaming the file
-                        rename($file->path, $newFilePath);
+                if ($file->canRead()) {
+                    $currentDir = new FileItem($request->get('currentLoc'), $this->plugin);
+
+                    if ($currentDir->canWrite()) {
+                        $basename = $file->name();
+
+                        $dstPath = $currentDir->path . '/' . $basename;
+                        $dstPathBackup = $dstPath;
+
+                        $counter = 1;
+                        while (file_exists($dstPath)) {
+                            $dstPath = $dstPathBackup . $counter;
+                            $counter++;
+                        }
+
+                        if (session()->get('adminx_filemanager_clipboard_is_cut') === true) {
+                            if ($file->canDelete()) {
+                                rename($file->path, $dstPath);
+
+                                session()->remove('adminx_filemanager_clipboard_is_cut');
+                                session()->remove('adminx_filemanager_clipboard');
+                            } else {
+                                abort(403);
+                            }
+                        } else {
+                            if (is_file($file->path)) {
+                                copy($file->path, $dstPath);
+                            } else {
+                                DirectoryUtils::recurseCopy($file->path, $dstPath);
+                            }
+                        }
 
                         return new NoBaseViewResponse(redirect($request->fullUrl()));
-                    }
-                } else {
-                    abort(403);
-                }
-            } else {
-                abort(404);
-            }
-        }
-
-        if ($request->get('download') !== null) {
-            $file = new FileItem($request->get('download'), $this->plugin);
-
-            if (is_file($file->path)) {
-                if ($file->canRead()) {
-                    return new \Adminx\Views\NoBaseViewResponse(response()->file($file->path));
-                } else {
-                    abort(403);
-                }
-            } else {
-                abort(404);
-            }
-        }
-
-        if ($request->post('paste_file') !== null) {
-            if (session()->has('adminx_filemanager_clipboard')) {
-                $clipboard = session()->get('adminx_filemanager_clipboard');
-                if ($this->checkPathIsValid($clipboard) && $this->checkPathIsValid($request->get('currentLoc'))) {
-                    $file = new FileItem($clipboard, $this->plugin);
-
-                    if ($file->canRead()) {
-                        $currentDir = new FileItem($request->get('currentLoc'), $this->plugin);
-
-                        if ($currentDir->canWrite()) {
-                            $basename = $file->name();
-
-                            $dstPath = $currentDir->path . '/' . $basename;
-                            $dstPathBackup = $dstPath;
-
-                            $counter = 1;
-                            while (file_exists($dstPath)) {
-                                $dstPath = $dstPathBackup . $counter;
-                                $counter++;
-                            }
-
-                            if (session()->get('adminx_filemanager_clipboard_is_cut') === true) {
-                                if ($file->canDelete()) {
-                                    rename($file->path, $dstPath);
-
-                                    session()->remove('adminx_filemanager_clipboard_is_cut');
-                                    session()->remove('adminx_filemanager_clipboard');
-                                } else {
-                                    abort(403);
-                                }
-                            } else {
-                                if (is_file($file->path)) {
-                                    copy($file->path, $dstPath);
-                                } else {
-                                    DirectoryUtils::recurseCopy($file->path, $dstPath);
-                                }
-                            }
-
-                            return new NoBaseViewResponse(redirect($request->fullUrl()));
-                        } else {
-                            abort(403);
-                        }
                     } else {
                         abort(403);
                     }
@@ -150,48 +158,90 @@ class Controller
             } else {
                 abort(403);
             }
+        } else {
+            abort(403);
+        }
+    }
+
+    /**
+     * Handles the copy operation
+     * 
+     * @param \Request $request
+     */
+    public function copy($request)
+    {
+        $path = $request->post('copy_file') !== null ? $request->post('copy_file') : $request->post('cut_file');
+        if ($this->checkPathIsValid($path)) {
+            $file = new FileItem($path, $this->plugin);
+
+            if ($file->canRead() && ($request->post('cut_file') === null || $file->canDelete())) {
+                session()->put('adminx_filemanager_clipboard', $file->path);
+                if ($request->post('cut_file') !== null) {
+                    session()->put('adminx_filemanager_clipboard_is_cut', true);
+                } else {
+                    session()->put('adminx_filemanager_clipboard_is_cut', false);
+                }
+                return new NoBaseViewResponse(redirect($request->fullUrl()));
+            } else {
+                abort(403);
+            }
+        } else {
+            abort(403);
+        }
+    }
+
+    /**
+     * Handles the delete operation
+     * 
+     * @param \Request $request
+     */
+    public function delete($request)
+    {
+        if ($this->checkPathIsValid($request->post('delete_file'))) {
+            $file = new FileItem($request->post('delete_file'), $this->plugin);
+
+            if ($file->canDelete())
+            {
+                if ($file->isDir()) {
+                    DirectoryUtils::deleteDir($file->path);
+                } else {
+                    unlink($file->path);
+                }
+
+                return new NoBaseViewResponse(redirect($request->fullUrl()));
+            } else {
+                abort(403);
+            }
+        } else {
+            abort(403);
+        }
+    }
+
+    public function handle($request)
+    {
+        if (!call_user_func_array($this->plugin->accessMiddleware, [auth()->user()])) {
+            abort(403);
+            return;
+        }
+
+        if ($request->post('rename_file') !== null && $request->post('rename_to') !== null) {
+            return $this->rename($request);
+        }
+
+        if ($request->get('download') !== null) {
+            return $this->download($request);
+        }
+
+        if ($request->post('paste_file') !== null) {
+            return $this->paste($request);
         }
 
         if ($request->post('copy_file') !== null || $request->post('cut_file') !== null) {
-            $path = $request->post('copy_file') !== null ? $request->post('copy_file') : $request->post('cut_file');
-            if ($this->checkPathIsValid($path)) {
-                $file = new FileItem($path, $this->plugin);
-
-                if ($file->canRead() && ($request->post('cut_file') === null || $file->canDelete())) {
-                    session()->put('adminx_filemanager_clipboard', $file->path);
-                    if ($request->post('cut_file') !== null) {
-                        session()->put('adminx_filemanager_clipboard_is_cut', true);
-                    } else {
-                        session()->put('adminx_filemanager_clipboard_is_cut', false);
-                    }
-                    return new NoBaseViewResponse(redirect($request->fullUrl()));
-                } else {
-                    abort(403);
-                }
-            } else {
-                abort(403);
-            }
+            return $this->copy($request);
         }
 
         if ($request->post('delete_file') !== null) {
-            if ($this->checkPathIsValid($request->post('delete_file'))) {
-                $file = new FileItem($request->post('delete_file'), $this->plugin);
-
-                if ($file->canDelete())
-                {
-                    if ($file->isDir()) {
-                        DirectoryUtils::deleteDir($file->path);
-                    } else {
-                        unlink($file->path);
-                    }
-
-                    return new NoBaseViewResponse(redirect($request->fullUrl()));
-                } else {
-                    abort(403);
-                }
-            } else {
-                abort(403);
-            }
+            return $this->delete($request);
         }
 
         $currentLoc = '/';
