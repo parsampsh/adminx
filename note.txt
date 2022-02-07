@@ -1,6 +1,5 @@
 Needed options for file manager:
 
-- rename
 - directory download
 - documentation
 - edit

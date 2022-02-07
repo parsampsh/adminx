@@ -15,6 +15,27 @@
 }
 </style>
 
+<script>
+function handleRename(inputId) {
+    var input = document.getElementById(inputId)
+    var valueBackup = input.value
+    var value = prompt('are you sure?', input.value)
+    if (value === null) {
+            return false;
+    }
+
+    input.value = value
+
+    if (input.value === valueBackup) {
+        // name is not changed
+        alert('You must change the current name')
+        return false
+    }
+
+    return true
+}
+</script>
+
 @if(isset($currentLocNotFound) && $currentLocNotFound === true)
     <div class='alert alert-danger'>
         File or directory not found. <a href='?currentLoc=/'>Root</a>

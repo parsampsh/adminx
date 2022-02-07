@@ -416,4 +416,66 @@ class FileManagerBuiltinPluginTest extends TestCase
         $response->assertStatus(200);
         $this->assertNotEmpty($response->getFile());
     }
+
+    public function test_rename_works()
+    {
+        $user = \App\Models\User::factory()->create();
+        $admin = new \Adminx\Core;
+        $admin->addPlugin(new \Adminx\Plugins\Builtins\FileManager\FileManagerPlugin, [
+            'dirs' => [
+                realpath(__DIR__ . '/../tests/test-dir'),
+            ],
+            'can_delete' => (function ($u, $file) {
+                return ($file->path !== realpath(__DIR__ . '/../tests/test-dir/undeletable.txt') && $file->path !== realpath(__DIR__ . '/../tests/test-dir/dir-undeletable') && $file->path !== realpath(__DIR__ . '/../tests/test-dir/dir-undeletable/sub/a.txt'));
+            }),
+            'can_read' => (function ($u, $file) {
+                return ($file->path !== realpath(__DIR__ . '/../tests/test-dir/un-readable.txt'));
+            }),
+        ]);
+        $admin->register('/admin');
+
+        $response = $this->actingAs($user)->post('/admin/page/file-manager', [
+            'rename_file' => realpath(__DIR__ . '/../tests/test-dir/undeletable.txt'),
+            'rename_to' => 'new-file.txt',
+        ]);
+        $response->assertStatus(403);
+
+        $response = $this->actingAs($user)->post('/admin/page/file-manager', [
+            'rename_file' => realpath(__DIR__ . '/../tests/test-dir/un-readable.txt'),
+            'rename_to' => 'new-file.txt',
+        ]);
+        $response->assertStatus(403);
+
+        $response = $this->actingAs($user)->post('/admin/page/file-manager', [
+            'rename_file' => __DIR__ . '/../tests/test-dir/not-found-file.txt',
+            'rename_to' => 'new-file.txt',
+        ]);
+        $response->assertStatus(404);
+
+        $response = $this->actingAs($user)->post('/admin/page/file-manager', [
+            'rename_file' => __DIR__ . '/../tests/test-dir/first.txt',
+            'rename_to' => 'last.txt',
+        ]);
+        $response->assertStatus(403);
+
+        $response = $this->actingAs($user)->post('/admin/page/file-manager', [
+            'rename_file' => __DIR__ . '/../tests/test-dir/first.txt',
+            'rename_to' => 'new-file.txt',
+        ]);
+        $response->assertStatus(302);
+        $this->assertFalse(file_exists(__DIR__ . '/../tests/test-dir/first.txt'));
+        $this->assertTrue(file_exists(__DIR__ . '/../tests/test-dir/new-file.txt'));
+        unlink(__DIR__ . '/../tests/test-dir/new-file.txt');
+        touch(__DIR__ . '/../tests/test-dir/first.txt');
+
+        $response = $this->actingAs($user)->post('/admin/page/file-manager', [
+            'rename_file' => __DIR__ . '/../tests/test-dir/first.txt',
+            'rename_to' => '../..\\new-file.txt',
+        ]);
+        $response->assertStatus(302);
+        $this->assertFalse(file_exists(__DIR__ . '/../tests/test-dir/first.txt'));
+        $this->assertTrue(file_exists(__DIR__ . '/../tests/test-dir/....new-file.txt'));
+        unlink(__DIR__ . '/../tests/test-dir/....new-file.txt');
+        touch(__DIR__ . '/../tests/test-dir/first.txt');
+    }
 }

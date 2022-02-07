@@ -28,6 +28,13 @@
             <input type='hidden' name='cut_file' value='{{ $item->path }}' />
             <button title='Cut' type='submit' class='btn btn-primary text-light'><i class='fa fa-cut'></i></button>
         </form>
+
+        <form onsubmit='return handleRename("{{ hash('sha256', $item->path) }}")' method='POST'  style='float: right; display: inline !important;'>
+            @csrf
+            <input type='hidden' name='rename_file' value='{{ $item->path }}' />
+            <input id='{{ hash('sha256', $item->path) }}' type='hidden' name='rename_to' value='{{ $item->name() }}' />
+            <button title='Rename' type='submit' class='btn btn-secondary text-light'>Rename</button>
+        </form>
     @endif
 @endif
 

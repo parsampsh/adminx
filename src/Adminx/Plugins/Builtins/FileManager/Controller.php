@@ -57,6 +57,34 @@ class Controller
             return;
         }
 
+        if ($request->post('rename_file') !== null && $request->post('rename_to') !== null) {
+            $file = new FileItem($request->get('rename_file'), $this->plugin);
+
+            if (file_exists($file->path)) {
+                if ($file->canRead() && $file->canDelete()) {
+                    $renameTo = $request->post('rename_to');
+                    $renameTo = str_replace('/', '', $renameTo);
+                    $renameTo = str_replace('\\', '', $renameTo);
+
+                    $newFilePath = $file->dirname() . '/' . $renameTo;
+
+                    if (file_exists($newFilePath)) {
+                        abort(403); // TODO : show an alert instead
+                    } else {
+                        // eveything is ok
+                        // renaming the file
+                        rename($file->path, $newFilePath);
+
+                        return new NoBaseViewResponse(redirect($request->fullUrl()));
+                    }
+                } else {
+                    abort(403);
+                }
+            } else {
+                abort(404);
+            }
+        }
+
         if ($request->get('download') !== null) {
             $file = new FileItem($request->get('download'), $this->plugin);
 
