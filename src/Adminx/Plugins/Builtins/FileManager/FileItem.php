@@ -98,4 +98,14 @@ class FileItem
     {
         return is_dir($this->path);
     }
+
+    /**
+     * Returns parent directory path of the file
+     * 
+     * @return string
+     */
+    public function dirname(): string
+    {
+        return dirname($this->path);
+    }
 }
