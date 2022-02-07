@@ -16,6 +16,12 @@ namespace Adminx\Plugins\Builtins\FileManager;
  */
 class DirectoryUtils
 {
+    /**
+     * Deletes a directory
+     * 
+     * @param string $folderName
+     * @return bool
+     */
     public static function deleteDir(string $folderName): bool
     {
         if (is_dir($folderName)) {
@@ -43,6 +49,13 @@ class DirectoryUtils
         return true;
     }
 
+    /**
+     * Copies a directory recursively
+     * 
+     * @param string $sourceDirectory
+     * @param string $destinationDirectory
+     * @param string $childFolder
+     */
     public static function recurseCopy(string $sourceDirectory, string $destinationDirectory, string $childFolder = ''): void {
         $directory = opendir($sourceDirectory);
     
