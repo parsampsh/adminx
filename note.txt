@@ -1,7 +1,6 @@
 Needed options for file manager:
 
 - directory download
-- documentation
 - edit
 - create
 - upload

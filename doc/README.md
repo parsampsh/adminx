@@ -12,3 +12,4 @@ Welcome to the Adminx documentation.
 - [Plugin system](06_plugins.md)
 - [Themes](07_themes.md)
 - [Permission access API](08_access_api.md)
+- [Builtin plugins](builtin_plugins)
