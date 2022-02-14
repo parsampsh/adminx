@@ -1,6 +1,5 @@
 Needed options for file manager:
 
-- directory download
 - edit
 - create
 - upload

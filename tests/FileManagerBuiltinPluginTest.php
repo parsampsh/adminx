@@ -417,6 +417,35 @@ class FileManagerBuiltinPluginTest extends TestCase
         $this->assertNotEmpty($response->getFile());
     }
 
+    public function test_directory_can_be_downloaded()
+    {
+        $user = \App\Models\User::factory()->create();
+        $admin = new \Adminx\Core;
+        $admin->addPlugin(new \Adminx\Plugins\Builtins\FileManager\FileManagerPlugin, [
+            'dirs' => [
+                realpath(__DIR__ . '/../tests/test-dir'),
+            ],
+            'can_download_directory' => (function ($u, $file) {
+                return false;
+            }),
+        ]);
+        $admin->register('/admin');
+
+        $response = $this->actingAs($user)->get('/admin/page/file-manager?download='.realpath(__DIR__ . '/../tests/test-dir'));
+        $response->assertStatus(403);
+
+        $admin = new \Adminx\Core;
+        $admin->addPlugin(new \Adminx\Plugins\Builtins\FileManager\FileManagerPlugin, [
+            'dirs' => [
+                realpath(__DIR__ . '/../tests/test-dir'),
+            ],
+        ]);
+        $admin->register('/admin');
+
+        $response = $this->actingAs($user)->get('/admin/page/file-manager?download='.realpath(__DIR__ . '/../tests/test-dir'));
+        $response->assertStatus(200);
+    }
+
     public function test_rename_works()
     {
         $user = \App\Models\User::factory()->create();

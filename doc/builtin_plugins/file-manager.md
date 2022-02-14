@@ -84,3 +84,16 @@ A file/directory can be **copied** to somewhere else when user can read that fil
 A file/directory can be **cuted** when user has permission for reading and deleting it and also permission for writing in the target directory.
 
 A file/directory can be **renamed** when user has permission to read it and delete it. same as cut.
+
+#### Directory download
+File manager can make directories downloadable.
+It just makes a zip file from directory and user can download it.
+
+There is another middleware named `can_download_directory`.
+You can handle exceptions about downloading the whole directory using this:
+
+```php
+$admin->addPlugin(new FileManagerPlugin, [
+    'can_download_directory' => (function (User $user, FileItem $file) { return true; }),
+]);
+```

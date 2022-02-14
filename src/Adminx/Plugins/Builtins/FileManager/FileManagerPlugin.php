@@ -105,11 +105,16 @@ class FileManagerPlugin implements IPlugin
         {
             $options['can_write'] = function () { return true; };
         }
+        if (!(isset($options['can_download_directory']) && is_callable($options['can_download_directory'])))
+        {
+            $options['can_download_directory'] = function () { return true; };
+        }
 
         $this->canSee = $options['can_see'];
         $this->canRead = $options['can_read'];
         $this->canDelete = $options['can_delete'];
         $this->canWrite = $options['can_write'];
+        $this->canDownloadDirectory = $options['can_download_directory'];
     }
 
     /**

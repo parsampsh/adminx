@@ -85,6 +85,19 @@ class Controller
     }
 
     /**
+     * Generates a zip file from a directory to be downloaded
+     *
+     * @param FileItem $file
+     */
+    public function prepareDirectoryForDownload($file)
+    {
+        $tmpPath = sys_get_temp_dir() . '/' . time() . rand() . '.zip';
+        DirectoryUtils::compressDir($file, $tmpPath);
+
+        return new \Adminx\Views\NoBaseViewResponse(response()->file($tmpPath));
+    }
+
+    /**
      * Handles the download operation
      * 
      * @param \Request $request
@@ -93,11 +106,19 @@ class Controller
     {
         $file = new FileItem($request->get('download'), $this->plugin);
 
-        if (is_file($file->path)) {
-            if ($file->canRead()) {
-                return new \Adminx\Views\NoBaseViewResponse(response()->file($file->path));
+        if (file_exists($file->path)) {
+            if (!$file->isDir()) {
+                if ($file->canRead()) {
+                    return new \Adminx\Views\NoBaseViewResponse(response()->file($file->path));
+                } else {
+                    abort(403);
+                }
             } else {
-                abort(403);
+                if ($file->canRead() && $file->canDownloadDirectory()) {
+                    return $this->prepareDirectoryForDownload($file);
+                } else {
+                    abort(403);
+                }
             }
         } else {
             abort(404);

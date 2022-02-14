@@ -13,10 +13,10 @@
         <button title='Copy' type='submit' class='btn btn-success text-light'><i class='fa fa-copy'></i></button>
     </form>
 
-    @if(!$item->isDir())
+    @if((!$item->isDir()) || $item->canDownloadDirectory())
         <form method='get' style='float: right; display: inline !important;'>
             <input type='hidden' name='download' value='{{ htmlspecialchars($item->path) }}' />
-            <button style='display: inline-block !important;' class='btn btn-dark' type='submit'>
+            <button title='download' style='display: inline-block !important;' class='btn btn-dark' type='submit'>
                 <i class='fa fa-download'></i>
             </button>
         </form>

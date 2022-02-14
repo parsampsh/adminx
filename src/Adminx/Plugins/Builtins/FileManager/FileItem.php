@@ -108,4 +108,18 @@ class FileItem
     {
         return dirname($this->path);
     }
+
+    /**
+     * Check user's permission to download the whole directory
+     * 
+     * @return bool
+     */
+    public function canDownloadDirectory(): bool
+    {
+        if (!extension_loaded('zip')) {
+            return false;
+        }
+
+        return (bool) call_user_func_array($this->plugin->canDownloadDirectory, [$this->getUser(), $this]);
+    }
 }
