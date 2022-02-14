@@ -1,8 +1,8 @@
 Needed options for file manager:
 
-- edit
-- create
 - upload
 - use multi language support
+- edit
+- create
 
 TODO : delete me before merging the branch!
