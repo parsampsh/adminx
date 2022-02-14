@@ -78,7 +78,9 @@ You can access the file path using `$file->path`.
 
 Also there are some more methods that you can check.
 
-#### Cut & Copy operations
+#### Cut & Copy & Rename operations
 A file/directory can be **copied** to somewhere else when user can read that file and also has write permission on the target directory that file is going to be copied in.
 
 A file/directory can be **cuted** when user has permission for reading and deleting it and also permission for writing in the target directory.
+
+A file/directory can be **renamed** when user has permission to read it and delete it. same as cut.
