@@ -99,5 +99,50 @@ class DirectoryUtils
         }
     
         closedir($directory);
-    }    
+    }
+
+    /**
+     * Compresses a directory recursively to a zip file
+     * 
+     * @param FileItem $file
+     * @param string $destination
+     */
+    public static function compressDir(FileItem $file, string $destination)
+    {
+        $zip = new \ZipArchive();
+        $zip->open($destination, \ZipArchive::CREATE);
+
+        $source = $file->path;
+
+        if (is_dir($source) === true)
+        {
+            $files = new \RecursiveIteratorIterator(new \RecursiveDirectoryIterator($source), \RecursiveIteratorIterator::SELF_FIRST);
+
+            foreach ($files as $file)
+            {
+                $file = str_replace('\\', '/', $file);
+
+                // Ignore "." and ".." folders
+                if( in_array(substr($file, strrpos($file, '/')+1), array('.', '..')) )
+                    continue;
+
+                $file = realpath($file);
+
+                if (is_dir($file) === true)
+                {
+                    $zip->addEmptyDir(str_replace($source . '/', '', $file . '/'));
+                }
+                else if (is_file($file) === true)
+                {
+                    $zip->addFromString(str_replace($source . '/', '', $file), file_get_contents($file));
+                }
+            }
+        }
+        else if (is_file($source) === true)
+        {
+            $zip->addFromString(basename($source), file_get_contents($source));
+        }
+
+        return $zip->close();
+    }
 }
