@@ -260,11 +260,15 @@ class Controller
         }
 
         if (!call_user_func_array($this->plugin->uploadMiddleware, [$currentDirectory, $file])) {
-            abort(403); // TODO : show message
+            abort(403); // TODO : show a message
         }
 
         $clientOriginalName = str_replace('/', '', $file->getClientOriginalName());
         $clientOriginalName = str_replace('\\', '', $clientOriginalName);
+
+        if (file_exists($currentDirectory->path . '/' . $clientOriginalName)) {
+            abort(403); // TODO : show a message
+        }
 
         $file->move($currentDirectory->path, $clientOriginalName);
 

@@ -565,6 +565,13 @@ class FileManagerBuiltinPluginTest extends TestCase
         $res->assertStatus(302);
 
         $this->assertTrue(is_file(realpath(__DIR__ . '/../tests/test-dir/subdir').'/someshit.txt'));
+
+        // try to overwrite a file
+        $res = $this->actingAs($user)->post('/admin/page/file-manager/?currentLoc='.realpath(__DIR__ . '/../tests/test-dir/subdir'), [
+            'upload_file' => UploadedFile::fake()->create('someshit.txt'),
+        ]);
+        $res->assertStatus(403);
+
         unlink(realpath(__DIR__ . '/../tests/test-dir/subdir').'/someshit.txt');
     }
 }
