@@ -12,6 +12,7 @@
 namespace Adminx\Tests;
 
 use Adminx\Tests\TestCase;
+use Illuminate\Http\UploadedFile;
 
 class FileManagerBuiltinPluginTest extends TestCase
 {
@@ -506,5 +507,64 @@ class FileManagerBuiltinPluginTest extends TestCase
         $this->assertTrue(file_exists(__DIR__ . '/../tests/test-dir/....new-file.txt'));
         unlink(__DIR__ . '/../tests/test-dir/....new-file.txt');
         touch(__DIR__ . '/../tests/test-dir/first.txt');
+    }
+
+    public function test_upload_works()
+    {
+        $user = \App\Models\User::factory()->create();
+        $admin = new \Adminx\Core;
+        $admin->addPlugin(new \Adminx\Plugins\Builtins\FileManager\FileManagerPlugin, [
+            'dirs' => [
+                realpath(__DIR__ . '/../tests/test-dir'),
+            ],
+            'can_write' => (function ($u, $file) {
+                return ($file->path !== realpath(__DIR__ . '/../tests/test-dir/un-writable'));
+            }),
+        ]);
+        $admin->register('/admin');
+
+        $fakeFile = UploadedFile::fake()->create('someshit.txt');
+
+        $res = $this->actingAs($user)->post('/admin/page/file-manager/', [
+            'upload_file' => $fakeFile,
+        ]);
+        $res->assertStatus(403);
+
+        $res = $this->actingAs($user)->post('/admin/page/file-manager/?currentLoc=/', [
+            'upload_file' => $fakeFile,
+        ]);
+        $res->assertStatus(403);
+
+        $res = $this->actingAs($user)->post('/admin/page/file-manager/?currentLoc='.realpath(__DIR__ . '/../tests/test-dir/un-writable'), [
+            'upload_file' => $fakeFile,
+        ]);
+        $res->assertStatus(403);
+
+        $admin = new \Adminx\Core;
+        $admin->addPlugin(new \Adminx\Plugins\Builtins\FileManager\FileManagerPlugin, [
+            'dirs' => [
+                realpath(__DIR__ . '/../tests/test-dir'),
+            ],
+            'can_write' => (function ($u, $file) {
+                return ($file->path !== realpath(__DIR__ . '/../tests/test-dir/un-writable'));
+            }),
+            'upload_middleware' => (function ($currentDir, $file) {
+                return $file->getClientOriginalExtension() === 'txt';
+            }),
+        ]);
+        $admin->register('/admin');
+
+        $res = $this->actingAs($user)->post('/admin/page/file-manager/?currentLoc='.realpath(__DIR__ . '/../tests/test-dir/subdir'), [
+            'upload_file' => UploadedFile::fake()->create('someshit.php'),
+        ]);
+        $res->assertStatus(403);
+
+        $res = $this->actingAs($user)->post('/admin/page/file-manager/?currentLoc='.realpath(__DIR__ . '/../tests/test-dir/subdir'), [
+            'upload_file' => UploadedFile::fake()->create('someshit.txt'),
+        ]);
+        $res->assertStatus(302);
+
+        $this->assertTrue(is_file(realpath(__DIR__ . '/../tests/test-dir/subdir').'/someshit.txt'));
+        unlink(realpath(__DIR__ . '/../tests/test-dir/subdir').'/someshit.txt');
     }
 }

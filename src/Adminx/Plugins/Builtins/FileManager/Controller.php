@@ -238,11 +238,48 @@ class Controller
         }
     }
 
+    public function upload($request)
+    {
+        $file = $request->file('upload_file');
+
+        $currentDirectory = new FileItem('/', $this->plugin);
+
+        if ($request->get('currentLoc') !== null)
+        {
+            if ($this->checkPathIsValid($request->get('currentLoc'))) {
+                $currentDirectory = new FileItem($request->get('currentLoc'), $this->plugin);
+            } else {
+                abort(403);
+            }
+        } else {
+            abort(403);
+        }
+
+        if (!$currentDirectory->canWrite() || $currentDirectory->path === '/') {
+            abort(403);
+        }
+
+        if (!call_user_func_array($this->plugin->uploadMiddleware, [$currentDirectory, $file])) {
+            abort(403); // TODO : show message
+        }
+
+        $clientOriginalName = str_replace('/', '', $file->getClientOriginalName());
+        $clientOriginalName = str_replace('\\', '', $clientOriginalName);
+
+        $file->move($currentDirectory->path, $clientOriginalName);
+
+        return new NoBaseViewResponse(redirect($request->fullUrl()));
+    }
+
     public function handle($request)
     {
         if (!call_user_func_array($this->plugin->accessMiddleware, [auth()->user()])) {
             abort(403);
             return;
+        }
+
+        if ($request->file('upload_file') !== null) {
+            return $this->upload($request);
         }
 
         if ($request->post('rename_file') !== null && $request->post('rename_to') !== null) {

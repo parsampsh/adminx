@@ -97,3 +97,16 @@ $admin->addPlugin(new FileManagerPlugin, [
     'can_download_directory' => (function (User $user, FileItem $file) { return true; }),
 ]);
 ```
+
+### Upload middleware
+You can set a middleware for upload process to validate the files that are going to be uploaded somewhere:
+
+```php
+$admin->addPlugin(new FileManagerPlugin, [
+    'upload_middleware' => (function (FileItem $directory, $file) { return $file->getClientOriginalExtension() !== 'php'; }),
+]);
+```
+
+As you can see, there are 2 arguments for this closure, first one is the directory that file is gonna be uploaded to, and the second one is the uploaded file object.
+
+If your closure returns true, file will be uploaded and if this returns false, file won't be uploaded.

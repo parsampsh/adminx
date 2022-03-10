@@ -54,14 +54,26 @@ function handleRename(inputId) {
     @else
         <div class="badge badge-primary">Current Location: {{ $currentLoc }}</div>
 
-        @if(session()->has('adminx_filemanager_clipboard') && $currentLocObj->canWrite() && $currentLoc !== '/')
-            <form method='POST'>
-                @csrf
-                <button value='1' title='Paste' name='paste_file' class='btn btn-primary' type='submit'>
-                    <i class='fa fa-paste'></i> Paste
-                </button>
-            </form>
-        @endif
+        <div>
+            @if(session()->has('adminx_filemanager_clipboard') && $currentLocObj->canWrite() && $currentLoc !== '/')
+                <form style='display: inline' method='POST'>
+                    @csrf
+                    <button value='1' title='Paste' name='paste_file' class='btn btn-primary' type='submit'>
+                        <i class='fa fa-paste'></i> Paste
+                    </button>
+                </form>
+            @endif
+
+            @if($currentLocObj->canWrite() && $currentLoc !== '/')
+                <form style='display: inline' method='POST' enctype="multipart/form-data">
+                    @csrf
+                    <input type='file' name='upload_file' required class='btn btn-secondary' />
+                    <button title='Upload' class='btn btn-secondary' type='submit'>
+                        <i class='fa fa-upload'></i> Upload
+                    </button>
+                </form>
+            @endif
+        </div>
 
         @if($parentDir !== null)
             <div>
