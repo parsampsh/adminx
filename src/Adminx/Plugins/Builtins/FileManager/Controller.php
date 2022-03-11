@@ -347,11 +347,13 @@ class Controller
                     'currentLoc' => $currentLoc,
                     'parentDir' => $parentDir,
                     'fileItem' => new FileItem($currentLoc, $this->plugin),
+                    'core' => $this->plugin->core,
                 ]);
             } else {
                 // file not found
                 return view('adminx.builtin_plugins.filemanager.main', [
                     'currentLocNotFound' => true,
+                    'core' => $this->plugin->core,
                 ]);
             }
         }
@@ -384,6 +386,7 @@ class Controller
             'currentLoc' => $currentLoc,
             'currentLocObj' => new FileItem($currentLoc, $this->plugin),
             'parentDir' => $parentDir,
+            'core' => $this->plugin->core,
         ]);
     }
 }

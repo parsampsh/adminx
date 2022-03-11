@@ -123,6 +123,13 @@ class FileManagerPlugin implements IPlugin
     }
 
     /**
+     * Panel core object
+     * 
+     * @var Core
+     */
+    public $core;
+
+    /**
      * Main method of the plugin
      * 
      * @param Core $admin
@@ -130,6 +137,7 @@ class FileManagerPlugin implements IPlugin
      */
     public function run(Core $admin, array $options = [])
     {
+        $this->core = $admin;
         $this->loadConfiguration($options);
 
         $admin->addPage($admin->getWord('file-manager.page-title', 'File Manager'), $this->pageSlug, function($request) {
