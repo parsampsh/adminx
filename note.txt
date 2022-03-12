@@ -1,6 +1,0 @@
-Needed options for file manager:
-
-- edit
-- create
-
-TODO : delete me before merging the branch!
