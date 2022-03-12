@@ -110,3 +110,33 @@ $admin->addPlugin(new FileManagerPlugin, [
 As you can see, there are 2 arguments for this closure, first one is the directory that file is gonna be uploaded to, and the second one is the uploaded file object.
 
 If your closure returns true, file will be uploaded and if this returns false, file won't be uploaded.
+
+### Customizing language
+You can customize language of the file manager.
+You can use word system of the Adminx.
+
+Example:
+
+```php
+$admin->setWord('adminx.filemanager.main_title', 'Admin panel');
+```
+
+All the keys for the file manager start with `adminx.filemanager.`.
+You can see list of all of them here:
+
+- `adminx.filemanager.delete`: Title of the delete button
+- `adminx.filemanager.delete_btn_confirmation`: Delete confirmation message
+- `adminx.filemanager.copy`: Title of the copy button
+- `adminx.filemanager.download`: Title of the download button
+- `adminx.filemanager.cut`: Title of the cut button
+- `adminx.filemanager.rename`: Title of the rename button
+- `adminx.filemanager.main_title`: Main title of the panel
+- `adminx.filemanager.back`: Title of the back button
+- `adminx.filemanager.are_you_sure`: Message "Are you sure" at rename process
+- `adminx.filemanager.change_current_name`: Message "You must change current name" at rename process
+- `adminx.filemanager.not_found`: Message "file not found"
+- `adminx.filemanager.paste`: Title of the paste button
+- `adminx.filemanager.upload`: Title of the upload button
+- `adminx.filemanager.cant_read_file`: Message "You can't read this file"
+- `adminx.filemanager.file`: Word "File" which is written before path of the current file
+- `adminx.filemanager.current_location`: "current location" which is written before path of the current directory

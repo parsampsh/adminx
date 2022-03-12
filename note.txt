@@ -1,6 +1,5 @@
 Needed options for file manager:
 
-- use multi language support
 - edit
 - create
 
