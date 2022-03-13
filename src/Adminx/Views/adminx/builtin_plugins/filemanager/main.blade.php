@@ -50,7 +50,11 @@ function handleRename(inputId) {
         @include('adminx.builtin_plugins.filemanager.buttons', ['item' => $fileItem])
 
         <hr />
-        <pre>{{ $fileContent }}</pre>
+        @if(isset($editor) && $editor)
+            @include('adminx.builtin_plugins.filemanager.editor', ['fileContent' => $fileContent, 'btnTitle' => $core->getWord('adminx.filemanager.edit', 'Edit')])
+        @else
+            <pre>{{ $fileContent }}</pre>
+        @endif
     @else
         <div class="badge badge-primary">{{ $core->getWord('adminx.filemanager.current_location', 'Current Location') }}: {{ $currentLoc }}</div>
 

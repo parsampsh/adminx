@@ -275,11 +275,58 @@ class Controller
         return new NoBaseViewResponse(redirect($request->fullUrl()));
     }
 
+    /**
+     * Handles file edit
+     * 
+     * @param Request $request
+     */
+    public function edit($request)
+    {
+        $filePath = $request->get('edit');
+
+        if (!is_file($filePath)) {
+            abort(404);
+        }
+
+        $filePath = realpath($filePath);
+
+        $file = new FileItem($filePath, $this->plugin);
+
+        if ($file->canWrite()) {
+            if ($request->post('file_content') !== null) {
+                $f = fopen($filePath, 'w');
+                fwrite($f, $request->post('file_content'));
+                fclose($f);
+
+                return new NoBaseViewResponse(redirect($request->fullUrl()));
+            }
+
+            $f = fopen($filePath, 'r');
+            $content = fread($f, filesize($filePath)+1);
+            fclose($f);
+
+            return view('adminx.builtin_plugins.filemanager.main', [
+                'currentLoc' => $file->path,
+                'fileContent' => $content,
+                'parentDir' => dirname($filePath),
+                'core' => $this->plugin->core,
+                'fileItem' => $file,
+                'editor' => true,
+            ]);
+        } else {
+            abort(403);
+        }
+    }
+
     public function handle($request)
     {
         if (!call_user_func_array($this->plugin->accessMiddleware, [auth()->user()])) {
             abort(403);
             return;
+        }
+
+        if ($request->get('edit') !== null) {
+            return $this->edit($request);
         }
 
         if ($request->file('upload_file') !== null) {

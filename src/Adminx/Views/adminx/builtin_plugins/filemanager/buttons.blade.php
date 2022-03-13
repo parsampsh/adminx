@@ -38,4 +38,13 @@
     @endif
 @endif
 
+@if($item->canWrite() && !$item->isDir())
+    <form method='get' style='float: right; display: inline !important;'>
+        <input type='hidden' name='edit' value='{{ htmlspecialchars($item->path) }}' />
+        <button title='{{ $core->getWord('adminx.filemanager.edit', 'Edit') }}' style='display: inline-block !important;' class='btn btn-primary' type='submit'>
+            <i class='fa fa-edit'></i>
+        </button>
+    </form>
+@endif
+
 <div style='clear: both;'></div>
