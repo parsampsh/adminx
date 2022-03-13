@@ -574,4 +574,46 @@ class FileManagerBuiltinPluginTest extends TestCase
 
         unlink(realpath(__DIR__ . '/../tests/test-dir/subdir').'/someshit.txt');
     }
+
+    public function test_edit_works()
+    {
+        $user = \App\Models\User::factory()->create();
+        $admin = new \Adminx\Core;
+        $admin->addPlugin(new \Adminx\Plugins\Builtins\FileManager\FileManagerPlugin, [
+            'dirs' => [
+                realpath(__DIR__ . '/../tests/test-dir'),
+            ],
+            'can_write' => (function ($u, $file) {
+                return ($file->path !== realpath(__DIR__ . '/../tests/test-dir/first.txt'));
+            }),
+        ]);
+        $admin->register('/admin');
+
+        $res = $this->actingAs($user)->get('/admin/page/file-manager?edit=' . __DIR__ . '/../tests/test-dir/hi.txt111');
+        $res->assertStatus(404);
+
+        $res = $this->actingAs($user)->get('/admin/page/file-manager?edit=' . realpath(__DIR__ . '/../tests/test-dir/subdir'));
+        $res->assertStatus(404);
+
+        $res = $this->actingAs($user)->get('/admin/page/file-manager?edit=' . realpath(__DIR__ . '/../tests/test-dir/first.txt'));
+        $res->assertStatus(403);
+
+        $res = $this->actingAs($user)->get('/admin/page/file-manager?edit=' . realpath(__DIR__ . '/../tests/test-dir/hi.txt'));
+        $res->assertStatus(200);
+        $res->assertSee('Hello there!');
+
+        $res = $this->actingAs($user)->post('/admin/page/file-manager?edit=' . realpath(__DIR__ . '/../tests/test-dir/hi.txt'), [
+            'file_content' => 'New content!',
+        ]);
+        $res->assertStatus(302);
+
+        $f = fopen(realpath(__DIR__ . '/../tests/test-dir/hi.txt'), 'r');
+        $this->assertEquals(fread($f, 100), 'New content!');
+        fclose($f);
+
+        // undo
+        $f = fopen(realpath(__DIR__ . '/../tests/test-dir/hi.txt'), 'w');
+        fwrite($f, 'Hello there!');
+        fclose($f);
+    }
 }
