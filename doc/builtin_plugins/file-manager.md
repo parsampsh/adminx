@@ -124,6 +124,7 @@ $admin->setWord('adminx.filemanager.main_title', 'Admin panel');
 All the keys for the file manager start with `adminx.filemanager.`.
 You can see list of all of them here:
 
+- `adminx.filemanager.main_title`: Main title of the admin panel
 - `adminx.filemanager.delete`: Title of the delete button
 - `adminx.filemanager.delete_btn_confirmation`: Delete confirmation message
 - `adminx.filemanager.copy`: Title of the copy button
