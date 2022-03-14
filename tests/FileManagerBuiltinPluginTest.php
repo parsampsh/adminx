@@ -616,4 +616,38 @@ class FileManagerBuiltinPluginTest extends TestCase
         fwrite($f, 'Hello there!');
         fclose($f);
     }
+
+    public function test_create_file_works()
+    {
+        $user = \App\Models\User::factory()->create();
+        $admin = new \Adminx\Core;
+        $admin->addPlugin(new \Adminx\Plugins\Builtins\FileManager\FileManagerPlugin, [
+            'dirs' => [
+                realpath(__DIR__ . '/../tests/test-dir'),
+            ],
+            'can_write' => (function ($u, $file) {
+                return ($file->path !== realpath(__DIR__ . '/../tests/test-dir/un-writable'));
+            }),
+        ]);
+        $admin->register('/admin');
+
+        $res = $this->actingAs($user)->post('/admin/page/file-manager?currentLoc=' . __DIR__ . '/../tests/test-dir/subdir111', ['create_file' => 'new.txt']);
+        $res->assertStatus(403);
+
+        $res = $this->actingAs($user)->post('/admin/page/file-manager?currentLoc=' . realpath(__DIR__ . '/../tests/test-dir/un-writable'), ['create_file' => 'new.txt']);
+        $res->assertStatus(403);
+
+        $res = $this->actingAs($user)->post('/admin/page/file-manager?currentLoc=' . realpath(__DIR__ . '/../tests/test-dir/un-writable'), ['create_file' => 'new.txt']);
+        $res->assertStatus(403);
+
+        $res = $this->actingAs($user)->post('/admin/page/file-manager?currentLoc=' . realpath(__DIR__ . '/../tests/test-dir/subdir'), ['create_file' => 'new.txt1']);
+        $res->assertStatus(302);
+
+        $this->assertTrue(is_file(realpath(__DIR__ . '/../tests/test-dir/subdir') . '/new.txt1'));
+
+        $res = $this->actingAs($user)->post('/admin/page/file-manager?currentLoc=' . realpath(__DIR__ . '/../tests/test-dir/subdir'), ['create_file' => 'new.txt1']);
+        $res->assertStatus(403);
+
+        unlink(realpath(__DIR__ . '/../tests/test-dir/subdir') . '/new.txt1');
+    }
 }

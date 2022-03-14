@@ -141,3 +141,5 @@ You can see list of all of them here:
 - `adminx.filemanager.cant_read_file`: Message "You can't read this file"
 - `adminx.filemanager.file`: Word "File" which is written before path of the current file
 - `adminx.filemanager.current_location`: "current location" which is written before path of the current directory
+- `adminx.filemanager.new_file`: Title of new file button
+- `adminx.filemanager.create_new_file`: Placeholder of the new file input

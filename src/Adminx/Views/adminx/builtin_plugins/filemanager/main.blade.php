@@ -76,6 +76,14 @@ function handleRename(inputId) {
                         <i class='fa fa-upload'></i> {{ $core->getWord('adminx.filemanager.upload', 'Upload') }}
                     </button>
                 </form>
+
+                <form style='display: inline' method='POST'>
+                    @csrf
+                    <input type='text' name='create_file' placeholder="{{ $core->getWord('adminx.filemanager.create_new_file', 'Create a new file') }}" />
+                    <button title='{{ $core->getWord('adminx.filemanager.new_file', 'New file') }}' class='btn btn-secondary' type='submit'>
+                        <i class='fa fa-plus'></i> {{ $core->getWord('adminx.filemanager.new_file', 'New file') }}
+                    </button>
+                </form>
             @endif
         </div>
 

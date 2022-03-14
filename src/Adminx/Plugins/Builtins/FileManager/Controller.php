@@ -246,7 +246,7 @@ class Controller
 
         if ($request->get('currentLoc') !== null)
         {
-            if ($this->checkPathIsValid($request->get('currentLoc'))) {
+            if ($this->checkPathIsValid($request->get('currentLoc')) && is_dir($request->get('currentLoc'))) {
                 $currentDirectory = new FileItem($request->get('currentLoc'), $this->plugin);
             } else {
                 abort(403);
@@ -318,6 +318,36 @@ class Controller
         }
     }
 
+    public function createFile($request)
+    {
+        $fileName = $request->post('create_file');
+
+        if ($request->get('currentLoc') !== null)
+        {
+            if ($this->checkPathIsValid($request->get('currentLoc')) && is_dir($request->get('currentLoc'))) {
+                $currentDirectory = new FileItem($request->get('currentLoc'), $this->plugin);
+            } else {
+                abort(403);
+            }
+        } else {
+            abort(403);
+        }
+
+        if (!$currentDirectory->canWrite() || $currentDirectory->path === '/') {
+            abort(403);
+        }
+
+        $filePath = $currentDirectory->path . '/' . $fileName;
+
+        if (file_exists($filePath)) {
+            abort(403); // TODO : show a message instead
+        }
+
+        touch($filePath);
+
+        return new NoBaseViewResponse(redirect($this->plugin->core->url('/page/file-manager/?edit='.$filePath)));
+    }
+
     public function handle($request)
     {
         if (!call_user_func_array($this->plugin->accessMiddleware, [auth()->user()])) {
@@ -351,6 +381,10 @@ class Controller
 
         if ($request->post('delete_file') !== null) {
             return $this->delete($request);
+        }
+
+        if ($request->post('create_file') !== null) {
+            return $this->createFile($request);
         }
 
         $currentLoc = '/';
