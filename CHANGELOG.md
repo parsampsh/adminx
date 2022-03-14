@@ -1,6 +1,6 @@
 # Adminx Changelog
 
-## 1.0 Next release
+## 1.0
 (**This release has a lot of breaking changes**)
 
 - Changed naming style of a lot of function and variables
