@@ -104,7 +104,6 @@ class FileManagerBuiltinPluginTest extends TestCase
         $response = $this->actingAs($user)->get('/admin/page/file-manager?currentLoc=' . __DIR__ . '/../tests/');
         $response->assertSee('FileManagerBuiltinPluginTest.php');
         $response->assertSee(realpath(__DIR__ . '/../tests/'));
-        $response->assertSee(dirname(__DIR__ . '/../tests/'));
     }
 
     public function test_path_must_be_valid()

@@ -50,6 +50,27 @@ class DirectoryUtils
     }
 
     /**
+     * Gets file path and returns list of the files and directories inside of it
+     * 
+     * @param string $path
+     * @return array
+     */
+    public static function dirList(string $path): array
+    {
+        $files = [];
+        $directory = opendir($path);
+        while (($file = readdir($directory)) !== false) {
+            if ($file === '.' || $file === '..') {
+                continue;
+            }
+
+            array_push($files, realpath($path . '/' . $file));
+        }
+
+        return $files;
+    }
+
+    /**
      * Copies a directory recursively
      * 
      * @param string $sourceDirectory

@@ -427,7 +427,7 @@ class Controller
             }
 
             if (is_dir($currentLoc) && $isCurrentLocValid) {
-                $items = glob($currentLoc . '/*'); // TODO : use readdir instead
+                $items = DirectoryUtils::dirList($currentLoc);
                 $currentLoc = realpath($currentLoc);
             } else if (is_file($currentLoc) && $isCurrentLocValid) {
                 if (!((new FileItem($currentLoc, $this->plugin))->canRead())) {
