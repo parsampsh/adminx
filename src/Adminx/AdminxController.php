@@ -135,6 +135,11 @@ class AdminxController extends BaseController
         // run the page action
         $output = call_user_func_array($action, [$request]);
 
+        if ($output instanceof \Adminx\Views\NoBaseViewResponse) {
+            // return the response without the base template view
+            return $output->response;
+        }
+
         // return the view
         return view('adminx.page', ['output' => $output, 'core' => $this->core, 'page_title' => $page_title]);
     }

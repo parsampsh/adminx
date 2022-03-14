@@ -75,4 +75,29 @@ class PageSystemTest extends TestCase
         $res->assertSee('The index page for adminx', false);
         $res->assertSee('The index page of adminx', false);
     }
+
+    public function test_no_base_view_response_works()
+    {
+        $user = \App\Models\User::factory()->create();
+
+        $admin = new \Adminx\Core;
+        $admin->addPage('test', 'test', function ($request) {
+            return 'This is the test';
+        });
+        $admin->register('/admin');
+
+        $res = $this->actingAs($user)->get('/admin/page/test');
+        $res->assertStatus(200);
+        $this->assertNotEquals($res->getContent(), 'This is the test');
+
+        $admin = new \Adminx\Core;
+        $admin->addPage('test', 'test', function ($request) {
+            return new \Adminx\Views\NoBaseViewResponse('This is the test');
+        });
+        $admin->register('/admin');
+
+        $res = $this->actingAs($user)->get('/admin/page/test');
+        $res->assertStatus(200);
+        $this->assertEquals($res->getContent(), 'This is the test');
+    }
 }
