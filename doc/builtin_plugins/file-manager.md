@@ -130,6 +130,7 @@ You can see list of all of them here:
 - `adminx.filemanager.download`: Title of the download button
 - `adminx.filemanager.cut`: Title of the cut button
 - `adminx.filemanager.rename`: Title of the rename button
+- `adminx.filemanager.edit`: Title of the edit button
 - `adminx.filemanager.main_title`: Main title of the panel
 - `adminx.filemanager.back`: Title of the back button
 - `adminx.filemanager.are_you_sure`: Message "Are you sure" at rename process
