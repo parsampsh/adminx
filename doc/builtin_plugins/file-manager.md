@@ -49,7 +49,7 @@ $admin->addPlugin(new FileManagerPlugin, [
 ]);
 ```
 
-## Permissions on oerations on files
+## Permissions on operations on files
 There are 4 kinds of operation on files: See, Read, Delete, Write.
 
 You can handle them using `can_see`, `can_read`, `cen_delete`, `cen_write`:
