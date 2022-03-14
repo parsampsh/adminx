@@ -143,3 +143,5 @@ You can see list of all of them here:
 - `adminx.filemanager.current_location`: "current location" which is written before path of the current directory
 - `adminx.filemanager.new_file`: Title of new file button
 - `adminx.filemanager.create_new_file`: Placeholder of the new file input
+- `adminx.filemanager.file_already_exists`: Message "File already exists" which is used in rename, upload and... processes
+- `adminx.filemanager.cant_upload_file`: Message "Cannot upload the file" whoch will be shown when the upload middleware returns false response

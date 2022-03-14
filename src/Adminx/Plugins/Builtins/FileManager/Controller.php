@@ -68,7 +68,11 @@ class Controller
                 $newFilePath = $file->dirname() . '/' . $renameTo;
 
                 if (file_exists($newFilePath)) {
-                    abort(403); // TODO : show an alert instead
+                    return new NoBaseViewResponse(response()->view('adminx.builtin_plugins.filemanager.alert', [
+                        'core' => $this->plugin->core,
+                        'backUrl' => $request->fullUrl(),
+                        'message' => $this->plugin->core->getWord('adminx.filemanager.file_already_exists', 'This file is already exists'),
+                    ])->setStatusCode(403));
                 } else {
                     // eveything is ok
                     // renaming the file
@@ -260,14 +264,22 @@ class Controller
         }
 
         if (!call_user_func_array($this->plugin->uploadMiddleware, [$currentDirectory, $file])) {
-            abort(403); // TODO : show a message
+            return new NoBaseViewResponse(response()->view('adminx.builtin_plugins.filemanager.alert', [
+                'core' => $this->plugin->core,
+                'backUrl' => $request->fullUrl(),
+                'message' => $this->plugin->core->getWord('adminx.filemanager.cant_upload_file', 'Cannot upload the file'),
+            ])->setStatusCode(403));
         }
 
         $clientOriginalName = str_replace('/', '', $file->getClientOriginalName());
         $clientOriginalName = str_replace('\\', '', $clientOriginalName);
 
         if (file_exists($currentDirectory->path . '/' . $clientOriginalName)) {
-            abort(403); // TODO : show a message
+            return new NoBaseViewResponse(response()->view('adminx.builtin_plugins.filemanager.alert', [
+                'core' => $this->plugin->core,
+                'backUrl' => $request->fullUrl(),
+                'message' => $this->plugin->core->getWord('adminx.filemanager.file_already_exists', 'This file is already exists'),
+            ])->setStatusCode(403));
         }
 
         $file->move($currentDirectory->path, $clientOriginalName);
@@ -340,7 +352,11 @@ class Controller
         $filePath = $currentDirectory->path . '/' . $fileName;
 
         if (file_exists($filePath)) {
-            abort(403); // TODO : show a message instead
+            return new NoBaseViewResponse(response()->view('adminx.builtin_plugins.filemanager.alert', [
+                'core' => $this->plugin->core,
+                'backUrl' => $request->fullUrl(),
+                'message' => $this->plugin->core->getWord('adminx.filemanager.file_already_exists', 'This file is already exists'),
+            ])->setStatusCode(403));
         }
 
         touch($filePath);
